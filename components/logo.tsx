@@ -15,8 +15,8 @@ export function Logo({ className = "" }: { className?: string }) {
         <path d="M26 28 L30 38 L34 28 Z" fill="#1E3A5F" />
       </svg>
       <div className="flex flex-col">
-        <span className="text-[#1E3A5F] font-bold text-base sm:text-lg leading-tight">MY SUPPORT</span>
-        <span className="text-[#8CC63F] font-bold text-base sm:text-lg leading-tight">MY WAY</span>
+        <span className="text-[#1E3A5F] font-bold text-base sm:text-lg leading-tight">Elegant</span>
+        <span className="text-[#8CC63F] font-bold text-base sm:text-lg leading-tight">Care Service</span>
       </div>
     </div>
   )

@@ -52,7 +52,7 @@ export default function NdisPage() {
             </h2>
             <p className="text-gray-600 leading-relaxed">
               The National Disability Insurance Scheme (NDIS) is a way of providing support for Australians with
-              disability, their families and carers. As a registered NDIS provider, My Support My Way is here to help
+              disability, their families and carers. As a registered NDIS provider, Elegant Care Service is here to help
               you navigate the scheme and access the services you need.
             </p>
           </div>

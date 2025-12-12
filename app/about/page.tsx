@@ -44,7 +44,7 @@ export default function AboutPage() {
                 <span className="text-[#8CC63F]">STORY</span>
               </h2>
               <p className="text-gray-600 leading-relaxed mb-4">
-                My Support My Way was founded with a simple yet powerful vision: to provide
+                Elegant Care Service was founded with a simple yet powerful vision: to provide
                 <strong className="text-[#1E3A5F]"> person-centered disability support services</strong> that truly make
                 a difference in people's lives.
               </p>

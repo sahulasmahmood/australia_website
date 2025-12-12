@@ -30,13 +30,13 @@ export function Footer() {
                   <path d="M26 28 L30 38 L34 28 Z" fill="#1E3A5F" />
                 </svg>
                 <div className="flex flex-col">
-                  <span className="text-white font-bold text-base sm:text-lg leading-tight">MY SUPPORT</span>
-                  <span className="text-[#8CC63F] font-bold text-base sm:text-lg leading-tight">MY WAY</span>
+                  <span className="text-white font-bold text-base sm:text-lg leading-tight">Elegant</span>
+                  <span className="text-[#8CC63F] font-bold text-base sm:text-lg leading-tight">Care Service</span>
                 </div>
               </div>
             </div>
             <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6">
-              My Support My Way is a registered NDIS provider committed to delivering high-quality disability support
+              Elegant Care Service is a registered NDIS provider committed to delivering high-quality disability support
               services. We believe in empowering individuals to live life on their own terms with dignity and
               independence.
             </p>
@@ -127,7 +127,7 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
           <p className="text-gray-400 text-[10px] sm:text-xs leading-relaxed text-center">
-            My Support My Way acknowledges the Traditional Custodians of Country throughout Australia and recognizes
+            Elegant Care Service acknowledges the Traditional Custodians of Country throughout Australia and recognizes
             their continuing connection to land, waters, and community. We pay our respects to Aboriginal and Torres
             Strait Islander cultures and to Elders past, present, and emerging.
           </p>
@@ -139,7 +139,7 @@ export function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-xs sm:text-sm text-gray-400">
             <p className="text-center sm:text-left">
-              &copy; {new Date().getFullYear()} My Support My Way. All rights reserved.
+              &copy; {new Date().getFullYear()} Elegant Care Service. All rights reserved.
             </p>
             <div className="flex items-center gap-3 sm:gap-4">
               <a href="#" className="hover:text-[#8CC63F] transition-colors">

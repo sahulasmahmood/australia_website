@@ -48,7 +48,7 @@ export function AboutSection() {
 
             <div className="space-y-3 sm:space-y-4 text-gray-700 leading-relaxed text-sm sm:text-base">
               <p>
-                At <strong className="text-[#1E3A5F]">My Support My Way</strong>, we believe that everyone deserves to
+                At <strong className="text-[#1E3A5F]">Elegant Care Service</strong>, we believe that everyone deserves to
                 live a life filled with dignity, independence, and joy. Our dedicated team of experienced professionals
                 is committed to providing{" "}
                 <strong className="text-[#8CC63F]">exceptional disability support services</strong> tailored to your

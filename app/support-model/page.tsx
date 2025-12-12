@@ -56,7 +56,7 @@ export default function SupportModelPage() {
                 <span className="text-[#8CC63F]">WE WORK</span>
               </h2>
               <p className="text-gray-600 leading-relaxed mb-4">
-                At My Support My Way, we believe that quality disability support is about more than just providing
+                At Elegant Care Service, we believe that quality disability support is about more than just providing
                 services – it's about building genuine relationships and empowering individuals to live their best
                 lives.
               </p>
