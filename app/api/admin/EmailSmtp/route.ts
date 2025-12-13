@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/config/models/connectDB";
 import EmailSMTP from "@/config/utils/admin/smtp/emailSMTPSchema";
-import { testSMTPConnection, sendTestEmail } from "../../../../config/models/connectSMTP";
+import { testSMTPConnection, sendTestEmail } from "@/config/models/connectSMTP";
 
 // GET - Fetch SMTP settings
 export async function GET() {

@@ -12,6 +12,8 @@ import {
   Users,
   Settings,
   User,
+  Search,
+  Phone,
   LogOut,
   ChevronDown,
   PanelLeftClose,
@@ -19,6 +21,7 @@ import {
   Briefcase,
   Heart,
   MessageSquare,
+  Globe,
 } from "lucide-react"
 import { Suspense } from "react"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
@@ -50,6 +53,7 @@ export default function AdminLayout({
     return true
   })
   const [pageManagerOpen, setPageManagerOpen] = useState(false)
+  const [servicesOpen, setServicesOpen] = useState(false)
   const [userDropdownOpen, setUserDropdownOpen] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
@@ -133,10 +137,28 @@ export default function AdminLayout({
       color: "text-[#8CC63F]",
     },
     {
+      name: "SEO Manager",
+      href: "/admin/seo",
+      icon: <Search className="h-5 w-5" />,
+      color: "text-[#1E3A5F]",
+    },
+    {
+      name: "Page Manager",
+      icon: <Globe className="h-5 w-5" />,
+      color: "text-[#8CC63F]",
+      isCollapsible: true,
+      collapsibleKey: "pageManager",
+      subItems: [
+        { name: "Banner Manager", href: "/admin/banners", icon: <FileText className="h-4 w-4" /> },
+        { name: "Contact Manager", href: "/admin/contact", icon: <Phone className="h-4 w-4" /> },
+      ],
+    },
+    {
       name: "Services",
       icon: <Briefcase className="h-5 w-5" />,
       color: "text-[#1E3A5F]",
       isCollapsible: true,
+      collapsibleKey: "services",
       subItems: [
         { name: "All Services", href: "/admin/services", icon: <Briefcase className="h-4 w-4" /> },
         { name: "Categories", href: "/admin/services/categories", icon: <FileText className="h-4 w-4" /> },
@@ -222,12 +244,15 @@ export default function AdminLayout({
             <div className="space-y-1">
               {sidebarItems.map((item) => {
                 if (item.isCollapsible) {
+                  const isOpen = item.collapsibleKey === "pageManager" ? pageManagerOpen : servicesOpen
+                  const setIsOpen = item.collapsibleKey === "pageManager" ? setPageManagerOpen : setServicesOpen
+                  
                   return (
-                    <Collapsible key={item.name} open={pageManagerOpen} onOpenChange={setPageManagerOpen}>
+                    <Collapsible key={item.name} open={isOpen} onOpenChange={setIsOpen}>
                       <CollapsibleTrigger asChild>
                         <button
                           className={`flex items-center justify-between w-full px-4 py-3 text-[#1E3A5F] hover:bg-[#F0F9E8] transition-all duration-200 rounded-lg group ${
-                            pageManagerOpen ? "bg-[#F0F9E8]" : ""
+                            isOpen ? "bg-[#F0F9E8]" : ""
                           }`}
                         >
                           <div className="flex items-center">
@@ -238,7 +263,7 @@ export default function AdminLayout({
                           </div>
                           <ChevronDown
                             className={`h-4 w-4 transition-transform duration-200 ${
-                              pageManagerOpen ? "rotate-180" : ""
+                              isOpen ? "rotate-180" : ""
                             }`}
                           />
                         </button>

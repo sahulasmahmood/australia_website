@@ -1,0 +1,376 @@
+"use client";
+
+import type React from "react";
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import {
+  Settings as SettingsIcon,
+  Save,
+  RotateCcw,
+  ImageIcon,
+  Upload,
+  Building2,
+} from "lucide-react";
+
+export default function SettingsPage() {
+  const { toast } = useToast();
+
+  const [siteName, setSiteName] = useState("Elegant Care Service");
+  const [siteTagline, setSiteTagline] = useState("Quality NDIS Support Services");
+  const [logo, setLogo] = useState<string | null>(null);
+  const [favicon, setFavicon] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [fetchLoading, setFetchLoading] = useState(true);
+
+  // Fetch settings on mount
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await fetch("/api/admin/settings");
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setSiteName(result.data.siteName || "Elegant Care Service");
+          setSiteTagline(result.data.siteTagline || "Quality NDIS Support Services");
+          setLogo(result.data.logo || null);
+          setFavicon(result.data.favicon || null);
+        }
+      } catch (error) {
+        console.error("Error fetching settings:", error);
+      } finally {
+        setFetchLoading(false);
+      }
+    };
+
+    fetchSettings();
+  }, []);
+
+  const saveSettings = async () => {
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/admin/settings", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          siteName,
+          siteTagline,
+          logo,
+          favicon,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast({
+          title: "Success",
+          description: "Site settings saved successfully",
+        });
+      } else {
+        throw new Error(result.message || "Failed to save settings");
+      }
+    } catch (error) {
+      console.error("Error saving settings:", error);
+      toast({
+        title: "Error",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Failed to save site settings",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const resetSettings = async () => {
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/admin/settings", {
+        method: "POST",
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSiteName("Elegant Care Service");
+        setSiteTagline("Quality NDIS Support Services");
+        setLogo(null);
+        setFavicon(null);
+
+        toast({
+          title: "Success",
+          description: "Site settings reset to default",
+        });
+      } else {
+        throw new Error(result.message || "Failed to reset settings");
+      }
+    } catch (error) {
+      console.error("Error resetting settings:", error);
+      toast({
+        title: "Error",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Failed to reset site settings",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setLogo(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleFaviconUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setFavicon(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  if (fetchLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8CC63F] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading settings...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-4xl font-bold text-[#1E3A5F] flex items-center gap-3">
+            <SettingsIcon className="h-8 w-8 text-[#8CC63F]" />
+            Site Settings
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Manage your website's basic information and branding
+          </p>
+        </div>
+        <div className="flex gap-3">
+          <Button
+            onClick={resetSettings}
+            variant="outline"
+            className="flex items-center"
+            disabled={loading}
+          >
+            <RotateCcw className="h-4 w-4 mr-2" />
+            Reset
+          </Button>
+          <Button
+            onClick={saveSettings}
+            className="flex items-center bg-[#8CC63F] hover:bg-[#7AB52F] text-white"
+            disabled={loading}
+          >
+            <Save className="h-4 w-4 mr-2" />
+            {loading ? "Saving..." : "Save Changes"}
+          </Button>
+        </div>
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-8">
+        {/* Site Information */}
+        <Card className="shadow-lg border-0">
+          <CardHeader className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#8CC63F]/10 p-6">
+            <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
+              <Building2 className="h-5 w-5 text-[#8CC63F]" />
+              Site Information
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6 space-y-6">
+            <div className="space-y-3">
+              <Label className="text-sm font-semibold text-gray-700">
+                Site Name *
+              </Label>
+              <Input
+                type="text"
+                value={siteName}
+                onChange={(e) => setSiteName(e.target.value)}
+                placeholder="Enter your site name"
+                className="w-full"
+              />
+              <p className="text-xs text-gray-500">
+                This will appear in the browser title and throughout the website
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <Label className="text-sm font-semibold text-gray-700">
+                Site Tagline
+              </Label>
+              <Input
+                type="text"
+                value={siteTagline}
+                onChange={(e) => setSiteTagline(e.target.value)}
+                placeholder="Enter your site tagline"
+                className="w-full"
+              />
+              <p className="text-xs text-gray-500">
+                A short description of your services (optional)
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Brand Assets */}
+        <Card className="shadow-lg border-0">
+          <CardHeader className="bg-gradient-to-r from-[#8CC63F]/10 to-[#1E3A5F]/10 p-6">
+            <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
+              <ImageIcon className="h-5 w-5 text-[#8CC63F]" />
+              Brand Assets
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6 space-y-6">
+            {/* Logo Upload */}
+            <div className="space-y-3">
+              <Label className="text-sm font-semibold text-gray-700">
+                Website Logo
+              </Label>
+              <div className="flex items-center gap-4">
+                <div className="w-24 h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center bg-gray-50">
+                  {logo ? (
+                    <img
+                      src={logo}
+                      alt="Logo"
+                      className="w-full h-full object-contain rounded-lg p-2"
+                    />
+                  ) : (
+                    <ImageIcon className="h-8 w-8 text-gray-400" />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLogoUpload}
+                    className="hidden"
+                    id="logo-upload"
+                  />
+                  <Label
+                    htmlFor="logo-upload"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                  >
+                    <Upload className="h-4 w-4" />
+                    Upload Logo
+                  </Label>
+                  <p className="text-xs text-gray-500 mt-2">
+                    Recommended: PNG or SVG format, max 2MB
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Favicon Upload */}
+            <div className="space-y-3">
+              <Label className="text-sm font-semibold text-gray-700">
+                Favicon
+              </Label>
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center bg-gray-50">
+                  {favicon ? (
+                    <img
+                      src={favicon}
+                      alt="Favicon"
+                      className="w-full h-full object-contain rounded-lg p-1"
+                    />
+                  ) : (
+                    <ImageIcon className="h-6 w-6 text-gray-400" />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFaviconUpload}
+                    className="hidden"
+                    id="favicon-upload"
+                  />
+                  <Label
+                    htmlFor="favicon-upload"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                  >
+                    <Upload className="h-4 w-4" />
+                    Upload Favicon
+                  </Label>
+                  <p className="text-xs text-gray-500 mt-2">
+                    Recommended: 32x32px ICO or PNG format
+                  </p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Preview Card */}
+      <Card className="shadow-lg border-0">
+        <CardHeader className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#8CC63F]/10 p-6">
+          <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
+            <ImageIcon className="h-5 w-5 text-[#8CC63F]" />
+            Preview
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-6">
+          <div className="border-2 border-gray-200 rounded-lg overflow-hidden bg-white">
+            <div className="bg-white border-b border-gray-200 p-4">
+              <div className="flex items-center gap-3">
+                {logo ? (
+                  <img
+                    src={logo}
+                    alt="Logo"
+                    className="w-12 h-12 object-contain"
+                  />
+                ) : (
+                  <div className="w-12 h-12 rounded-full bg-[#8CC63F] flex items-center justify-center text-white text-xl font-bold">
+                    {siteName.charAt(0)}
+                  </div>
+                )}
+                <div>
+                  <div className="font-bold text-[#1E3A5F] text-lg">
+                    {siteName}
+                  </div>
+                  {siteTagline && (
+                    <div className="text-sm text-gray-600">{siteTagline}</div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="p-6 bg-gray-50">
+              <p className="text-sm text-gray-600 text-center">
+                This is how your site name and logo will appear on your website
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
