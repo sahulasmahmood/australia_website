@@ -105,6 +105,19 @@ export async function PUT(
       );
     }
 
+    // Check if order already exists (excluding current service)
+    const existingOrder = await Service.findOne({
+      order,
+      _id: { $ne: id },
+      isDeleted: false
+    });
+    if (existingOrder) {
+      return NextResponse.json(
+        { success: false, message: `A service with order ${order} already exists` },
+        { status: 400 }
+      );
+    }
+
     // Generate new slug if name changed
     const newSlug = generateSlug(serviceName);
     if (newSlug !== service.slug) {

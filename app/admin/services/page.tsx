@@ -45,6 +45,15 @@ import {
   Calendar,
   Briefcase,
 } from "lucide-react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import RichTextEditor from "@/components/ui/rich-text-editor";
 import axios from "axios";
 
@@ -66,12 +75,30 @@ interface Service {
   seoKeywords?: string;
 }
 
+interface PaginationData {
+  currentPage: number;
+  totalPages: number;
+  totalServices: number;
+  limit: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+}
+
 export default function ServicesPage() {
   const { toast } = useToast();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState<PaginationData>({
+    currentPage: 1,
+    totalPages: 1,
+    totalServices: 0,
+    limit: 6,
+    hasNextPage: false,
+    hasPrevPage: false,
+  });
   const [isSaving, setIsSaving] = useState(false);
   const [deletingServiceId, setDeletingServiceId] = useState<string | null>(
     null
@@ -100,7 +127,7 @@ export default function ServicesPage() {
   });
 
   // Fetch services
-  const fetchServices = async () => {
+  const fetchServices = async (page = 1) => {
     try {
       setLoading(true);
       const token = localStorage.getItem("admin_token");
@@ -113,7 +140,7 @@ export default function ServicesPage() {
         return;
       }
 
-      const response = await axios.get("/api/admin/services?limit=100", {
+      const response = await axios.get(`/api/admin/services?page=${page}&limit=6`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -121,6 +148,10 @@ export default function ServicesPage() {
 
       if (response.data.success) {
         setServices(response.data.data);
+        if (response.data.pagination) {
+          setPagination(response.data.pagination);
+        }
+        setCurrentPage(page);
       }
     } catch (error) {
       toast({
@@ -134,8 +165,8 @@ export default function ServicesPage() {
   };
 
   useEffect(() => {
-    fetchServices();
-  }, []);
+    fetchServices(currentPage);
+  }, [currentPage]);
 
   const handleEdit = (service: Service) => {
     setEditingId(service._id || null);
@@ -248,7 +279,7 @@ export default function ServicesPage() {
             editingId ? "updated" : "added"
           }.`,
         });
-        fetchServices();
+        fetchServices(currentPage);
         handleCancel();
       }
     } catch (error: any) {
@@ -287,7 +318,14 @@ export default function ServicesPage() {
           description: "Service has been successfully deleted.",
         });
         setDeletingServiceId(null);
-        fetchServices();
+        
+        // Check if we need to go back to previous page
+        const remainingServices = Array.isArray(services) ? services.filter((s) => s._id !== id) : [];
+        if (remainingServices.length === 0 && currentPage > 1) {
+          setCurrentPage(currentPage - 1);
+        } else {
+          fetchServices(currentPage);
+        }
       }
     } catch (error) {
       toast({
@@ -386,6 +424,142 @@ export default function ServicesPage() {
     }));
   };
 
+  // Pagination handlers
+  const handlePageChange = (page: number) => {
+    if (pagination && page >= 1 && page <= pagination.totalPages) {
+      setCurrentPage(page);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const renderPaginationItems = () => {
+    if (!pagination) return [];
+    
+    const items = [];
+    const { currentPage, totalPages } = pagination;
+
+    // Previous button
+    items.push(
+      <PaginationItem key="prev">
+        <PaginationPrevious
+          onClick={() => handlePageChange(currentPage - 1)}
+          className={
+            !pagination.hasPrevPage
+              ? "pointer-events-none opacity-50"
+              : "cursor-pointer"
+          }
+        />
+      </PaginationItem>
+    );
+
+    // Page numbers
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) {
+        items.push(
+          <PaginationItem key={i}>
+            <PaginationLink
+              onClick={() => handlePageChange(i)}
+              isActive={currentPage === i}
+              className={`cursor-pointer ${
+                currentPage === i
+                  ? "bg-[#8CC63F] text-white border-0 hover:bg-[#7AB52F]"
+                  : ""
+              }`}
+            >
+              {i}
+            </PaginationLink>
+          </PaginationItem>
+        );
+      }
+    } else {
+      // Show first page
+      items.push(
+        <PaginationItem key={1}>
+          <PaginationLink
+            onClick={() => handlePageChange(1)}
+            isActive={currentPage === 1}
+            className={`cursor-pointer ${
+              currentPage === 1
+                ? "bg-[#8CC63F] text-white border-0 hover:bg-[#7AB52F]"
+                : ""
+            }`}
+          >
+            1
+          </PaginationLink>
+        </PaginationItem>
+      );
+
+      if (currentPage > 3) {
+        items.push(
+          <PaginationItem key="ellipsis1">
+            <PaginationEllipsis />
+          </PaginationItem>
+        );
+      }
+
+      const start = Math.max(2, currentPage - 1);
+      const end = Math.min(totalPages - 1, currentPage + 1);
+
+      for (let i = start; i <= end; i++) {
+        items.push(
+          <PaginationItem key={i}>
+            <PaginationLink
+              onClick={() => handlePageChange(i)}
+              isActive={currentPage === i}
+              className={`cursor-pointer ${
+                currentPage === i
+                  ? "bg-[#8CC63F] text-white border-0 hover:bg-[#7AB52F]"
+                  : ""
+              }`}
+            >
+              {i}
+            </PaginationLink>
+          </PaginationItem>
+        );
+      }
+
+      if (currentPage < totalPages - 2) {
+        items.push(
+          <PaginationItem key="ellipsis2">
+            <PaginationEllipsis />
+          </PaginationItem>
+        );
+      }
+
+      items.push(
+        <PaginationItem key={totalPages}>
+          <PaginationLink
+            onClick={() => handlePageChange(totalPages)}
+            isActive={currentPage === totalPages}
+            className={`cursor-pointer ${
+              currentPage === totalPages
+                ? "bg-[#8CC63F] text-white border-0 hover:bg-[#7AB52F]"
+                : ""
+            }`}
+          >
+            {totalPages}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    // Next button
+    items.push(
+      <PaginationItem key="next">
+        <PaginationNext
+          onClick={() => handlePageChange(currentPage + 1)}
+          className={
+            !pagination.hasNextPage
+              ? "pointer-events-none opacity-50"
+              : "cursor-pointer"
+          }
+        />
+      </PaginationItem>
+    );
+
+    return items;
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -410,7 +584,27 @@ export default function ServicesPage() {
           </p>
         </div>
         <Button
-          onClick={() => setIsAddModalOpen(true)}
+          onClick={() => {
+            setEditingId(null);
+            setFormData({
+              serviceName: "",
+              shortDescription: "",
+              description: "",
+              features: "",
+              image: "",
+              gallery: [],
+              status: "active",
+              order: 0,
+              seoTitle: "",
+              seoDescription: "",
+              seoKeywords: "",
+            });
+            setSelectedFiles({
+              image: null,
+              galleryImages: [],
+            });
+            setIsAddModalOpen(true);
+          }}
           className="bg-[#8CC63F] hover:bg-[#7AB52F] text-white"
         >
           <Plus className="h-4 w-4 mr-2" />
@@ -431,7 +625,27 @@ export default function ServicesPage() {
             Get started by creating your first service.
           </p>
           <Button
-            onClick={() => setIsAddModalOpen(true)}
+            onClick={() => {
+              setEditingId(null);
+              setFormData({
+                serviceName: "",
+                shortDescription: "",
+                description: "",
+                features: "",
+                image: "",
+                gallery: [],
+                status: "active",
+                order: 0,
+                seoTitle: "",
+                seoDescription: "",
+                seoKeywords: "",
+              });
+              setSelectedFiles({
+                image: null,
+                galleryImages: [],
+              });
+              setIsAddModalOpen(true);
+            }}
             className="bg-[#8CC63F] hover:bg-[#7AB52F] text-white"
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -571,8 +785,26 @@ export default function ServicesPage() {
         </div>
       )}
 
+      {/* Pagination */}
+      {pagination && pagination.totalPages > 1 && (
+        <div className="flex justify-center mt-8">
+          <Pagination>
+            <PaginationContent>{renderPaginationItems()}</PaginationContent>
+          </Pagination>
+        </div>
+      )}
+
       {/* Add/Edit Modal */}
-      <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
+      <Dialog 
+        open={isAddModalOpen} 
+        onOpenChange={(open) => {
+          if (!open) {
+            handleCancel();
+          } else {
+            setIsAddModalOpen(open);
+          }
+        }}
+      >
         <DialogContent className="!max-w-6xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl text-[#1E3A5F]">

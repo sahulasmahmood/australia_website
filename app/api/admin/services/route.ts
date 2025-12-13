@@ -141,6 +141,15 @@ export async function POST(request: NextRequest) {
     // Generate slug
     const slug = generateSlug(serviceName);
 
+    // Check if order already exists
+    const existingOrder = await Service.findOne({ order, isDeleted: false });
+    if (existingOrder) {
+      return NextResponse.json(
+        { success: false, message: `A service with order ${order} already exists` },
+        { status: 400 }
+      );
+    }
+
     // Check if slug already exists
     const existingService = await Service.findOne({ slug, isDeleted: false });
     if (existingService) {
