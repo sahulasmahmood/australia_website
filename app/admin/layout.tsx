@@ -53,7 +53,6 @@ export default function AdminLayout({
     return true
   })
   const [pageManagerOpen, setPageManagerOpen] = useState(false)
-  const [servicesOpen, setServicesOpen] = useState(false)
   const [userDropdownOpen, setUserDropdownOpen] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
@@ -151,17 +150,7 @@ export default function AdminLayout({
       subItems: [
         { name: "Banner Manager", href: "/admin/banners", icon: <FileText className="h-4 w-4" /> },
         { name: "Contact Manager", href: "/admin/contact", icon: <Phone className="h-4 w-4" /> },
-      ],
-    },
-    {
-      name: "Services",
-      icon: <Briefcase className="h-5 w-5" />,
-      color: "text-[#1E3A5F]",
-      isCollapsible: true,
-      collapsibleKey: "services",
-      subItems: [
-        { name: "All Services", href: "/admin/services", icon: <Briefcase className="h-4 w-4" /> },
-        { name: "Categories", href: "/admin/services/categories", icon: <FileText className="h-4 w-4" /> },
+        { name: "Services", href: "/admin/services", icon: <Briefcase className="h-4 w-4" /> },
       ],
     },
     {
@@ -244,8 +233,8 @@ export default function AdminLayout({
             <div className="space-y-1">
               {sidebarItems.map((item) => {
                 if (item.isCollapsible) {
-                  const isOpen = item.collapsibleKey === "pageManager" ? pageManagerOpen : servicesOpen
-                  const setIsOpen = item.collapsibleKey === "pageManager" ? setPageManagerOpen : setServicesOpen
+                  const isOpen = pageManagerOpen
+                  const setIsOpen = setPageManagerOpen
                   
                   return (
                     <Collapsible key={item.name} open={isOpen} onOpenChange={setIsOpen}>
