@@ -1,6 +1,6 @@
 import { TopBar } from "@/components/top-bar"
 import { Header } from "@/components/header"
-import { PageBanner } from "@/components/page-banner"
+import { DynamicPageBanner } from "@/components/DynamicPageBanner"
 import { Footer } from "@/components/footer"
 import { CtaBanner } from "@/components/cta-banner"
 import { AboutSeo } from "@/components/About/AboutSeo"
@@ -19,7 +19,8 @@ export default function AboutPage() {
       <AboutSeo />
       <TopBar />
       <Header />
-      <PageBanner
+      <DynamicPageBanner
+        pageKey="about"
         title="ABOUT US"
         breadcrumb={[
           { label: "Home", href: "/" },

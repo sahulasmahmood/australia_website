@@ -1,6 +1,6 @@
 import { TopBar } from "@/components/top-bar"
 import { Header } from "@/components/header"
-import { PageBanner } from "@/components/page-banner"
+import { DynamicPageBanner } from "@/components/DynamicPageBanner"
 import { Footer } from "@/components/footer"
 import { ContactSeo } from "@/components/Contact/ContactSeo"
 import { ContactContent } from "@/components/Contact/ContactContent"
@@ -18,7 +18,8 @@ export default function ContactPage() {
       <ContactSeo />
       <TopBar />
       <Header />
-      <PageBanner
+      <DynamicPageBanner
+        pageKey="contact"
         title="CONTACT US"
         breadcrumb={[
           { label: "Home", href: "/" },

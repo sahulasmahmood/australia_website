@@ -1,6 +1,6 @@
 "use client"
 
-import { HeroSection } from "@/components/hero-section"
+import { DynamicHeroSection } from "@/components/Home/DynamicHeroSection"
 import { ServicesSection } from "@/components/services-section"
 import { AboutSection } from "@/components/about-section"
 import { WhyChooseUsSection } from "@/components/why-choose-us-section"
@@ -11,7 +11,7 @@ import { TeamSection } from "@/components/team-section"
 export function HomeContent() {
   return (
     <>
-      <HeroSection />
+      <DynamicHeroSection />
       <ServicesSection />
       <AboutSection />
       <WhyChooseUsSection />

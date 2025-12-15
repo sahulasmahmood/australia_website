@@ -1,12 +1,21 @@
 interface PageBannerProps {
   title: string
   breadcrumb?: { label: string; href: string }[]
+  backgroundImage?: string
 }
 
-export function PageBanner({ title, breadcrumb }: PageBannerProps) {
+export function PageBanner({ title, breadcrumb, backgroundImage }: PageBannerProps) {
   return (
-    <section className="bg-[#1E3A5F] py-12 sm:py-16 md:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+    <section 
+      className="relative bg-[#1E3A5F] py-12 sm:py-16 md:py-20"
+      style={backgroundImage ? {
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      } : undefined}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center relative z-10">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">{title}</h1>
         {breadcrumb && (
           <nav className="flex justify-center items-center gap-2 text-sm text-white/80">
