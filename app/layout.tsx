@@ -4,6 +4,7 @@ import { Poppins, Open_Sans } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { GoogleAuthProvider } from "@/components/providers/google-auth-provider"
+import { SEOProvider } from "@/components/providers/seo-provider"
 import { Toaster } from "@/components/ui/toaster"
 
 const poppins = Poppins({
@@ -34,7 +35,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable} ${openSans.variable} font-sans antialiased`}>
         <GoogleAuthProvider>
-          {children}
+          <SEOProvider>
+            {children}
+          </SEOProvider>
         </GoogleAuthProvider>
         <Toaster />
         <Analytics />

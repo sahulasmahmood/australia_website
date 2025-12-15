@@ -58,9 +58,19 @@ const services = [
   },
 ]
 
+import { ServicesSeo } from "@/components/services-seo"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: 'Our Services | Elegant Care Service',
+  description: 'Explore our comprehensive range of NDIS services including supported independent living, community participation, and respite care.',
+  keywords: 'NDIS services, supported living, respite care, community participation, disability support'
+}
+
 export default function ServicesPage() {
   return (
     <main className="min-h-screen">
+      <ServicesSeo />
       <TopBar />
       <Header />
       <PageBanner

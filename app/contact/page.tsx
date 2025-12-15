@@ -3,10 +3,19 @@ import { Header } from "@/components/header"
 import { PageBanner } from "@/components/page-banner"
 import { Footer } from "@/components/footer"
 import { Phone, Mail, MapPin, Clock } from "lucide-react"
+import { ContactSeo } from "@/components/contact-seo"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: 'Contact Us | Elegant Care Service',
+  description: 'Get in touch with Elegant Care Service for NDIS support. We are here to answer your questions and help you find the right care.',
+  keywords: 'contact us, NDIS support, disability services inquiry, get in touch'
+}
 
 export default function ContactPage() {
   return (
     <main className="min-h-screen">
+      <ContactSeo />
       <TopBar />
       <Header />
       <PageBanner

@@ -6,6 +6,14 @@ import { CtaBanner } from "@/components/cta-banner"
 import { Logo } from "@/components/logo"
 import { CheckCircle } from "lucide-react"
 import Image from "next/image"
+import { AboutSeo } from "@/components/about-seo"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: 'About Us | Elegant Care Service',
+  description: 'Learn about our mission, values, and dedication to providing exceptional NDIS disability support services in Australia.',
+  keywords: 'about us, NDIS provider, disability support, mission, values'
+}
 
 export default function AboutPage() {
   const values = [
@@ -19,6 +27,7 @@ export default function AboutPage() {
 
   return (
     <main className="min-h-screen">
+      <AboutSeo />
       <TopBar />
       <Header />
       <PageBanner
@@ -35,7 +44,7 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="flex justify-center">
               <div className="w-48 sm:w-64 md:w-80">
-                <Logo size="lg" />
+                <Logo />
               </div>
             </div>
             <div>
