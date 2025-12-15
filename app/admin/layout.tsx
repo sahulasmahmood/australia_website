@@ -151,6 +151,7 @@ export default function AdminLayout({
         { name: "Banner Manager", href: "/admin/banners", icon: <FileText className="h-4 w-4" /> },
         { name: "Contact Manager", href: "/admin/contact", icon: <Phone className="h-4 w-4" /> },
         { name: "Services", href: "/admin/services", icon: <Briefcase className="h-4 w-4" /> },
+        { name: "Support Models", href: "/admin/support-models", icon: <Users className="h-4 w-4" /> },
       ],
     },
     {
