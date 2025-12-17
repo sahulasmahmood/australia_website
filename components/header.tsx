@@ -7,6 +7,7 @@ import { Logo } from "./logo"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useServices } from "@/hooks/use-services"
+import { useSupportModels } from "@/hooks/use-support-models"
 
 const staticNavItems = [
   { label: "HOME", href: "/" },
@@ -19,14 +20,6 @@ const staticNavItems = [
       { label: "Our Team", href: "/about/team" },
     ],
   },
-  {
-    label: "SUPPORT MODEL",
-    href: "/support-model",
-    dropdown: [
-      { label: "How We Work", href: "/support-model" },
-      { label: "Our Approach", href: "/support-model#approach" },
-    ],
-  },
   { label: "NDIS", href: "/ndis" },
   { label: "FEEDBACK", href: "/feedback" },
   { label: "CONTACT", href: "/contact" },
@@ -34,6 +27,7 @@ const staticNavItems = [
 
 export function Header() {
   const { services, isLoading: servicesLoading } = useServices(1, 50)
+  const { supportModels, isLoading: supportModelsLoading } = useSupportModels(1, 50)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedItems, setExpandedItems] = useState<string[]>([])
   
@@ -43,7 +37,13 @@ export function Header() {
     href: `/services/${service.slug}`,
   }))
   
-  // Combine static nav items with dynamic services
+  // Build dynamic support models dropdown
+  const supportModelsDropdown = supportModels.map(model => ({
+    label: model.title,
+    href: `/support-model/${model.slug}`,
+  }))
+  
+  // Combine static nav items with dynamic services and support models
   const navItems = [
     staticNavItems[0], // HOME
     staticNavItems[1], // ABOUT US
@@ -51,6 +51,11 @@ export function Header() {
       label: "SERVICES",
       href: "/services",
       dropdown: servicesDropdown.length > 0 ? servicesDropdown : undefined,
+    },
+    {
+      label: "SUPPORT MODEL",
+      href: "/support-model",
+      dropdown: supportModelsDropdown.length > 0 ? supportModelsDropdown : undefined,
     },
     ...staticNavItems.slice(2), // Rest of the items
   ]
@@ -107,6 +112,14 @@ export function Header() {
                       <div className="px-3 py-2 text-sm text-gray-500 text-center">
                         No services available
                       </div>
+                    ) : item.label === "SUPPORT MODEL" && supportModelsLoading ? (
+                      <div className="px-3 py-2 text-sm text-gray-500 text-center">
+                        Loading support models...
+                      </div>
+                    ) : item.label === "SUPPORT MODEL" && supportModelsDropdown.length === 0 ? (
+                      <div className="px-3 py-2 text-sm text-gray-500 text-center">
+                        No support models available
+                      </div>
                     ) : (
                       <>
                         {item.label === "SERVICES" && (
@@ -119,8 +132,18 @@ export function Header() {
                             </Link>
                           </DropdownMenuItem>
                         )}
+                        {item.label === "SUPPORT MODEL" && (
+                          <DropdownMenuItem asChild>
+                            <Link 
+                              href="/support-model" 
+                              className="cursor-pointer hover:bg-[#8CC63F]/10 hover:text-[#8CC63F] rounded-md px-3 py-1.5 font-semibold text-[#1E3A5F] border-b border-gray-100 mb-0.5 text-sm"
+                            >
+                              View All Support Models
+                            </Link>
+                          </DropdownMenuItem>
+                        )}
                         {item.dropdown.map((subItem) => (
-                          <DropdownMenuItem key={subItem.label} asChild>
+                          <DropdownMenuItem key={`${item.label}-${subItem.href}`} asChild>
                             <Link 
                               href={subItem.href} 
                               className="cursor-pointer hover:bg-[#8CC63F]/10 hover:text-[#8CC63F] rounded-md px-3 py-1.5 text-sm transition-colors"
@@ -194,6 +217,14 @@ export function Header() {
                             <div className="px-10 py-2 text-sm text-gray-500">
                               No services available
                             </div>
+                          ) : item.label === "SUPPORT MODEL" && supportModelsLoading ? (
+                            <div className="px-10 py-2 text-sm text-gray-500">
+                              Loading support models...
+                            </div>
+                          ) : item.label === "SUPPORT MODEL" && supportModelsDropdown.length === 0 ? (
+                            <div className="px-10 py-2 text-sm text-gray-500">
+                              No support models available
+                            </div>
                           ) : (
                             <>
                               {item.label === "SERVICES" && (
@@ -205,9 +236,18 @@ export function Header() {
                                   View All Services
                                 </Link>
                               )}
+                              {item.label === "SUPPORT MODEL" && (
+                                <Link
+                                  href="/support-model"
+                                  className="block px-10 py-2 text-sm font-semibold text-[#1E3A5F] hover:text-[#8CC63F] hover:bg-gray-100 transition-colors border-b border-gray-200 mb-0.5"
+                                  onClick={() => setMobileMenuOpen(false)}
+                                >
+                                  View All Support Models
+                                </Link>
+                              )}
                               {item.dropdown.map((subItem) => (
                                 <Link
-                                  key={subItem.label}
+                                  key={`${item.label}-mobile-${subItem.href}`}
                                   href={subItem.href}
                                   className="block px-10 py-2 text-sm text-gray-600 hover:text-[#8CC63F] hover:bg-gray-100 transition-colors"
                                   onClick={() => setMobileMenuOpen(false)}

@@ -7,9 +7,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
-interface ServiceData {
+interface SupportModelData {
   _id?: string;
-  serviceName: string;
+  title: string;
   shortDescription?: string;
   description: string;
   image: string;
@@ -24,19 +24,19 @@ interface ServiceData {
   seoKeywords?: string;
 }
 
-interface ServiceDetailClientProps {
-  serviceData: ServiceData;
+interface SupportModelDetailClientProps {
+  supportModelData: SupportModelData;
 }
 
-export default function ServiceDetailClient({
-  serviceData,
-}: ServiceDetailClientProps) {
-  const [selectedImage, setSelectedImage] = useState(serviceData.image);
+export default function SupportModelDetailClient({
+  supportModelData,
+}: SupportModelDetailClientProps) {
+  const [selectedImage, setSelectedImage] = useState(supportModelData.image || "/placeholder.svg");
 
   const allImages = [
-    serviceData.image,
-    ...(serviceData.gallery || []),
-  ].filter(Boolean);
+    supportModelData.image,
+    ...(supportModelData.gallery || []),
+  ].filter(img => img && img.trim() !== "");
 
   return (
     <div className="min-h-screen">
@@ -44,69 +44,29 @@ export default function ServiceDetailClient({
       <section className="py-12 sm:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-12">
-            {/* Left - Images */}
+            {/* Left - Content */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="relative h-80 md:h-96 rounded-lg overflow-hidden shadow-lg mb-4">
-                <Image
-                  src={selectedImage}
-                  alt={serviceData.serviceName}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Gallery Thumbnails */}
-              {allImages.length > 1 && (
-                <div className="flex gap-3 overflow-x-auto pb-2">
-                  {allImages.map((image, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedImage(image)}
-                      className={`relative w-20 h-20 rounded-lg overflow-hidden shrink-0 border-2 transition-all ${
-                        selectedImage === image
-                          ? "border-[#8CC63F]"
-                          : "border-transparent hover:border-gray-300"
-                      }`}
-                    >
-                      <Image
-                        src={image}
-                        alt={`Gallery ${index + 1}`}
-                        fill
-                        className="object-cover"
-                      />
-                    </button>
-                  ))}
-                </div>
-              )}
-            </motion.div>
-
-            {/* Right - Content */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
               <h2 className="text-2xl font-bold text-[#1E3A5F] mb-6">
-                About This Service
+                About This Support Model
               </h2>
 
               <div
                 className="prose prose-lg text-gray-600 mb-8 text-justify"
-                dangerouslySetInnerHTML={{ __html: serviceData.description }}
+                dangerouslySetInnerHTML={{ __html: supportModelData.description }}
               />
 
               {/* Features */}
-              {serviceData.features && serviceData.features.length > 0 && (
+              {supportModelData.features && supportModelData.features.length > 0 && (
                 <div className="mb-8">
                   <h3 className="text-xl font-semibold text-[#1E3A5F] mb-4">
                     Key Features
                   </h3>
                   <ul className="space-y-3">
-                    {serviceData.features.map((feature, index) => (
+                    {supportModelData.features.map((feature, index) => (
                       <li key={index} className="flex items-start gap-3">
                         <CheckCircle className="h-5 w-5 text-[#8CC63F] shrink-0 mt-0.5" />
                         <span className="text-gray-600">{feature}</span>
@@ -138,6 +98,46 @@ export default function ServiceDetailClient({
                   </Button>
                 </Link>
               </div>
+            </motion.div>
+
+            {/* Right - Images */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <div className="relative h-80 md:h-96 rounded-lg overflow-hidden shadow-lg mb-4">
+                <Image
+                  src={selectedImage}
+                  alt={supportModelData.title || "Support Model"}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+
+              {/* Gallery Thumbnails */}
+              {allImages.length > 1 && (
+                <div className="flex gap-3 overflow-x-auto pb-2">
+                  {allImages.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImage(image)}
+                      className={`relative w-20 h-20 rounded-lg overflow-hidden shrink-0 border-2 transition-all ${
+                        selectedImage === image
+                          ? "border-[#8CC63F]"
+                          : "border-transparent hover:border-gray-300"
+                      }`}
+                    >
+                      <Image
+                        src={image}
+                        alt={`${supportModelData.title || "Support Model"} - Gallery ${index + 1}`}
+                        fill
+                        className="object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
             </motion.div>
           </div>
         </div>
