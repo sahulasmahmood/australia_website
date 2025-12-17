@@ -6,8 +6,9 @@ import Link from "next/link"
 import { Logo } from "./logo"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useServices } from "@/hooks/use-services"
 
-const navItems = [
+const staticNavItems = [
   { label: "HOME", href: "/" },
   {
     label: "ABOUT US",
@@ -16,18 +17,6 @@ const navItems = [
       { label: "Our Story", href: "/about" },
       { label: "Our Mission", href: "/about#mission" },
       { label: "Our Team", href: "/about/team" },
-    ],
-  },
-  {
-    label: "SERVICES",
-    href: "/services",
-    dropdown: [
-      { label: "Supported Independent Living", href: "/services/supported-living" },
-      { label: "Respite Support", href: "/services/respite-support" },
-      { label: "Community Participation", href: "/services/community-participation" },
-      { label: "Daily Living Assistance", href: "/services/daily-living" },
-      { label: "Transport Support", href: "/services/transport" },
-      { label: "Behaviour Support", href: "/services/behaviour-support" },
     ],
   },
   {
@@ -44,8 +33,27 @@ const navItems = [
 ]
 
 export function Header() {
+  const { services, isLoading: servicesLoading } = useServices(1, 50)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedItems, setExpandedItems] = useState<string[]>([])
+  
+  // Build dynamic services dropdown
+  const servicesDropdown = services.map(service => ({
+    label: service.serviceName,
+    href: `/services/${service.slug}`,
+  }))
+  
+  // Combine static nav items with dynamic services
+  const navItems = [
+    staticNavItems[0], // HOME
+    staticNavItems[1], // ABOUT US
+    {
+      label: "SERVICES",
+      href: "/services",
+      dropdown: servicesDropdown.length > 0 ? servicesDropdown : undefined,
+    },
+    ...staticNavItems.slice(2), // Rest of the items
+  ]
 
   useEffect(() => {
     const handleResize = () => {
@@ -86,18 +94,43 @@ export function Header() {
             {navItems.map((item) =>
               item.dropdown ? (
                 <DropdownMenu key={item.label}>
-                  <DropdownMenuTrigger className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-[#333] hover:text-[#8CC63F] transition-colors">
+                  <DropdownMenuTrigger className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-[#333] hover:text-[#8CC63F] transition-colors group">
                     {item.label}
-                    <ChevronDown className="h-4 w-4" />
+                    <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-white border border-gray-200">
-                    {item.dropdown.map((subItem) => (
-                      <DropdownMenuItem key={subItem.label} asChild>
-                        <Link href={subItem.href} className="cursor-pointer hover:bg-gray-50 hover:text-[#8CC63F]">
-                          {subItem.label}
-                        </Link>
-                      </DropdownMenuItem>
-                    ))}
+                  <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg rounded-lg min-w-[240px] max-w-[280px] p-1">
+                    {item.label === "SERVICES" && servicesLoading ? (
+                      <div className="px-3 py-2 text-sm text-gray-500 text-center">
+                        Loading services...
+                      </div>
+                    ) : item.label === "SERVICES" && servicesDropdown.length === 0 ? (
+                      <div className="px-3 py-2 text-sm text-gray-500 text-center">
+                        No services available
+                      </div>
+                    ) : (
+                      <>
+                        {item.label === "SERVICES" && (
+                          <DropdownMenuItem asChild>
+                            <Link 
+                              href="/services" 
+                              className="cursor-pointer hover:bg-[#8CC63F]/10 hover:text-[#8CC63F] rounded-md px-3 py-1.5 font-semibold text-[#1E3A5F] border-b border-gray-100 mb-0.5 text-sm"
+                            >
+                              View All Services
+                            </Link>
+                          </DropdownMenuItem>
+                        )}
+                        {item.dropdown.map((subItem) => (
+                          <DropdownMenuItem key={subItem.label} asChild>
+                            <Link 
+                              href={subItem.href} 
+                              className="cursor-pointer hover:bg-[#8CC63F]/10 hover:text-[#8CC63F] rounded-md px-3 py-1.5 text-sm transition-colors"
+                            >
+                              {subItem.label}
+                            </Link>
+                          </DropdownMenuItem>
+                        ))}
+                      </>
+                    )}
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
@@ -152,17 +185,38 @@ export function Header() {
                         />
                       </button>
                       {expandedItems.includes(item.label) && (
-                        <div className="bg-gray-50 py-2">
-                          {item.dropdown.map((subItem) => (
-                            <Link
-                              key={subItem.label}
-                              href={subItem.href}
-                              className="block px-10 py-3 text-sm text-gray-600 hover:text-[#8CC63F] hover:bg-gray-100 transition-colors"
-                              onClick={() => setMobileMenuOpen(false)}
-                            >
-                              {subItem.label}
-                            </Link>
-                          ))}
+                        <div className="bg-gray-50 py-1">
+                          {item.label === "SERVICES" && servicesLoading ? (
+                            <div className="px-10 py-2 text-sm text-gray-500">
+                              Loading services...
+                            </div>
+                          ) : item.label === "SERVICES" && servicesDropdown.length === 0 ? (
+                            <div className="px-10 py-2 text-sm text-gray-500">
+                              No services available
+                            </div>
+                          ) : (
+                            <>
+                              {item.label === "SERVICES" && (
+                                <Link
+                                  href="/services"
+                                  className="block px-10 py-2 text-sm font-semibold text-[#1E3A5F] hover:text-[#8CC63F] hover:bg-gray-100 transition-colors border-b border-gray-200 mb-0.5"
+                                  onClick={() => setMobileMenuOpen(false)}
+                                >
+                                  View All Services
+                                </Link>
+                              )}
+                              {item.dropdown.map((subItem) => (
+                                <Link
+                                  key={subItem.label}
+                                  href={subItem.href}
+                                  className="block px-10 py-2 text-sm text-gray-600 hover:text-[#8CC63F] hover:bg-gray-100 transition-colors"
+                                  onClick={() => setMobileMenuOpen(false)}
+                                >
+                                  {subItem.label}
+                                </Link>
+                              ))}
+                            </>
+                          )}
                         </div>
                       )}
                     </div>
