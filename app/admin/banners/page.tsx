@@ -24,8 +24,9 @@ export default function BannersPage() {
     { key: "about", label: "About Us" },
     { key: "services", label: "Services" },
     { key: "support-model", label: "Support Model" },
-    { key: "contact", label: "Contact" },
     { key: "ndis", label: "NDIS Information" },
+    { key: "feedback", label: "Feedback" },
+    { key: "contact", label: "Contact" },
   ];
 
   const [pageKey, setPageKey] = useState<string>("home");

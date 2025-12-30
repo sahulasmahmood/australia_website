@@ -61,6 +61,9 @@ export default function ContactPage() {
     pageDescription: "",
     officeTitle: "",
     officeDescription: "",
+    
+    // Service Areas
+    serviceAreas: "",
   });
 
   // Fetch contact information from API
@@ -71,7 +74,13 @@ export default function ContactPage() {
         const result = await response.json();
 
         if (result.success && result.data) {
-          setContactInfo(result.data);
+          setContactInfo({
+            ...contactInfo,
+            ...result.data,
+            whatsapp: result.data.whatsapp || "",
+            telegram: result.data.telegram || "",
+            serviceAreas: result.data.serviceAreas || "",
+          });
         }
       } catch (error) {
         console.error("Error fetching contact info:", error);
@@ -144,7 +153,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 max-w-full overflow-x-hidden">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -532,7 +541,8 @@ export default function ContactPage() {
                 }
                 placeholder="<iframe src='https://www.google.com/maps/embed?pb=...' width='100%' height='450' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
                 rows={4}
-                className="mt-2"
+                className="mt-2 w-full break-words"
+                style={{ wordBreak: 'break-all', overflowWrap: 'break-word' }}
               />
               <p className="text-sm text-gray-500 mt-1">
                 Embed code from Google Maps for displaying interactive map on
@@ -579,7 +589,7 @@ export default function ContactPage() {
                 }
                 placeholder="Ready to start your journey with us? Contact our support team today and let us help you achieve your goals with quality NDIS support services."
                 rows={3}
-                className="mt-2"
+                className="mt-2 w-full"
               />
             </div>
             <div>
@@ -611,8 +621,29 @@ export default function ContactPage() {
                 }
                 placeholder="Conveniently located in Melbourne, our office is your gateway to quality NDIS support services tailored to your needs."
                 rows={3}
-                className="mt-2"
+                className="mt-2 w-full"
               />
+            </div>
+            <div>
+              <Label
+                htmlFor="serviceAreas"
+                className="text-base font-semibold"
+              >
+                Service Areas (comma-separated)
+              </Label>
+              <Textarea
+                id="serviceAreas"
+                value={contactInfo.serviceAreas}
+                onChange={(e) =>
+                  handleInputChange("serviceAreas", e.target.value)
+                }
+                placeholder="Adelaide, Adelaide Hills, Mount Barker, Riverland, Renmark, Mildura, Murray Region, Surrounding Areas"
+                rows={3}
+                className="mt-2 w-full"
+              />
+              <p className="text-sm text-gray-500 mt-1">
+                Enter service areas separated by commas. These will be displayed on the contact page.
+              </p>
             </div>
           </CardContent>
         </Card>

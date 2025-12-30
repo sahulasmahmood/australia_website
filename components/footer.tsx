@@ -1,15 +1,35 @@
-import { Facebook, Instagram, Twitter, Linkedin, Phone, Mail, MapPin } from "lucide-react"
+"use client"
+
+import { Facebook, Instagram, Twitter, Linkedin, Youtube, Phone, Mail, MapPin, Send, Sparkles } from "lucide-react"
+import { WhatsAppIcon } from "@/components/ui/whatsapp-icon"
+import { Logo } from "@/components/logo"
+import { useContact } from "@/hooks/use-contact"
+import Link from "next/link"
 
 const quickLinks = [
-  { label: "Home", href: "#" },
-  { label: "About Us", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "NDIS", href: "#" },
-  { label: "Contact", href: "#contact" },
-  { label: "Feedback", href: "#" },
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "NDIS", href: "/ndis" },
+  { label: "Contact", href: "/contact" },
+  { label: "Feedback", href: "/feedback" },
 ]
 
 export function Footer() {
+  const { contactInfo } = useContact()
+
+  // Format full address
+  const getFullAddress = () => {
+    if (!contactInfo) return ""
+    const parts = [
+      contactInfo.address,
+      contactInfo.city,
+      contactInfo.state,
+      contactInfo.postcode,
+    ].filter(Boolean)
+    return parts.join(", ")
+  }
+
   return (
     <footer id="contact" className="bg-[#1E3A5F] text-white">
       {/* Main Footer */}
@@ -18,57 +38,91 @@ export function Footer() {
           {/* Column 1 - About */}
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="mb-4 sm:mb-6">
-              <div className="flex items-center gap-3">
-                <svg viewBox="0 0 60 60" className="h-10 w-10 sm:h-12 sm:w-12" aria-hidden="true">
-                  <rect x="27" y="35" width="6" height="20" fill="#8B7355" rx="1" />
-                  <circle cx="30" cy="20" r="12" fill="#8CC63F" />
-                  <circle cx="20" cy="28" r="8" fill="#7AB82F" />
-                  <circle cx="40" cy="28" r="8" fill="#9DD64F" />
-                  <circle cx="25" cy="15" r="6" fill="#A8D86F" />
-                  <circle cx="35" cy="15" r="6" fill="#7AB82F" />
-                  <circle cx="30" cy="22" r="4" fill="#1E3A5F" />
-                  <path d="M26 28 L30 38 L34 28 Z" fill="#1E3A5F" />
-                </svg>
-                <div className="flex flex-col">
-                  <span className="text-white font-bold text-base sm:text-lg leading-tight">Elegant</span>
-                  <span className="text-[#8CC63F] font-bold text-base sm:text-lg leading-tight">Care Service</span>
-                </div>
-              </div>
+              <Logo className="[&_span]:text-white [&_span:last-child]:text-[#8CC63F]" />
             </div>
-            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6">
+            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6 text-justify">
               Elegant Care Service is a registered NDIS provider committed to delivering high-quality disability support
               services. We believe in empowering individuals to live life on their own terms with dignity and
               independence.
             </p>
             <div className="flex gap-3 sm:gap-4">
-              <a
-                href="#"
-                className="p-2.5 sm:p-2 bg-white/10 rounded-full hover:bg-[#8CC63F] transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook className="h-4 w-4 sm:h-5 sm:w-5" />
-              </a>
-              <a
-                href="#"
-                className="p-2.5 sm:p-2 bg-white/10 rounded-full hover:bg-[#8CC63F] transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-4 w-4 sm:h-5 sm:w-5" />
-              </a>
-              <a
-                href="#"
-                className="p-2.5 sm:p-2 bg-white/10 rounded-full hover:bg-[#8CC63F] transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter className="h-4 w-4 sm:h-5 sm:w-5" />
-              </a>
-              <a
-                href="#"
-                className="p-2.5 sm:p-2 bg-white/10 rounded-full hover:bg-[#8CC63F] transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-4 w-4 sm:h-5 sm:w-5" />
-              </a>
+              {contactInfo?.facebook && (
+                <a
+                  href={contactInfo.facebook}
+                  className="p-2.5 sm:p-2 bg-white/10 rounded-full hover:bg-[#8CC63F] transition-colors"
+                  aria-label="Facebook"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Facebook className="h-4 w-4 sm:h-5 sm:w-5" />
+                </a>
+              )}
+              {contactInfo?.instagram && (
+                <a
+                  href={contactInfo.instagram}
+                  className="p-2.5 sm:p-2 bg-white/10 rounded-full hover:bg-[#8CC63F] transition-colors"
+                  aria-label="Instagram"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Instagram className="h-4 w-4 sm:h-5 sm:w-5" />
+                </a>
+              )}
+              {contactInfo?.twitter && (
+                <a
+                  href={contactInfo.twitter}
+                  className="p-2.5 sm:p-2 bg-white/10 rounded-full hover:bg-[#8CC63F] transition-colors"
+                  aria-label="Twitter"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Twitter className="h-4 w-4 sm:h-5 sm:w-5" />
+                </a>
+              )}
+              {contactInfo?.linkedin && (
+                <a
+                  href={contactInfo.linkedin}
+                  className="p-2.5 sm:p-2 bg-white/10 rounded-full hover:bg-[#8CC63F] transition-colors"
+                  aria-label="LinkedIn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Linkedin className="h-4 w-4 sm:h-5 sm:w-5" />
+                </a>
+              )}
+              {contactInfo?.youtube && (
+                <a
+                  href={contactInfo.youtube}
+                  className="p-2.5 sm:p-2 bg-white/10 rounded-full hover:bg-[#8CC63F] transition-colors"
+                  aria-label="YouTube"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Youtube className="h-4 w-4 sm:h-5 sm:w-5" />
+                </a>
+              )}
+              {contactInfo?.whatsapp && (
+                <a
+                  href={contactInfo.whatsapp}
+                  className="p-2.5 sm:p-2 bg-white/10 rounded-full hover:bg-[#8CC63F] transition-colors"
+                  aria-label="WhatsApp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <WhatsAppIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                </a>
+              )}
+              {contactInfo?.telegram && (
+                <a
+                  href={contactInfo.telegram}
+                  className="p-2.5 sm:p-2 bg-white/10 rounded-full hover:bg-[#8CC63F] transition-colors"
+                  aria-label="Telegram"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Send className="h-4 w-4 sm:h-5 sm:w-5" />
+                </a>
+              )}
             </div>
           </div>
 
@@ -78,13 +132,13 @@ export function Footer() {
             <ul className="grid grid-cols-2 sm:grid-cols-1 gap-2 sm:gap-3">
               {quickLinks.map((link, index) => (
                 <li key={index}>
-                  <a
+                  <Link
                     href={link.href}
                     className="text-gray-300 hover:text-[#8CC63F] transition-colors text-xs sm:text-sm flex items-center gap-2"
                   >
                     <span className="w-1.5 h-1.5 bg-[#8CC63F] rounded-full flex-shrink-0" />
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -94,30 +148,41 @@ export function Footer() {
           <div>
             <h3 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-white">Contact Us</h3>
             <div className="space-y-3 sm:space-y-4">
-              <a href="tel:1300000000" className="flex items-start gap-3 text-gray-300 hover:text-[#8CC63F] group">
-                <Phone className="h-4 w-4 sm:h-5 sm:w-5 mt-0.5 flex-shrink-0 text-[#8CC63F]" />
-                <div>
-                  <p className="text-xs sm:text-sm font-medium text-white">Phone</p>
-                  <p className="text-xs sm:text-sm">1300 000 000</p>
+              {contactInfo?.primaryPhone && (
+                <a 
+                  href={`tel:${contactInfo.primaryPhone}`} 
+                  className="flex items-start gap-3 text-gray-300 hover:text-[#8CC63F] group"
+                >
+                  <Phone className="h-4 w-4 sm:h-5 sm:w-5 mt-0.5 flex-shrink-0 text-[#8CC63F]" />
+                  <div>
+                    <p className="text-xs sm:text-sm font-medium text-white">Phone</p>
+                    <p className="text-xs sm:text-sm">{contactInfo.primaryPhone}</p>
+                  </div>
+                </a>
+              )}
+              {contactInfo?.email && (
+                <a
+                  href={`mailto:${contactInfo.email}`}
+                  className="flex items-start gap-3 text-gray-300 hover:text-[#8CC63F] group"
+                >
+                  <Mail className="h-4 w-4 sm:h-5 sm:w-5 mt-0.5 flex-shrink-0 text-[#8CC63F]" />
+                  <div>
+                    <p className="text-xs sm:text-sm font-medium text-white">Email</p>
+                    <p className="text-xs sm:text-sm break-all sm:break-normal">
+                      {contactInfo.email}
+                    </p>
+                  </div>
+                </a>
+              )}
+              {getFullAddress() && (
+                <div className="flex items-start gap-3 text-gray-300">
+                  <MapPin className="h-4 w-4 sm:h-5 sm:w-5 mt-0.5 flex-shrink-0 text-[#8CC63F]" />
+                  <div>
+                    <p className="text-xs sm:text-sm font-medium text-white">Address</p>
+                    <p className="text-xs sm:text-sm">{getFullAddress()}</p>
+                  </div>
                 </div>
-              </a>
-              <a
-                href="mailto:info@mysupportmyway.com.au"
-                className="flex items-start gap-3 text-gray-300 hover:text-[#8CC63F] group"
-              >
-                <Mail className="h-4 w-4 sm:h-5 sm:w-5 mt-0.5 flex-shrink-0 text-[#8CC63F]" />
-                <div>
-                  <p className="text-xs sm:text-sm font-medium text-white">Email</p>
-                  <p className="text-xs sm:text-sm break-all sm:break-normal">info@mysupportmyway.com.au</p>
-                </div>
-              </a>
-              <div className="flex items-start gap-3 text-gray-300">
-                <MapPin className="h-4 w-4 sm:h-5 sm:w-5 mt-0.5 flex-shrink-0 text-[#8CC63F]" />
-                <div>
-                  <p className="text-xs sm:text-sm font-medium text-white">Address</p>
-                  <p className="text-xs sm:text-sm">123 Support Street, Sydney NSW 2000</p>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
@@ -137,20 +202,15 @@ export function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-white/10 bg-[#152D4A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-xs sm:text-sm text-gray-400">
-            <p className="text-center sm:text-left">
-              &copy; {new Date().getFullYear()} Elegant Care Service. All rights reserved.
-            </p>
-            <div className="flex items-center gap-3 sm:gap-4">
-              <a href="#" className="hover:text-[#8CC63F] transition-colors">
-                Privacy Policy
+          <p className="text-center text-xs sm:text-sm text-gray-400 flex items-center justify-center gap-2 flex-wrap">
+            <span>&copy; {new Date().getFullYear()} Elegant Care Service. All rights reserved.</span>
+            <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-[#8CC63F] inline-block" />
+            <span className="hover:text-[#8CC63F] transition-colors">
+              <a href="https://mntfuture.com/" target="_blank" rel="noopener noreferrer">
+                Developed by MnT
               </a>
-              <span>|</span>
-              <a href="#" className="hover:text-[#8CC63F] transition-colors">
-                Terms of Service
-              </a>
-            </div>
-          </div>
+            </span>
+          </p>
         </div>
       </div>
     </footer>
