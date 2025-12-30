@@ -1,6 +1,6 @@
 import { TopBar } from "@/components/top-bar"
 import { Header } from "@/components/header"
-import { PageBanner } from "@/components/page-banner"
+import { DynamicPageBanner } from "@/components/DynamicPageBanner"
 import { Footer } from "@/components/footer"
 import { CtaBanner } from "@/components/cta-banner"
 import { CheckCircle, HelpCircle, FileText, Users } from "lucide-react"
@@ -34,7 +34,8 @@ export default function NdisPage() {
     <main className="min-h-screen">
       <TopBar />
       <Header />
-      <PageBanner
+      <DynamicPageBanner
+        pageKey="ndis"
         title="NDIS INFORMATION"
         breadcrumb={[
           { label: "Home", href: "/" },
