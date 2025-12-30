@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react"
 import { useState, useEffect } from "react"
 import { TopBar } from "@/components/top-bar"
 import { Header } from "@/components/header"
@@ -11,7 +12,7 @@ import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import axios from "axios"
 
-export default function ResetPassword() {
+function ResetPasswordForm() {
   const { toast } = useToast()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -148,116 +149,126 @@ export default function ResetPassword() {
   )
 
   return (
+    <section className="flex-1 flex items-center justify-center py-12 sm:py-16 bg-[#F5F5F5]">
+      <div className="w-full max-w-md mx-auto px-4 sm:px-6">
+        <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
+          <div className="flex justify-center mb-6">
+            <Logo />
+          </div>
+
+          <h1 className="text-2xl font-bold text-center text-[#1E3A5F] mb-2">Reset Password</h1>
+          <p className="text-gray-600 text-center text-sm mb-8">
+            Enter your new password below
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label htmlFor="newPassword" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                New Password
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="newPassword"
+                  name="newPassword"
+                  required
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  disabled={isLoading}
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50"
+                  placeholder="Enter new password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                Confirm Password
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  disabled={isLoading}
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50"
+                  placeholder="Confirm new password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-2">
+              <p className="text-sm font-medium text-[#1E3A5F] mb-2">Password Requirements:</p>
+              <PasswordRequirement met={passwordStrength.length} text="At least 8 characters" />
+              <PasswordRequirement met={passwordStrength.uppercase} text="One uppercase letter" />
+              <PasswordRequirement met={passwordStrength.lowercase} text="One lowercase letter" />
+              <PasswordRequirement met={passwordStrength.number} text="One number" />
+              <PasswordRequirement met={passwordStrength.special} text="One special character" />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading || !token}
+              className="w-full bg-[#8CC63F] text-white font-medium py-3 rounded hover:bg-[#7AB82F] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                  Resetting Password...
+                </>
+              ) : (
+                "Reset Password"
+              )}
+            </button>
+
+            <div className="text-center">
+              <Link
+                href="/login"
+                className="text-sm text-[#8CC63F] hover:underline"
+              >
+                Back to Login
+              </Link>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default function ResetPassword() {
+  return (
     <main className="min-h-screen flex flex-col">
       <TopBar />
       <Header />
-
-      <section className="flex-1 flex items-center justify-center py-12 sm:py-16 bg-[#F5F5F5]">
-        <div className="w-full max-w-md mx-auto px-4 sm:px-6">
-          <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
-            <div className="flex justify-center mb-6">
-              <Logo />
-            </div>
-
-            <h1 className="text-2xl font-bold text-center text-[#1E3A5F] mb-2">Reset Password</h1>
-            <p className="text-gray-600 text-center text-sm mb-8">
-              Enter your new password below
-            </p>
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label htmlFor="newPassword" className="block text-sm font-medium text-[#1E3A5F] mb-2">
-                  New Password
-                </label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    id="newPassword"
-                    name="newPassword"
-                    required
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    disabled={isLoading}
-                    className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50"
-                    placeholder="Enter new password"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                    tabIndex={-1}
-                  >
-                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-[#1E3A5F] mb-2">
-                  Confirm Password
-                </label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    required
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    disabled={isLoading}
-                    className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50"
-                    placeholder="Confirm new password"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                    tabIndex={-1}
-                  >
-                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-2">
-                <p className="text-sm font-medium text-[#1E3A5F] mb-2">Password Requirements:</p>
-                <PasswordRequirement met={passwordStrength.length} text="At least 8 characters" />
-                <PasswordRequirement met={passwordStrength.uppercase} text="One uppercase letter" />
-                <PasswordRequirement met={passwordStrength.lowercase} text="One lowercase letter" />
-                <PasswordRequirement met={passwordStrength.number} text="One number" />
-                <PasswordRequirement met={passwordStrength.special} text="One special character" />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isLoading || !token}
-                className="w-full bg-[#8CC63F] text-white font-medium py-3 rounded hover:bg-[#7AB82F] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    Resetting Password...
-                  </>
-                ) : (
-                  "Reset Password"
-                )}
-              </button>
-
-              <div className="text-center">
-                <Link
-                  href="/login"
-                  className="text-sm text-[#8CC63F] hover:underline"
-                >
-                  Back to Login
-                </Link>
-              </div>
-            </form>
-          </div>
-        </div>
-      </section>
-
+      <Suspense fallback={
+        <section className="flex-1 flex items-center justify-center py-12 sm:py-16 bg-[#F5F5F5]">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8CC63F]"></div>
+        </section>
+      }>
+        <ResetPasswordForm />
+      </Suspense>
       <Footer />
     </main>
   )
