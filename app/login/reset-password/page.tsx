@@ -12,6 +12,8 @@ import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import axios from "axios"
 
+export const dynamic = 'force-dynamic'
+
 function ResetPasswordForm() {
   const { toast } = useToast()
   const router = useRouter()
