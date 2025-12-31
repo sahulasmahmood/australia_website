@@ -88,7 +88,7 @@ export default function AdminDashboard() {
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Recent Activities */}
         <Card>
-          <CardHeader className="bg-[#F0F9E8]">
+          <CardHeader className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#8CC63F]/10 p-4 border-b">
             <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
               <TrendingUp className="h-5 w-5 text-[#8CC63F]" />
               Recent Activities
@@ -128,7 +128,7 @@ export default function AdminDashboard() {
 
         {/* Quick Stats */}
         <Card>
-          <CardHeader className="bg-[#F0F9E8]">
+          <CardHeader className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#8CC63F]/10 p-4 border-b">
             <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
               <Briefcase className="h-5 w-5 text-[#8CC63F]" />
               Quick Overview

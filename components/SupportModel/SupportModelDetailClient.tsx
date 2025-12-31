@@ -2,10 +2,11 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Phone, Mail } from "lucide-react";
-import Link from "next/link";
+import { CheckCircle, Phone } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/whatsapp-icon";
 import Image from "next/image";
 import { useState } from "react";
+import { useContact } from "@/hooks/use-contact";
 
 interface SupportModelData {
   _id?: string;
@@ -31,6 +32,7 @@ interface SupportModelDetailClientProps {
 export default function SupportModelDetailClient({
   supportModelData,
 }: SupportModelDetailClientProps) {
+  const { contactInfo } = useContact();
   const [selectedImage, setSelectedImage] = useState(supportModelData.image || "/placeholder.svg");
 
   const allImages = [
@@ -78,25 +80,33 @@ export default function SupportModelDetailClient({
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/contact">
+                <a 
+                  href={`tel:${contactInfo?.primaryPhone || ""}`}
+                  className="w-full sm:w-auto"
+                >
                   <Button
                     size="lg"
-                    className="bg-[#8CC63F] hover:bg-[#7AB52F] text-white w-full sm:w-auto"
+                    className="bg-[#8CC63F] hover:bg-[#7AB52F] text-white w-full"
                   >
                     <Phone className="h-4 w-4 mr-2" />
                     Contact Us
                   </Button>
-                </Link>
-                <Link href="/contact">
+                </a>
+                <a 
+                  href={`https://wa.me/${contactInfo?.whatsappNumber?.replace(/\s+/g, '') || ""}?text=I'm interested in ${supportModelData.title}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto"
+                >
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-[#1E3A5F] text-[#1E3A5F] hover:bg-[#1E3A5F] hover:text-white w-full sm:w-auto"
+                    className="border-[#1E3A5F] text-[#1E3A5F] hover:bg-[#1E3A5F] hover:text-white w-full"
                   >
-                    <Mail className="h-4 w-4 mr-2" />
+                    <WhatsAppIcon className="h-4 w-4 mr-2" />
                     Get a Quote
                   </Button>
-                </Link>
+                </a>
               </div>
             </motion.div>
 

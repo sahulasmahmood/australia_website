@@ -1,12 +1,19 @@
+"use client"
+
 import { Phone, Mail } from "lucide-react"
+import { useContact } from "@/hooks/use-contact"
 
 export function CtaBanner() {
+  const { contactInfo, isLoading } = useContact()
+
+  if (isLoading) return null
+
   return (
     <section className="bg-[#8CC63F] py-8 sm:py-10 md:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col items-center gap-6 sm:gap-8 md:flex-row md:justify-center md:gap-12 lg:gap-16 text-white">
           <a
-            href="tel:1300000000"
+            href={`tel:${contactInfo?.primaryPhone || ""}`}
             className="flex items-center gap-3 sm:gap-4 hover:opacity-90 transition-opacity group text-center md:text-left"
           >
             <div className="p-2.5 sm:p-3 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors">
@@ -14,7 +21,7 @@ export function CtaBanner() {
             </div>
             <div>
               <p className="text-xs sm:text-sm font-medium uppercase tracking-wider opacity-90">Call Us Now</p>
-              <p className="text-xl sm:text-2xl md:text-3xl font-bold">1300 000 000</p>
+              <p className="text-xl sm:text-2xl md:text-3xl font-bold">{contactInfo?.primaryPhone || "Contact Us"}</p>
             </div>
           </a>
 
@@ -22,7 +29,7 @@ export function CtaBanner() {
           <div className="md:hidden w-32 h-px bg-white/30" />
 
           <a
-            href="mailto:info@mysupportmyway.com.au"
+            href={`mailto:${contactInfo?.email || ""}`}
             className="flex items-center gap-3 sm:gap-4 hover:opacity-90 transition-opacity group text-center md:text-left"
           >
             <div className="p-2.5 sm:p-3 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors">
@@ -31,7 +38,7 @@ export function CtaBanner() {
             <div>
               <p className="text-xs sm:text-sm font-medium uppercase tracking-wider opacity-90">Email Us</p>
               <p className="text-base sm:text-xl md:text-2xl font-bold break-all sm:break-normal">
-                info@mysupportmyway.com.au
+                {contactInfo?.email || "Email Us"}
               </p>
             </div>
           </a>

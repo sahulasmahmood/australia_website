@@ -23,24 +23,37 @@ export function ContactContent() {
     setFormLoading(true)
 
     try {
-      // You can add form submission logic here
-      toast({
-        title: "Message Sent!",
-        description: "Thank you for contacting us. We'll get back to you soon.",
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       })
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        subject: "",
-        message: "",
-      })
-    } catch (error) {
+
+      const data = await response.json()
+
+      if (data.success) {
+        toast({
+          title: "Message Sent!",
+          description: data.message || "Thank you for contacting us. We'll get back to you soon.",
+        })
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        })
+      } else {
+        throw new Error(data.error || "Failed to send message")
+      }
+    } catch (error: any) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Failed to send message. Please try again.",
+        description: error.message || "Failed to send message. Please try again.",
       })
     } finally {
       setFormLoading(false)

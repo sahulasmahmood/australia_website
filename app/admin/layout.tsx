@@ -160,18 +160,18 @@ export default function AdminLayout({
       icon: <Users className="h-5 w-5" />,
       color: "text-[#8CC63F]",
     }, */
-/*     {
+    {
+      name: "Lead Manager",
+      href: "/admin/leads",
+      icon: <MessageSquare className="h-5 w-5" />,
+      color: "text-[#8CC63F]",
+    },
+    {
       name: "Testimonials",
       href: "/admin/testimonials",
       icon: <Heart className="h-5 w-5" />,
       color: "text-[#1E3A5F]",
-    }, */
-/*     {
-      name: "Inquiries",
-      href: "/admin/inquiries",
-      icon: <MessageSquare className="h-5 w-5" />,
-      color: "text-[#8CC63F]",
-    }, */
+    },
     {
       name: "Settings",
       href: "/admin/settings",

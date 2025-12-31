@@ -7,6 +7,7 @@ import { GoogleAuthProvider } from "@/components/providers/google-auth-provider"
 import { SEOProvider } from "@/components/providers/seo-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { DynamicMetadata } from "@/components/DynamicMetadata"
+import FloatingContactButtons from "@/components/FloatingContactButtons"
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -60,6 +61,7 @@ export default function RootLayout({
             {children}
           </SEOProvider>
         </GoogleAuthProvider>
+        <FloatingContactButtons />
         <Toaster />
         <Analytics />
       </body>
