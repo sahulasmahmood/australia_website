@@ -4,6 +4,7 @@ import { Facebook, Instagram, Twitter, Linkedin, Youtube, Phone, Mail, MapPin, S
 import { WhatsAppIcon } from "@/components/ui/whatsapp-icon"
 import { Logo } from "@/components/logo"
 import { useContact } from "@/hooks/use-contact"
+import { FooterSkeleton } from "@/components/ui/skeletons"
 import Link from "next/link"
 
 const quickLinks = [
@@ -16,7 +17,7 @@ const quickLinks = [
 ]
 
 export function Footer() {
-  const { contactInfo } = useContact()
+  const { contactInfo, isLoading } = useContact()
 
   // Format full address
   const getFullAddress = () => {
@@ -28,6 +29,10 @@ export function Footer() {
       contactInfo.postcode,
     ].filter(Boolean)
     return parts.join(", ")
+  }
+
+  if (isLoading) {
+    return <FooterSkeleton />
   }
 
   return (
@@ -191,7 +196,7 @@ export function Footer() {
       {/* Indigenous Acknowledgment */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
-          <p className="text-gray-400 text-[10px] sm:text-xs leading-relaxed text-center">
+          <p className="text-gray-400 text-[10px] sm:text-xs leading-relaxed text-center text-justify">
             Elegant Care Service acknowledges the Traditional Custodians of Country throughout Australia and recognizes
             their continuing connection to land, waters, and community. We pay our respects to Aboriginal and Torres
             Strait Islander cultures and to Elders past, present, and emerging.

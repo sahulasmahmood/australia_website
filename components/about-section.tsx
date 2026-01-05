@@ -41,7 +41,7 @@ export function AboutSection() {
               <span className="text-[#8CC63F]">PERSONAL COMFORT...</span>
             </h2>
 
-            <div className="space-y-3 sm:space-y-4 text-gray-700 leading-relaxed text-sm sm:text-base">
+            <div className="space-y-3 sm:space-y-4 text-gray-700 leading-relaxed text-sm sm:text-base text-justify">
               <p>
                 At <strong className="text-[#1E3A5F]">Elegant Care Service</strong>, we believe that everyone deserves to
                 live a life filled with dignity, independence, and joy. Our dedicated team of experienced professionals
@@ -61,8 +61,8 @@ export function AboutSection() {
               </p>
             </div>
 
-            <Button className="mt-6 sm:mt-8 w-full sm:w-auto bg-transparent border-2 border-[#8CC63F] text-[#8CC63F] hover:bg-[#8CC63F] hover:text-white font-semibold px-6 sm:px-8">
-              READ MORE
+            <Button className="mt-6 sm:mt-8 w-full sm:w-auto bg-transparent border-2 border-[#8CC63F] text-[#8CC63F] hover:bg-[#8CC63F] hover:text-white font-semibold px-6 sm:px-8" asChild>
+              <a href="/about">READ MORE</a>
             </Button>
           </div>
         </div>

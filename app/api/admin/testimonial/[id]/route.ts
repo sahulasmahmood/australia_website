@@ -6,12 +6,12 @@ import { uploadToCloudinary } from "@/config/utils/cloudinary";
 // PUT - Update testimonial by ID
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
 
-    const { id } = params;
+    const { id } = await params;
     if (!id) {
       return NextResponse.json(
         { success: false, message: "Testimonial ID is required" },
@@ -123,12 +123,12 @@ export async function PUT(
 // DELETE - Delete testimonial by ID
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
 
-    const { id } = params;
+    const { id } = await params;
     if (!id) {
       return NextResponse.json(
         { success: false, message: "Testimonial ID is required" },

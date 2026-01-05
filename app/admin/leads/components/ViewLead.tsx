@@ -2,7 +2,6 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -15,18 +14,18 @@ import {
   MessageSquare,
   CheckCircle,
   AlertCircle,
-  MapPin,
   Globe,
   TrendingUp,
   Activity,
   Copy,
-  ExternalLink,
   X,
   Star,
-  Target
+  DollarSign,
+  Briefcase
 } from "lucide-react"
 import { WhatsAppIcon } from "@/components/ui/whatsapp-icon"
 import { Lead } from "@/hooks/use-leads"
+import { useToast } from "@/hooks/use-toast"
 
 interface ViewLeadProps {
   lead: Lead | null
@@ -35,24 +34,50 @@ interface ViewLeadProps {
 }
 
 export default function ViewLead({ lead, isOpen, onClose }: ViewLeadProps) {
+  const { toast } = useToast()
+  
   if (!lead) return null
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "new":
-        return <AlertCircle className="h-4 w-4" />
-      case "contacted":
-        return <Clock className="h-4 w-4" />
-      case "consulting":
-        return <Activity className="h-4 w-4" />
-      case "confirmed":
-        return <CheckCircle className="h-4 w-4" />
-      case "completed":
-        return <CheckCircle className="h-4 w-4 text-green-500" />
-      case "cancelled":
-        return <X className="h-4 w-4" />
-      default:
-        return <AlertCircle className="h-4 w-4" />
+      case "new": return <AlertCircle className="h-3.5 w-3.5" />
+      case "contacted": return <Clock className="h-3.5 w-3.5" />
+      case "consulting": return <Activity className="h-3.5 w-3.5" />
+      case "confirmed": return <CheckCircle className="h-3.5 w-3.5" />
+      case "completed": return <CheckCircle className="h-3.5 w-3.5" />
+      case "cancelled": return <X className="h-3.5 w-3.5" />
+      default: return <AlertCircle className="h-3.5 w-3.5" />
+    }
+  }
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "new": return "bg-blue-100 text-blue-700"
+      case "contacted": return "bg-yellow-100 text-yellow-700"
+      case "consulting": return "bg-purple-100 text-purple-700"
+      case "confirmed": return "bg-green-100 text-green-700"
+      case "completed": return "bg-emerald-100 text-emerald-700"
+      case "cancelled": return "bg-red-100 text-red-700"
+      default: return "bg-gray-100 text-gray-700"
+    }
+  }
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case "high": return "bg-red-100 text-red-700"
+      case "medium": return "bg-orange-100 text-orange-700"
+      case "low": return "bg-green-100 text-green-700"
+      default: return "bg-gray-100 text-gray-700"
+    }
+  }
+
+  const getSourceColor = (source: string) => {
+    switch (source) {
+      case "website": return "bg-blue-100 text-blue-700"
+      case "whatsapp": return "bg-green-100 text-green-700"
+      case "phone": return "bg-purple-100 text-purple-700"
+      case "referral": return "bg-orange-100 text-orange-700"
+      default: return "bg-gray-100 text-gray-700"
     }
   }
 
@@ -68,178 +93,240 @@ export default function ViewLead({ lead, isOpen, onClose }: ViewLeadProps) {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
-  }
-
-  const getStatusGradient = (status: string) => {
-    switch (status) {
-      case "new":
-        return "from-blue-500 to-cyan-500"
-      case "contacted":
-        return "from-yellow-500 to-orange-500"
-      case "consulting":
-        return "from-purple-500 to-indigo-500"
-      case "confirmed":
-        return "from-green-500 to-emerald-500"
-      case "completed":
-        return "from-green-600 to-green-800 shadow-green-200"
-      case "cancelled":
-        return "from-gray-500 to-slate-500"
-      default:
-        return "from-gray-500 to-slate-500"
-    }
-  }
-
-  const getPriorityGradient = (priority: string) => {
-    switch (priority) {
-      case "high":
-        return "from-red-500 to-rose-500"
-      case "medium":
-        return "from-orange-500 to-amber-500"
-      case "low":
-        return "from-green-500 to-teal-500"
-      default:
-        return "from-gray-500 to-slate-500"
-    }
+    toast({ title: "Copied!", description: "Copied to clipboard" })
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl w-[95vw] max-h-[90vh] overflow-hidden p-0 bg-white shadow-2xl rounded-2xl border-0">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-0">
         <DialogHeader className="sr-only">
           <DialogTitle>Lead Details for {lead.firstName} {lead.lastName}</DialogTitle>
         </DialogHeader>
         
-        {/* Header Section */}
-        <div className="relative bg-[#1E3A5F] p-8 text-white">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Header */}
+        <div className="bg-[#1E3A5F] p-6 text-white">
+          <div className="flex items-start justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-md border border-white/20">
-                <User className="h-8 w-8 text-white" />
+              <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center">
+                <User className="h-7 w-7 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold">{lead.firstName} {lead.lastName}</h1>
-                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-white/70 text-sm">
-                  <div className="flex items-center gap-1.5">
+                <h2 className="text-2xl font-bold">{lead.firstName} {lead.lastName}</h2>
+                <div className="flex flex-wrap items-center gap-3 mt-1 text-white/80 text-sm">
+                  <span className="flex items-center gap-1.5">
                     <Mail className="h-4 w-4" />
-                    <span>{lead.email}</span>
-                  </div>
+                    {lead.email}
+                  </span>
                   {lead.phone && (
-                    <div className="flex items-center gap-1.5">
+                    <span className="flex items-center gap-1.5">
                       <Phone className="h-4 w-4" />
-                      <span>{lead.phone}</span>
-                    </div>
+                      {lead.phone}
+                    </span>
                   )}
                 </div>
               </div>
             </div>
-            
-            <div className="flex flex-wrap gap-2">
-              <div className={`px-3 py-1.5 rounded-full bg-gradient-to-r ${getStatusGradient(lead.status)} text-white text-xs font-semibold flex items-center gap-2 shadow-lg`}>
-                {getStatusIcon(lead.status)}
-                {lead.status.toUpperCase()}
-              </div>
-              <div className={`px-3 py-1.5 rounded-full bg-gradient-to-r ${getPriorityGradient(lead.priority)} text-white text-xs font-semibold flex items-center gap-2 shadow-lg`}>
-                <TrendingUp className="h-4 w-4" />
-                {lead.priority.toUpperCase()}
-              </div>
-            </div>
+          </div>
+          
+          {/* Status Badges */}
+          <div className="flex flex-wrap gap-2 mt-4">
+            <Badge className={`${getStatusColor(lead.status)} border-0 flex items-center gap-1.5`}>
+              {getStatusIcon(lead.status)}
+              {lead.status.toUpperCase()}
+            </Badge>
+            <Badge className={`${getPriorityColor(lead.priority)} border-0 flex items-center gap-1.5`}>
+              <TrendingUp className="h-3.5 w-3.5" />
+              {lead.priority.toUpperCase()} PRIORITY
+            </Badge>
+            <Badge className={`${getSourceColor(lead.source)} border-0 flex items-center gap-1.5`}>
+              {lead.source === 'whatsapp' ? <WhatsAppIcon className="h-3.5 w-3.5" /> : <Globe className="h-3.5 w-3.5" />}
+              {lead.source.toUpperCase()}
+            </Badge>
           </div>
         </div>
 
-        {/* Content Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 overflow-y-auto max-h-[calc(90vh-140px)]">
-          {/* Main Info */}
-          <div className="lg:col-span-2 p-8 space-y-8">
-            <section>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4 flex items-center gap-2">
-                <MessageSquare className="h-4 w-4 text-[#8CC63F]" />
-                Enquiry Details
+        {/* Content */}
+        <div className="p-6 space-y-6">
+          {/* Contact & Service Info Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Contact Details */}
+            <div className="space-y-4">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+                <User className="h-4 w-4 text-[#8CC63F]" />
+                Contact Information
               </h3>
-              <div className="space-y-6">
-                <div>
-                  <label className="text-sm font-medium text-gray-500">Subject</label>
-                  <p className="text-lg font-semibold text-[#1E3A5F]">{lead.subject}</p>
+              <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-gray-500">Full Name</p>
+                    <p className="font-semibold text-[#1E3A5F]">{lead.firstName} {lead.lastName}</p>
+                  </div>
+                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => copyToClipboard(`${lead.firstName} ${lead.lastName}`)}>
+                    <Copy className="h-4 w-4 text-gray-400" />
+                  </Button>
                 </div>
-                <div className="p-6 bg-gray-50 rounded-2xl border border-gray-100">
-                  <label className="text-sm font-medium text-gray-400 block mb-2">Message</label>
-                  <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{lead.message}</p>
+                <Separator />
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-gray-500">Email Address</p>
+                    <p className="font-medium text-[#1E3A5F]">{lead.email}</p>
+                  </div>
+                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => copyToClipboard(lead.email)}>
+                    <Copy className="h-4 w-4 text-gray-400" />
+                  </Button>
+                </div>
+                {lead.phone && (
+                  <>
+                    <Separator />
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-xs text-gray-500">Phone Number</p>
+                        <p className="font-medium text-[#1E3A5F]">{lead.phone}</p>
+                      </div>
+                      <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => copyToClipboard(lead.phone)}>
+                        <Copy className="h-4 w-4 text-gray-400" />
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Service & Pricing */}
+            <div className="space-y-4">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+                <Briefcase className="h-4 w-4 text-[#8CC63F]" />
+                Service Details
+              </h3>
+              <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+                <div>
+                  <p className="text-xs text-gray-500">Service Requested</p>
+                  <p className="font-semibold text-[#1E3A5F]">{lead.subject}</p>
+                </div>
+                <Separator />
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-gray-500 flex items-center gap-1">
+                      <DollarSign className="h-3 w-3" />
+                      Estimated Cost
+                    </p>
+                    <p className="font-bold text-lg text-[#8CC63F]">
+                      {lead.estimatedCost || "To be determined"}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </section>
-
-            {lead.notes && (
-              <section>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4 flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-[#8CC63F]" />
-                  Internal Notes
-                </h3>
-                <div className="p-6 bg-amber-50 rounded-2xl border border-amber-100 italic text-amber-900 leading-relaxed">
-                  {lead.notes}
-                </div>
-              </section>
-            )}
+            </div>
           </div>
 
-          {/* Sidebar Info */}
-          <div className="bg-gray-50/50 p-8 border-l border-gray-100 space-y-8">
-            <section>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4">Meta Information</h3>
-              <div className="space-y-4 text-sm">
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-gray-500">Source</span>
-                  <Badge variant="outline" className="bg-white">{lead.source}</Badge>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-gray-500">Submitted</span>
-                  <span className="font-medium text-gray-700">{new Date(lead.submittedAt).toLocaleDateString()}</span>
-                </div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-gray-500">Last Active</span>
-                  <span className="font-medium text-gray-700">{new Date(lead.lastUpdated).toLocaleDateString()}</span>
-                </div>
-              </div>
-            </section>
+          {/* Customer Message */}
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+              <MessageSquare className="h-4 w-4 text-[#8CC63F]" />
+              Customer Message
+            </h3>
+            <div className="bg-gray-50 rounded-lg p-4">
+              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                {lead.message || "No message provided."}
+              </p>
+            </div>
+          </div>
 
-            <section className="space-y-3 pt-4">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Quick Actions</h3>
-              <Button 
+          {/* Internal Notes */}
+          {lead.notes && (
+            <div className="space-y-4">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+                <FileText className="h-4 w-4 text-[#8CC63F]" />
+                Internal Notes
+              </h3>
+              <div className="bg-amber-50 border border-amber-100 rounded-lg p-4">
+                <p className="text-amber-900 leading-relaxed whitespace-pre-wrap">
+                  {lead.notes}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Review Link (for completed leads) */}
+          {lead.status === "completed" && lead.reviewLink && (
+            <div className="space-y-4">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+                <Star className="h-4 w-4 text-[#8CC63F]" />
+                Review Link
+              </h3>
+              <div className="bg-green-50 border border-green-100 rounded-lg p-4 flex items-center justify-between">
+                <p className="text-sm text-green-800 font-mono break-all pr-4">{lead.reviewLink}</p>
+                <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={() => copyToClipboard(lead.reviewLink!)}>
+                  <Copy className="h-4 w-4 text-green-600" />
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* Timeline */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-gray-50 rounded-lg p-4">
+              <div className="flex items-center gap-2 text-gray-500 text-xs mb-1">
+                <Calendar className="h-3.5 w-3.5" />
+                Submitted On
+              </div>
+              <p className="font-medium text-[#1E3A5F]">{formatDate(lead.submittedAt)}</p>
+            </div>
+            <div className="bg-gray-50 rounded-lg p-4">
+              <div className="flex items-center gap-2 text-gray-500 text-xs mb-1">
+                <Clock className="h-3.5 w-3.5" />
+                Last Updated
+              </div>
+              <p className="font-medium text-[#1E3A5F]">{formatDate(lead.lastUpdated)}</p>
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+              <Activity className="h-4 w-4 text-[#8CC63F]" />
+              Quick Actions
+            </h3>
+            <div className="flex flex-wrap gap-3">
+              <Button
                 onClick={() => window.open(`mailto:${lead.email}`)}
-                className="w-full bg-white text-[#1E3A5F] border border-gray-200 hover:bg-gray-100 justify-start h-12 rounded-xl transition-all"
+                className="bg-[#1E3A5F] hover:bg-[#2c5282] text-white"
               >
-                <Mail className="h-4 w-4 mr-3 text-[#1E3A5F]" />
+                <Mail className="h-4 w-4 mr-2" />
                 Send Email
               </Button>
               {lead.phone && (
                 <>
-                  <Button 
+                  <Button
                     onClick={() => window.open(`tel:${lead.phone}`)}
-                    className="w-full bg-white text-[#1E3A5F] border border-gray-200 hover:bg-gray-100 justify-start h-12 rounded-xl transition-all"
+                    variant="outline"
+                    className="border-[#1E3A5F] text-[#1E3A5F] hover:bg-[#1E3A5F] hover:text-white"
                   >
-                    <Phone className="h-4 w-4 mr-3 text-[#1E3A5F]" />
-                    Call Customer
+                    <Phone className="h-4 w-4 mr-2" />
+                    Call
                   </Button>
-                  <Button 
+                  <Button
                     onClick={() => window.open(`https://wa.me/${lead.phone.replace(/[^0-9]/g, '')}`)}
-                    className="w-full bg-[#25D366] text-white hover:bg-[#128C7E] justify-start h-12 rounded-xl transition-all shadow-md shadow-green-100"
+                    className="bg-[#25D366] hover:bg-[#128C7E] text-white"
                   >
-                    <WhatsAppIcon className="h-4 w-4 mr-3" />
+                    <WhatsAppIcon className="h-4 w-4 mr-2" />
                     WhatsApp
                   </Button>
-                  {lead.status === "completed" && lead.reviewLink && (
-                    <Button 
-                      onClick={() => {
-                        const message = `Hi ${lead.firstName}, thank you for choosing Elegant Care. Please leave us a review: ${lead.reviewLink}`;
-                        window.open(`https://wa.me/${lead.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`);
-                      }}
-                      className="w-full bg-amber-500 text-white hover:bg-amber-600 justify-start h-12 rounded-xl transition-all shadow-md shadow-amber-100"
-                    >
-                      <Star className="h-4 w-4 mr-3" />
-                      Share Review Link
-                    </Button>
-                  )}
                 </>
               )}
-            </section>
+              {lead.status === "completed" && lead.reviewLink && lead.phone && (
+                <Button
+                  onClick={() => {
+                    const reviewMessage = `Hi ${lead.firstName}, thank you for choosing Elegant Care Service! We hope you had a great experience with our ${lead.subject} service.\n\nPlease take a moment to share your feedback: ${lead.reviewLink}\n\nYour feedback helps us serve you better! 🙏`;
+                    window.open(`https://wa.me/${lead.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(reviewMessage)}`);
+                  }}
+                  className="bg-[#8CC63F] hover:bg-[#7AB82F] text-white"
+                >
+                  <Star className="h-4 w-4 mr-2" />
+                  Share Review Link
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </DialogContent>

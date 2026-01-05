@@ -54,8 +54,9 @@ import {
   Download,
   Activity,
   UserPlus,
-  ChevronLeft,
-  ChevronRight
+  User,
+  Settings,
+  DollarSign,
 } from "lucide-react"
 import {
   Pagination,
@@ -102,6 +103,7 @@ export default function LeadManager() {
     status: "new",
     priority: "medium",
     source: "website",
+    estimatedCost: "",
     notes: "",
   })
 
@@ -138,7 +140,6 @@ export default function LeadManager() {
     const items = []
     const { totalPages } = pagination
 
-    // Previous
     items.push(
       <PaginationItem key="prev">
         <PaginationPrevious 
@@ -148,7 +149,6 @@ export default function LeadManager() {
       </PaginationItem>
     )
 
-    // Page Numbers
     for (let i = 1; i <= totalPages; i++) {
       if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
         items.push(
@@ -171,7 +171,6 @@ export default function LeadManager() {
       }
     }
 
-    // Next
     items.push(
       <PaginationItem key="next">
         <PaginationNext 
@@ -185,7 +184,7 @@ export default function LeadManager() {
   }
 
   const handleEditLead = (lead: Lead) => {
-    setFormData(lead)
+    setSelectedLead(lead)
     setIsEditModalOpen(true)
   }
 
@@ -218,7 +217,8 @@ export default function LeadManager() {
     }
   }
 
-  const handleSaveLead = async () => {
+  // Handle Add Lead
+  const handleAddLead = async () => {
     setIsFormSubmitted(true)
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.subject || !formData.message) {
       toast({ title: "Validation Error", description: "Please fill in all required fields.", variant: "destructive" })
@@ -226,9 +226,8 @@ export default function LeadManager() {
     }
     setIsSaving(true)
     try {
-      const method = formData._id ? 'PUT' : 'POST'
       const response = await fetch('/api/admin/leads', {
-        method,
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
@@ -236,25 +235,76 @@ export default function LeadManager() {
       if (result.success) {
         mutate()
         setIsAddModalOpen(false)
-        setIsEditModalOpen(false)
-        setFormData({ firstName: "", lastName: "", email: "", phone: "", subject: "", message: "", status: "new", priority: "medium", source: "website", notes: "" })
+        setFormData({ firstName: "", lastName: "", email: "", phone: "", subject: "", message: "", status: "new", priority: "medium", source: "website", estimatedCost: "", notes: "" })
         setIsFormSubmitted(false)
-        toast({ title: formData._id ? "Lead Updated" : "Lead Added", description: `Enquiry has been successfully ${formData._id ? 'updated' : 'added'}.` })
+        toast({ title: "Lead Added", description: "Enquiry has been successfully added." })
       } else {
-        toast({ title: "Error", description: result.error || "Failed to save lead", variant: "destructive" })
+        toast({ title: "Error", description: result.error || "Failed to add lead", variant: "destructive" })
       }
     } catch (error) {
-      toast({ title: "Error", description: "Failed to save lead. Please try again.", variant: "destructive" })
+      toast({ title: "Error", description: "Failed to add lead. Please try again.", variant: "destructive" })
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  // Handle Update Lead (only admin fields)
+  const handleUpdateLead = async () => {
+    if (!selectedLead) return
+    setIsSaving(true)
+    try {
+      const response = await fetch('/api/admin/leads', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          _id: selectedLead._id,
+          phone: selectedLead.phone,
+          status: selectedLead.status,
+          priority: selectedLead.priority,
+          source: selectedLead.source,
+          estimatedCost: selectedLead.estimatedCost,
+          notes: selectedLead.notes,
+        }),
+      })
+      const result = await response.json()
+      if (result.success) {
+        mutate()
+        setIsEditModalOpen(false)
+        
+        if (result.data?.reviewLink && selectedLead.status === "completed") {
+          toast({ 
+            title: "Lead Updated & Review Link Generated", 
+            description: "Status updated to completed. Review link is ready to share." 
+          })
+        } else {
+          toast({ title: "Lead Updated", description: "Lead information has been updated successfully." })
+        }
+      } else {
+        toast({ title: "Error", description: result.error || "Failed to update lead", variant: "destructive" })
+      }
+    } catch (error) {
+      toast({ title: "Error", description: "Failed to update lead. Please try again.", variant: "destructive" })
     } finally {
       setIsSaving(false)
     }
   }
 
   const handleExportCSV = () => {
-    const headers = ["First Name", "Last Name", "Email", "Phone", "Subject", "Status", "Priority", "Source", "Date"]
+    const headers = ["First Name", "Last Name", "Email", "Phone", "Subject", "Status", "Priority", "Source", "Estimated Cost", "Date"]
     const csvContent = [
       headers.join(","),
-      ...leads.map(lead => [lead.firstName, lead.lastName, lead.email, lead.phone, lead.subject, lead.status, lead.priority, lead.source, new Date(lead.submittedAt).toLocaleDateString()].join(","))
+      ...leads.map(lead => [
+        lead.firstName, 
+        lead.lastName, 
+        lead.email, 
+        lead.phone, 
+        lead.subject, 
+        lead.status, 
+        lead.priority, 
+        lead.source, 
+        lead.estimatedCost || "",
+        new Date(lead.submittedAt).toLocaleDateString()
+      ].join(","))
     ].join("\n")
     const blob = new Blob([csvContent], { type: "text/csv" })
     const url = window.URL.createObjectURL(blob)
@@ -274,6 +324,7 @@ export default function LeadManager() {
     { title: "High Priority", value: statsData?.highPriority || 0, icon: Star, color: "text-[#1E3A5F]" },
   ]
 
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -289,7 +340,7 @@ export default function LeadManager() {
           </Button>
           <Button
             onClick={() => {
-              setFormData({ firstName: "", lastName: "", email: "", phone: "", subject: "", message: "", status: "new", priority: "medium", source: "website", notes: "" })
+              setFormData({ firstName: "", lastName: "", email: "", phone: "", subject: "", message: "", status: "new", priority: "medium", source: "website", estimatedCost: "", notes: "" })
               setIsAddModalOpen(true)
             }}
             className="bg-[#8CC63F] hover:bg-[#7AB82F] text-white"
@@ -334,7 +385,7 @@ export default function LeadManager() {
             </div>
             <div className="flex gap-4">
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[160px]">
+                <SelectTrigger className="w-[180px]">
                   <Filter className="h-4 w-4 mr-2 text-gray-400" />
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
@@ -349,7 +400,7 @@ export default function LeadManager() {
                 </SelectContent>
               </Select>
               <Select value={priorityFilter} onValueChange={setPriorityFilter}>
-                <SelectTrigger className="w-[160px]">
+                <SelectTrigger className="w-[180px]">
                   <Star className="h-4 w-4 mr-2 text-gray-400" />
                   <SelectValue placeholder="Priority" />
                 </SelectTrigger>
@@ -367,7 +418,7 @@ export default function LeadManager() {
 
       {/* Table */}
       <Card className="border-0 shadow-lg">
-        <CardHeader className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#8CC63F]/10 p-4 border-b">
+        <CardHeader className="bg-linear-to-r from-[#1E3A5F]/10 to-[#8CC63F]/10 p-4 border-b">
           <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
             <Users className="h-5 w-5 text-[#8CC63F]" />
             Enquiries List
@@ -382,6 +433,7 @@ export default function LeadManager() {
                   <TableHead className="font-semibold text-[#1E3A5F]">Subject</TableHead>
                   <TableHead className="font-semibold text-[#1E3A5F]">Status</TableHead>
                   <TableHead className="font-semibold text-[#1E3A5F]">Priority</TableHead>
+                  <TableHead className="font-semibold text-[#1E3A5F]">Est. Cost</TableHead>
                   <TableHead className="font-semibold text-[#1E3A5F]">Date</TableHead>
                   <TableHead className="text-right font-semibold text-[#1E3A5F]">Actions</TableHead>
                 </TableRow>
@@ -389,14 +441,14 @@ export default function LeadManager() {
               <TableBody>
                 {isLoading ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="h-48 text-center">
+                    <TableCell colSpan={7} className="h-48 text-center">
                       <Loader2 className="h-8 w-8 animate-spin text-[#8CC63F] mx-auto mb-2" />
                       <p className="text-gray-500">Loading enquiries...</p>
                     </TableCell>
                   </TableRow>
                 ) : leads.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="h-48 text-center text-gray-500">
+                    <TableCell colSpan={7} className="h-48 text-center text-gray-500">
                       No enquiries found.
                     </TableCell>
                   </TableRow>
@@ -420,6 +472,11 @@ export default function LeadManager() {
                         <Badge className={`${getPriorityColor(lead.priority)} border-0`}>
                           {lead.priority.toUpperCase()}
                         </Badge>
+                      </TableCell>
+                      <TableCell className="py-4">
+                        <span className="font-semibold text-green-600">
+                          {lead.estimatedCost || "TBD"}
+                        </span>
                       </TableCell>
                       <TableCell className="py-4">
                         <div className="flex flex-col">
@@ -465,36 +522,63 @@ export default function LeadManager() {
       {/* View Lead Modal */}
       <ViewLead lead={selectedLead} isOpen={isViewModalOpen} onClose={() => setIsViewModalOpen(false)} />
 
-      {/* Add/Edit Modal */}
-      <Dialog open={isAddModalOpen || isEditModalOpen} onOpenChange={(open) => { if (!open) { setIsAddModalOpen(false); setIsEditModalOpen(false); setIsFormSubmitted(false) } }}>
+
+      {/* Add New Lead Modal */}
+      <Dialog open={isAddModalOpen} onOpenChange={(open) => { if (!open) { setIsAddModalOpen(false); setIsFormSubmitted(false) } }}>
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-[#1E3A5F]">
-              {formData._id ? "Edit Lead Information" : "Add Manual Lead"}
+            <DialogTitle className="text-2xl font-bold text-[#1E3A5F] flex items-center gap-2">
+              <UserPlus className="h-6 w-6 text-[#8CC63F]" />
+              Add Manual Lead
             </DialogTitle>
           </DialogHeader>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
             <div className="space-y-2">
               <Label>First Name *</Label>
-              <Input value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} className={isFormSubmitted && !formData.firstName ? "border-red-500" : ""} />
+              <Input 
+                placeholder="Enter first name"
+                value={formData.firstName} 
+                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} 
+                className={isFormSubmitted && !formData.firstName ? "border-red-500" : ""} 
+              />
             </div>
             <div className="space-y-2">
               <Label>Last Name *</Label>
-              <Input value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} className={isFormSubmitted && !formData.lastName ? "border-red-500" : ""} />
+              <Input 
+                placeholder="Enter last name"
+                value={formData.lastName} 
+                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} 
+                className={isFormSubmitted && !formData.lastName ? "border-red-500" : ""} 
+              />
             </div>
             <div className="space-y-2">
               <Label>Email Address *</Label>
-              <Input type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className={isFormSubmitted && !formData.email ? "border-red-500" : ""} />
+              <Input 
+                type="email" 
+                placeholder="Enter email address"
+                value={formData.email} 
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })} 
+                className={isFormSubmitted && !formData.email ? "border-red-500" : ""} 
+              />
             </div>
             <div className="space-y-2">
               <Label>Phone Number</Label>
-              <Input value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
+              <Input 
+                placeholder="Enter phone number"
+                value={formData.phone} 
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })} 
+              />
             </div>
             <div className="space-y-2 md:col-span-2">
               <Label>Subject / Service Needed *</Label>
-              <Select value={formData.subject} onValueChange={(val) => setFormData({ ...formData, subject: val })}>
+              <Select 
+                value={formData.subject || ""} 
+                onValueChange={(val) => setFormData({ ...formData, subject: val })}
+              >
                 <SelectTrigger className={isFormSubmitted && !formData.subject ? "border-red-500" : ""}>
-                  <SelectValue placeholder="Select a service" />
+                  <SelectValue placeholder="Select a service">
+                    {formData.subject || "Select a service"}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {services.map((service) => (
@@ -507,12 +591,20 @@ export default function LeadManager() {
             </div>
             <div className="space-y-2 md:col-span-2">
               <Label>Message / Enquiry Details *</Label>
-              <Textarea rows={4} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className={isFormSubmitted && !formData.message ? "border-red-500" : ""} />
+              <Textarea 
+                rows={4} 
+                placeholder="Enter enquiry details or message"
+                value={formData.message} 
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })} 
+                className={isFormSubmitted && !formData.message ? "border-red-500" : ""} 
+              />
             </div>
             <div className="space-y-2">
               <Label>Status</Label>
-              <Select value={formData.status} onValueChange={(val: any) => setFormData({ ...formData, status: val })}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+              <Select value={formData.status || "new"} onValueChange={(val: any) => setFormData({ ...formData, status: val })}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="new">New</SelectItem>
                   <SelectItem value="contacted">Contacted</SelectItem>
@@ -525,8 +617,10 @@ export default function LeadManager() {
             </div>
             <div className="space-y-2">
               <Label>Priority</Label>
-              <Select value={formData.priority} onValueChange={(val: any) => setFormData({ ...formData, priority: val })}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+              <Select value={formData.priority || "medium"} onValueChange={(val: any) => setFormData({ ...formData, priority: val })}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select priority" />
+                </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="high">High</SelectItem>
                   <SelectItem value="medium">Medium</SelectItem>
@@ -534,15 +628,207 @@ export default function LeadManager() {
                 </SelectContent>
               </Select>
             </div>
+            <div className="space-y-2">
+              <Label>Source</Label>
+              <Select value={formData.source || "website"} onValueChange={(val: any) => setFormData({ ...formData, source: val })}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select source" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="website">Website</SelectItem>
+                  <SelectItem value="whatsapp">WhatsApp</SelectItem>
+                  <SelectItem value="phone">Phone</SelectItem>
+                  <SelectItem value="referral">Referral</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>Estimated Cost</Label>
+              <Input 
+                placeholder="$500 or To be determined"
+                value={formData.estimatedCost} 
+                onChange={(e) => setFormData({ ...formData, estimatedCost: e.target.value })} 
+              />
+            </div>
             <div className="space-y-2 md:col-span-2">
               <Label>Internal Notes</Label>
-              <Textarea rows={3} value={formData.notes} onChange={(e) => setFormData({ ...formData, notes: e.target.value })} />
+              <Textarea 
+                rows={3} 
+                placeholder="Add any internal notes about this lead"
+                value={formData.notes} 
+                onChange={(e) => setFormData({ ...formData, notes: e.target.value })} 
+              />
             </div>
           </div>
           <div className="flex gap-3 justify-end pt-4 border-t">
-            <Button variant="outline" onClick={() => { setIsAddModalOpen(false); setIsEditModalOpen(false) }}>Cancel</Button>
-            <Button onClick={handleSaveLead} disabled={isSaving} className="bg-[#8CC63F] hover:bg-[#7AB82F] text-white min-w-[120px]">
-              {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : "Save Changes"}
+            <Button variant="outline" onClick={() => { setIsAddModalOpen(false); setIsFormSubmitted(false) }}>Cancel</Button>
+            <Button onClick={handleAddLead} disabled={isSaving} className="bg-[#8CC63F] hover:bg-[#7AB82F] text-white min-w-[120px]">
+              {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : "Add Lead"}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+
+      {/* Edit Lead Modal - Update Status & Details */}
+      <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-[#1E3A5F] flex items-center gap-2">
+              <Edit className="h-6 w-6 text-[#8CC63F]" />
+              Update Lead Status & Details
+            </DialogTitle>
+            <p className="text-gray-600 text-sm mt-2">
+              Customer information is read-only. You can only update administrative fields.
+            </p>
+          </DialogHeader>
+          {selectedLead && (
+            <div className="space-y-6 py-4">
+              {/* Read-only Customer Information */}
+              <div className="bg-gray-50 p-6 rounded-lg border">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                  <User className="h-5 w-5 text-[#1E3A5F]" />
+                  Customer Information (Read-only)
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div>
+                    <Label className="text-sm font-medium text-gray-600">Customer Name</Label>
+                    <p className="text-lg font-semibold text-gray-900">{selectedLead.firstName} {selectedLead.lastName}</p>
+                  </div>
+                  <div>
+                    <Label className="text-sm font-medium text-gray-600">Email</Label>
+                    <p className="text-gray-900">{selectedLead.email}</p>
+                  </div>
+                  {selectedLead.phone && (
+                    <div>
+                      <Label className="text-sm font-medium text-gray-600">Phone</Label>
+                      <p className="text-gray-900">{selectedLead.phone}</p>
+                    </div>
+                  )}
+                  <div>
+                    <Label className="text-sm font-medium text-gray-600">Service Requested</Label>
+                    <p className="text-gray-900">{selectedLead.subject}</p>
+                  </div>
+                  <div>
+                    <Label className="text-sm font-medium text-gray-600">Submitted On</Label>
+                    <p className="text-gray-900">{new Date(selectedLead.submittedAt).toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <Label className="text-sm font-medium text-gray-600">Customer Message</Label>
+                  <p className="mt-1 p-3 bg-white rounded border text-gray-900">{selectedLead.message}</p>
+                </div>
+              </div>
+
+              {/* Editable Administrative Fields */}
+              <div className="bg-[#8CC63F]/10 p-6 rounded-lg border border-[#8CC63F]/30">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                  <Settings className="h-5 w-5 text-[#8CC63F]" />
+                  Administrative Details (Editable)
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Phone Number</Label>
+                    <Input
+                      value={selectedLead.phone || ""}
+                      onChange={(e) => setSelectedLead({ ...selectedLead, phone: e.target.value })}
+                      placeholder="Add or update phone number"
+                    />
+                    <p className="text-xs text-gray-500">Optional - can be added if customer didn't provide</p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Lead Status</Label>
+                    <Select
+                      value={selectedLead.status}
+                      onValueChange={(value: any) => setSelectedLead({ ...selectedLead, status: value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="new">New</SelectItem>
+                        <SelectItem value="contacted">Contacted</SelectItem>
+                        <SelectItem value="consulting">Consulting</SelectItem>
+                        <SelectItem value="confirmed">Confirmed</SelectItem>
+                        <SelectItem value="completed">Completed</SelectItem>
+                        <SelectItem value="cancelled">Cancelled</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Priority Level</Label>
+                    <Select
+                      value={selectedLead.priority}
+                      onValueChange={(value: any) => setSelectedLead({ ...selectedLead, priority: value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="low">Low Priority</SelectItem>
+                        <SelectItem value="medium">Medium Priority</SelectItem>
+                        <SelectItem value="high">High Priority</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium flex items-center gap-2">
+                      <DollarSign className="h-4 w-4 text-green-600" />
+                      Estimated Cost
+                    </Label>
+                    <Input
+                      value={selectedLead.estimatedCost || ""}
+                      onChange={(e) => setSelectedLead({ ...selectedLead, estimatedCost: e.target.value })}
+                      placeholder="$500 or To be determined"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Lead Source</Label>
+                    <Select
+                      value={selectedLead.source}
+                      onValueChange={(value: any) => setSelectedLead({ ...selectedLead, source: value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="website">Website</SelectItem>
+                        <SelectItem value="whatsapp">WhatsApp</SelectItem>
+                        <SelectItem value="phone">Phone Call</SelectItem>
+                        <SelectItem value="referral">Referral</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="mt-6 space-y-2">
+                  <Label className="text-sm font-medium">Internal Notes & Follow-up Details</Label>
+                  <Textarea
+                    value={selectedLead.notes || ""}
+                    onChange={(e) => setSelectedLead({ ...selectedLead, notes: e.target.value })}
+                    placeholder="Add internal notes, follow-up details, pricing discussions, etc."
+                    rows={4}
+                    className="resize-none"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+          <div className="flex gap-3 justify-end pt-4 border-t">
+            <Button variant="outline" onClick={() => setIsEditModalOpen(false)} disabled={isSaving}>
+              Cancel
+            </Button>
+            <Button onClick={handleUpdateLead} disabled={isSaving} className="bg-[#8CC63F] hover:bg-[#7AB82F] text-white min-w-[140px]">
+              {isSaving ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Updating...
+                </>
+              ) : (
+                <>
+                  <Edit className="h-4 w-4 mr-2" />
+                  Update Lead
+                </>
+              )}
             </Button>
           </div>
         </DialogContent>

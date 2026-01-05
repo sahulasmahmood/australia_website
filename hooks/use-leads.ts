@@ -13,6 +13,7 @@ export interface Lead {
   status: "new" | "contacted" | "consulting" | "confirmed" | "completed" | "cancelled";
   priority: "low" | "medium" | "high";
   source: "website" | "whatsapp" | "phone" | "referral";
+  estimatedCost?: string;
   notes: string;
   reviewLink?: string;
   reviewToken?: string;

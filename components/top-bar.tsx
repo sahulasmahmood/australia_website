@@ -4,9 +4,14 @@ import { Phone, Mail, Send } from "lucide-react"
 import { Facebook, Instagram, Twitter, Linkedin, Youtube } from "lucide-react"
 import { WhatsAppIcon } from "@/components/ui/whatsapp-icon"
 import { useContact } from "@/hooks/use-contact"
+import { TopBarSkeleton } from "@/components/ui/skeletons"
 
 export function TopBar() {
-  const { contactInfo } = useContact()
+  const { contactInfo, isLoading } = useContact()
+
+  if (isLoading) {
+    return <TopBarSkeleton />
+  }
 
   return (
     <div className="hidden sm:block bg-[#1E3A5F] text-white py-2.5 px-4">

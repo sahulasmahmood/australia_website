@@ -1,6 +1,7 @@
 import { TopBar } from "@/components/top-bar"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { CtaBanner } from "@/components/cta-banner"
 import { HomeSeo } from "@/components/Home/HomeSeo"
 import { HomeContent } from "@/components/Home/HomeContent"
 import { Metadata } from "next"
@@ -18,6 +19,7 @@ export default function Home() {
       <TopBar />
       <Header />
       <HomeContent />
+      <CtaBanner />
       <Footer />
     </main>
   )

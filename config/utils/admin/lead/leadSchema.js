@@ -58,6 +58,11 @@ const leadSchema = new mongoose.Schema(
     },
 
     // Additional Fields
+    estimatedCost: {
+      type: String,
+      trim: true,
+      default: "",
+    },
     notes: {
       type: String,
       trim: true,

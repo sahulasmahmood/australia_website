@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSupportModels } from "@/hooks/use-support-models";
 import { Target } from "lucide-react";
+import { ServicesSectionSkeleton } from "@/components/ui/skeletons";
 
 // Helper function to strip HTML tags and decode entities
 const stripHtml = (html: string | undefined) => {
@@ -22,24 +23,7 @@ export function SupportModelContent() {
   const { supportModels, isLoading } = useSupportModels(1, 20);
 
   if (isLoading) {
-    return (
-      <section className="py-12 sm:py-16 md:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-4">
-              <span className="text-[#1E3A5F]">OUR </span>
-              <span className="text-[#8CC63F]">SUPPORT MODELS</span>
-            </h2>
-            <p className="text-gray-600 max-w-3xl mx-auto">
-              Discover our range of support models designed to meet your unique needs and goals.
-            </p>
-          </div>
-          <div className="flex justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8CC63F]"></div>
-          </div>
-        </div>
-      </section>
-    );
+    return <ServicesSectionSkeleton />;
   }
 
   if (!supportModels || supportModels.length === 0) {
@@ -51,7 +35,7 @@ export function SupportModelContent() {
               <span className="text-[#1E3A5F]">OUR </span>
               <span className="text-[#8CC63F]">SUPPORT MODELS</span>
             </h2>
-            <p className="text-gray-600 max-w-3xl mx-auto">
+            <p className="text-gray-600 max-w-3xl mx-auto text-justify">
               Discover our range of support models designed to meet your unique needs and goals.
             </p>
           </div>
@@ -82,7 +66,7 @@ export function SupportModelContent() {
             <Link
               key={model._id}
               href={`/support-model/${model.slug}`}
-              className="group bg-[#F5F5F5] overflow-hidden rounded-lg hover:shadow-lg transition-all hover:-translate-y-1"
+              className="group bg-[#F5F5F5] overflow-hidden rounded-lg hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col"
             >
               <div className="relative h-48 w-full">
                 <Image
@@ -92,11 +76,11 @@ export function SupportModelContent() {
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="p-6 sm:p-8 text-center">
+              <div className="p-6 sm:p-8 text-center flex flex-col flex-1">
                 <h3 className="text-sm font-bold text-[#1E3A5F] mb-3 tracking-wide uppercase">
                   {model.title}
                 </h3>
-                <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 flex-1 text-justify">
                   {model.shortDescription || stripHtml(model.description)}
                 </p>
                 <span className="mt-4 inline-block text-[#8CC63F] text-sm font-medium group-hover:underline">

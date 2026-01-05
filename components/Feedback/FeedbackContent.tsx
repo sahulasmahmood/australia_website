@@ -1,216 +1,299 @@
 "use client"
 
 import { useState } from "react"
-import { MessageSquare, ThumbsUp, AlertCircle, Loader2 } from "lucide-react"
+import { Loader2, ChevronDown, Check } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+
+const feedbackTypes = [
+  { value: "compliment", label: "Compliment" },
+  { value: "suggestion", label: "Suggestion" },
+  { value: "concern", label: "Concern" },
+  { value: "complaint", label: "Complaint" },
+  { value: "other", label: "Other" },
+]
 
 export function FeedbackContent() {
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
+  const [isAnonymous, setIsAnonymous] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    feedbackType: "",
-    service: "",
+    phone: "",
+    feedbackType: "other",
     feedback: "",
-    contact: false,
+    resolution: "",
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!formData.feedback) {
+      toast({
+        variant: "destructive",
+        title: "Required Field",
+        description: "Please enter your feedback message.",
+      })
+      return
+    }
+
+    if (!isAnonymous && !formData.name) {
+      toast({
+        variant: "destructive",
+        title: "Required Field",
+        description: "Please enter your name or choose anonymous feedback.",
+      })
+      return
+    }
+
     setLoading(true)
 
     try {
-      // You can add form submission logic here
-      toast({
-        title: "Feedback Submitted!",
-        description: "Thank you for your feedback. We appreciate your input.",
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          isAnonymous,
+          name: isAnonymous ? "" : formData.name,
+          email: isAnonymous ? "" : formData.email,
+          phone: isAnonymous ? "" : formData.phone,
+          feedbackType: formData.feedbackType,
+          feedback: formData.feedback,
+          resolution: formData.resolution,
+        }),
       })
-      setFormData({
-        name: "",
-        email: "",
-        feedbackType: "",
-        service: "",
-        feedback: "",
-        contact: false,
-      })
-    } catch (error) {
+
+      const data = await response.json()
+
+      if (data.success) {
+        toast({
+          title: "Feedback Submitted!",
+          description: data.message || "Thank you for your feedback. We appreciate your input.",
+        })
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          feedbackType: "other",
+          feedback: "",
+          resolution: "",
+        })
+        setIsAnonymous(false)
+      } else {
+        throw new Error(data.error || "Failed to submit feedback")
+      }
+    } catch (error: any) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Failed to submit feedback. Please try again.",
+        description: error.message || "Failed to submit feedback. Please try again.",
       })
     } finally {
       setLoading(false)
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
-    })
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
   }
+
+  const selectedTypeLabel = feedbackTypes.find(t => t.value === formData.feedbackType)?.label || "Select type"
 
   return (
     <section className="py-12 sm:py-16 md:py-20 bg-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        {/* Header */}
         <div className="text-center mb-10 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4">
-            <span className="text-[#1E3A5F]">WE VALUE </span>
-            <span className="text-[#8CC63F]">YOUR FEEDBACK</span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+            <span className="text-[#1E3A5F]">WE VALUE YOUR </span>
+            <span className="text-[#8CC63F]">FEEDBACK</span>
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Your feedback helps us improve our services and ensure we're meeting your needs. Whether it's a
-            compliment, suggestion, or concern, we want to hear from you.
+          <p className="text-gray-600 max-w-2xl mx-auto text-justify">
+            Your feedback helps us improve our services and provide better care for you and your loved ones.
           </p>
         </div>
 
-        {/* Feedback Types */}
-        <div className="grid sm:grid-cols-3 gap-6 mb-12">
-          <div className="bg-[#F5F5F5] p-6 rounded-lg text-center">
-            <div className="w-14 h-14 mx-auto mb-4 flex items-center justify-center bg-[#8CC63F]/10 rounded-full">
-              <ThumbsUp className="w-7 h-7 text-[#8CC63F]" />
-            </div>
-            <h3 className="font-semibold text-[#1E3A5F] mb-2">Compliments</h3>
-            <p className="text-gray-600 text-sm">Let us know when we've done well!</p>
-          </div>
-
-          <div className="bg-[#F5F5F5] p-6 rounded-lg text-center">
-            <div className="w-14 h-14 mx-auto mb-4 flex items-center justify-center bg-[#8CC63F]/10 rounded-full">
-              <MessageSquare className="w-7 h-7 text-[#8CC63F]" />
-            </div>
-            <h3 className="font-semibold text-[#1E3A5F] mb-2">Suggestions</h3>
-            <p className="text-gray-600 text-sm">Share ideas for improvement.</p>
-          </div>
-
-          <div className="bg-[#F5F5F5] p-6 rounded-lg text-center">
-            <div className="w-14 h-14 mx-auto mb-4 flex items-center justify-center bg-[#8CC63F]/10 rounded-full">
-              <AlertCircle className="w-7 h-7 text-[#8CC63F]" />
-            </div>
-            <h3 className="font-semibold text-[#1E3A5F] mb-2">Concerns</h3>
-            <p className="text-gray-600 text-sm">Report any issues or concerns.</p>
-          </div>
-        </div>
-
         {/* Feedback Form */}
-        <div className="bg-[#F5F5F5] rounded-lg p-6 sm:p-8">
-          <h3 className="text-xl font-bold text-[#1E3A5F] mb-6">Submit Your Feedback</h3>
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Anonymous Option - Custom Radio Buttons */}
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+            <span className="text-sm font-medium text-[#1E3A5F]">
+              Would you like your feedback to be anonymous?
+            </span>
+            <div className="flex items-center gap-6">
+              <label className="flex items-center gap-2 cursor-pointer group">
+                <div 
+                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+                    isAnonymous 
+                      ? "border-[#8CC63F] bg-[#8CC63F]" 
+                      : "border-gray-300 group-hover:border-[#8CC63F]"
+                  }`}
+                  onClick={() => !loading && setIsAnonymous(true)}
+                >
+                  {isAnonymous && <div className="w-2 h-2 rounded-full bg-white" />}
+                </div>
+                <span className="text-sm text-gray-700">Yes</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer group">
+                <div 
+                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+                    !isAnonymous 
+                      ? "border-[#8CC63F] bg-[#8CC63F]" 
+                      : "border-gray-300 group-hover:border-[#8CC63F]"
+                  }`}
+                  onClick={() => !loading && setIsAnonymous(false)}
+                >
+                  {!isAnonymous && <div className="w-2 h-2 rounded-full bg-white" />}
+                </div>
+                <span className="text-sm text-gray-700">No</span>
+              </label>
+            </div>
+          </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid sm:grid-cols-2 gap-4">
+          {/* Form Grid */}
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Left Column - Contact Info */}
+            <div className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-[#1E3A5F] mb-2">
-                  Your Name (Optional)
+                  Name {!isAnonymous && "*"}
                 </label>
                 <input
                   type="text"
                   id="name"
                   name="name"
+                  placeholder="Enter your full name"
                   value={formData.name}
                   onChange={handleChange}
-                  disabled={loading}
-                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all bg-white disabled:opacity-50"
+                  disabled={loading || isAnonymous}
+                  required={!isAnonymous}
+                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50 disabled:bg-gray-100"
                 />
               </div>
+
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-[#1E3A5F] mb-2">
-                  Email (Optional)
+                  Email
                 </label>
                 <input
                   type="email"
                   id="email"
                   name="email"
+                  placeholder="Enter your email address"
                   value={formData.email}
                   onChange={handleChange}
-                  disabled={loading}
-                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all bg-white disabled:opacity-50"
+                  disabled={loading || isAnonymous}
+                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50 disabled:bg-gray-100"
                 />
+              </div>
+
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                  Phone
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="Enter your phone number"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  disabled={loading || isAnonymous}
+                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50 disabled:bg-gray-100"
+                />
+              </div>
+
+              {/* Custom Dropdown for Feedback Type */}
+              <div>
+                <label className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                  Feedback Type
+                </label>
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => !loading && setIsDropdownOpen(!isDropdownOpen)}
+                    disabled={loading}
+                    className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all bg-white disabled:opacity-50 text-left flex items-center justify-between"
+                  >
+                    <span className="text-gray-900">{selectedTypeLabel}</span>
+                    <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  
+                  {isDropdownOpen && (
+                    <>
+                      <div 
+                        className="fixed inset-0 z-10" 
+                        onClick={() => setIsDropdownOpen(false)}
+                      />
+                      <div className="absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-[#1E3A5F] [&::-webkit-scrollbar-thumb]:rounded-full">
+                        {feedbackTypes.map((type) => (
+                          <button
+                            key={type.value}
+                            type="button"
+                            onClick={() => {
+                              setFormData({ ...formData, feedbackType: type.value })
+                              setIsDropdownOpen(false)
+                            }}
+                            className="w-full px-4 py-2.5 text-left hover:bg-[#8CC63F]/10 flex items-center justify-between transition-colors text-sm"
+                          >
+                            <span className="text-gray-700">{type.label}</span>
+                            {formData.feedbackType === type.value && (
+                              <Check className="h-4 w-4 text-[#8CC63F]" />
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
 
-            <div>
-              <label htmlFor="feedbackType" className="block text-sm font-medium text-[#1E3A5F] mb-2">
-                Type of Feedback *
-              </label>
-              <select
-                id="feedbackType"
-                name="feedbackType"
-                required
-                value={formData.feedbackType}
-                onChange={handleChange}
-                disabled={loading}
-                className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all bg-white disabled:opacity-50"
-              >
-                <option value="">Select type</option>
-                <option value="compliment">Compliment</option>
-                <option value="suggestion">Suggestion</option>
-                <option value="concern">Concern</option>
-                <option value="complaint">Complaint</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
+            {/* Right Column - Feedback Content */}
+            <div className="space-y-6">
+              <div>
+                <label htmlFor="feedback" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                  What would you like to tell us? *
+                </label>
+                <textarea
+                  id="feedback"
+                  name="feedback"
+                  rows={5}
+                  required
+                  placeholder="Please share your feedback in detail..."
+                  value={formData.feedback}
+                  onChange={handleChange}
+                  disabled={loading}
+                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all resize-none disabled:opacity-50"
+                />
+              </div>
 
-            <div>
-              <label htmlFor="service" className="block text-sm font-medium text-[#1E3A5F] mb-2">
-                Related Service (Optional)
-              </label>
-              <select
-                id="service"
-                name="service"
-                value={formData.service}
-                onChange={handleChange}
-                disabled={loading}
-                className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all bg-white disabled:opacity-50"
-              >
-                <option value="">Select service</option>
-                <option value="sil">Supported Independent Living</option>
-                <option value="respite">Respite Support</option>
-                <option value="community">Community Participation</option>
-                <option value="daily-living">Assistance with Daily Living</option>
-                <option value="transport">Transport Support</option>
-                <option value="behaviour">Behaviour Support</option>
-                <option value="general">General / Not Specific</option>
-              </select>
+              <div>
+                <label htmlFor="resolution" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                  If you are making a complaint, how would you like us to address the problem?
+                </label>
+                <textarea
+                  id="resolution"
+                  name="resolution"
+                  rows={5}
+                  placeholder="Tell us how you would like us to resolve this issue..."
+                  value={formData.resolution}
+                  onChange={handleChange}
+                  disabled={loading}
+                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all resize-none disabled:opacity-50"
+                />
+              </div>
             </div>
+          </div>
 
-            <div>
-              <label htmlFor="feedback" className="block text-sm font-medium text-[#1E3A5F] mb-2">
-                Your Feedback *
-              </label>
-              <textarea
-                id="feedback"
-                name="feedback"
-                rows={6}
-                required
-                value={formData.feedback}
-                onChange={handleChange}
-                disabled={loading}
-                placeholder="Please share your feedback in detail..."
-                className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all resize-none bg-white disabled:opacity-50"
-              ></textarea>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <input
-                type="checkbox"
-                id="contact"
-                name="contact"
-                checked={formData.contact}
-                onChange={handleChange}
-                disabled={loading}
-                className="mt-1 w-4 h-4 accent-[#8CC63F] disabled:opacity-50"
-              />
-              <label htmlFor="contact" className="text-sm text-gray-600">
-                I would like to be contacted regarding this feedback
-              </label>
-            </div>
-
+          {/* Submit Button */}
+          <div className="pt-4">
             <button
               type="submit"
               disabled={loading}
-              className="w-full sm:w-auto bg-[#8CC63F] text-white font-medium px-8 py-3 rounded hover:bg-[#7AB82F] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="bg-[#8CC63F] text-white font-semibold px-8 py-3 rounded hover:bg-[#7AB82F] transition-colors disabled:opacity-50 flex items-center justify-center gap-2 uppercase tracking-wide"
             >
               {loading ? (
                 <>
@@ -218,25 +301,14 @@ export function FeedbackContent() {
                   Submitting...
                 </>
               ) : (
-                "Submit Feedback"
+                <>
+                  Submit Message
+                  <span className="ml-1">▶</span>
+                </>
               )}
             </button>
-          </form>
-        </div>
-
-        {/* Alternative Contact */}
-        <div className="mt-8 text-center text-gray-600">
-          <p>
-            Prefer to speak with someone directly? Call us at{" "}
-            <a href="tel:0870060200" className="text-[#8CC63F] font-medium hover:underline">
-              (08) 7006 0200
-            </a>{" "}
-            or email{" "}
-            <a href="mailto:info@mysupportmyway.com.au" className="text-[#8CC63F] font-medium hover:underline">
-              info@mysupportmyway.com.au
-            </a>
-          </p>
-        </div>
+          </div>
+        </form>
       </div>
     </section>
   )

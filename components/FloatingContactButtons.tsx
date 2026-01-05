@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import { WhatsAppIcon } from "@/components/ui/whatsapp-icon";
@@ -10,6 +11,12 @@ export default function FloatingContactButtons() {
   const [showWhatsAppTooltip, setShowWhatsAppTooltip] = useState(false);
   const [showCallTooltip, setShowCallTooltip] = useState(false);
   const { contactInfo } = useContact();
+  const pathname = usePathname();
+
+  // Hide floating buttons on admin and login pages
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/login')) {
+    return null;
+  }
 
   const handleWhatsAppClick = () => {
     const message = "Hi! I'm interested in your services. Please provide more details.";

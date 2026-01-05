@@ -3,7 +3,7 @@ import { Header } from "@/components/header"
 import { DynamicPageBanner } from "@/components/DynamicPageBanner"
 import { Footer } from "@/components/footer"
 import { CtaBanner } from "@/components/cta-banner"
-import { CheckCircle, HelpCircle, FileText, Users } from "lucide-react"
+import { Check, HelpCircle, FileText, Users } from "lucide-react"
 import Link from "next/link"
 
 export default function NdisPage() {
@@ -51,7 +51,7 @@ export default function NdisPage() {
               <span className="text-[#1E3A5F]">UNDERSTANDING </span>
               <span className="text-[#8CC63F]">THE NDIS</span>
             </h2>
-            <p className="text-gray-600 leading-relaxed">
+            <p className="text-gray-600 leading-relaxed text-justify">
               The National Disability Insurance Scheme (NDIS) is a way of providing support for Australians with
               disability, their families and carers. As a registered NDIS provider, Elegant Care Service is here to help
               you navigate the scheme and access the services you need.
@@ -64,7 +64,7 @@ export default function NdisPage() {
                 <Users className="w-8 h-8 text-[#8CC63F]" />
               </div>
               <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2">Who We Support</h3>
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-600 text-sm text-justify">
                 We support NDIS participants of all ages with a wide range of disabilities across South Australia.
               </p>
             </div>
@@ -74,7 +74,7 @@ export default function NdisPage() {
                 <FileText className="w-8 h-8 text-[#8CC63F]" />
               </div>
               <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2">Registered Provider</h3>
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-600 text-sm text-justify">
                 We are a registered NDIS provider, meaning we meet strict quality and safety standards.
               </p>
             </div>
@@ -84,7 +84,7 @@ export default function NdisPage() {
                 <HelpCircle className="w-8 h-8 text-[#8CC63F]" />
               </div>
               <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2">Plan Management</h3>
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-600 text-sm text-justify">
                 Whether you're self-managed, plan-managed, or agency-managed, we can work with you.
               </p>
             </div>
@@ -119,7 +119,7 @@ export default function NdisPage() {
                 <div className="bg-white p-6 rounded-lg text-center h-full">
                   <div className="text-4xl font-bold text-[#8CC63F] mb-3">{item.step}</div>
                   <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2">{item.title}</h3>
-                  <p className="text-gray-600 text-sm">{item.desc}</p>
+                  <p className="text-gray-600 text-sm text-justify">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -139,10 +139,12 @@ export default function NdisPage() {
             {faqs.map((faq) => (
               <div key={faq.question} className="bg-[#F5F5F5] rounded-lg p-6">
                 <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2 flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-[#8CC63F] flex-shrink-0 mt-1" />
+                  <div className="mt-0.5 p-1 bg-[#8CC63F] rounded-full flex-shrink-0">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
                   {faq.question}
                 </h3>
-                <p className="text-gray-600 ml-7">{faq.answer}</p>
+                <p className="text-gray-600 ml-7 text-justify">{faq.answer}</p>
               </div>
             ))}
           </div>

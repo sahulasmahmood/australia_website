@@ -1,14 +1,19 @@
 "use client"
 
 import { useState } from "react"
-import { Phone, Mail, MapPin, Clock, Loader2 } from "lucide-react"
+import { Phone, Mail, MapPin, Clock, Loader2, ChevronDown, Check } from "lucide-react"
 import { useContact } from "@/hooks/use-contact"
+import { useServices } from "@/hooks/use-services"
+import { useSupportModels } from "@/hooks/use-support-models"
 import { useToast } from "@/hooks/use-toast"
 
 export function ContactContent() {
   const { contactInfo, isLoading } = useContact()
+  const { services } = useServices()
+  const { supportModels } = useSupportModels()
   const { toast } = useToast()
   const [formLoading, setFormLoading] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -20,6 +25,17 @@ export function ContactContent() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Validate subject field
+    if (!formData.subject) {
+      toast({
+        variant: "destructive",
+        title: "Required Field",
+        description: "Please select a service or subject.",
+      })
+      return
+    }
+    
     setFormLoading(true)
 
     try {
@@ -87,8 +103,51 @@ export function ContactContent() {
     return (
       <section className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8CC63F]"></div>
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
+            {/* Contact Form Skeleton */}
+            <div className="space-y-6">
+              <div className="h-8 w-48 bg-gray-200 rounded animate-pulse" />
+              <div className="h-4 w-full bg-gray-200 rounded animate-pulse" />
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <div className="h-4 w-20 bg-gray-200 rounded animate-pulse" />
+                  <div className="h-12 w-full bg-gray-100 rounded animate-pulse" />
+                </div>
+                <div className="space-y-2">
+                  <div className="h-4 w-20 bg-gray-200 rounded animate-pulse" />
+                  <div className="h-12 w-full bg-gray-100 rounded animate-pulse" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="h-4 w-24 bg-gray-200 rounded animate-pulse" />
+                <div className="h-12 w-full bg-gray-100 rounded animate-pulse" />
+              </div>
+              <div className="space-y-2">
+                <div className="h-4 w-24 bg-gray-200 rounded animate-pulse" />
+                <div className="h-12 w-full bg-gray-100 rounded animate-pulse" />
+              </div>
+              <div className="space-y-2">
+                <div className="h-4 w-20 bg-gray-200 rounded animate-pulse" />
+                <div className="h-12 w-full bg-gray-100 rounded animate-pulse" />
+              </div>
+              <div className="space-y-2">
+                <div className="h-4 w-16 bg-gray-200 rounded animate-pulse" />
+                <div className="h-32 w-full bg-gray-100 rounded animate-pulse" />
+              </div>
+              <div className="h-12 w-full bg-[#8CC63F]/30 rounded animate-pulse" />
+            </div>
+            {/* Contact Info Skeleton */}
+            <div className="space-y-6">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="flex items-start gap-4">
+                  <div className="h-12 w-12 rounded-full bg-[#8CC63F]/20 animate-pulse" />
+                  <div className="space-y-2 flex-1">
+                    <div className="h-4 w-20 bg-gray-300 rounded animate-pulse" />
+                    <div className="h-4 w-full bg-gray-200 rounded animate-pulse" />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -109,7 +168,7 @@ export function ContactContent() {
                 </h2>
               )}
               {contactInfo?.pageDescription && (
-                <p className="text-gray-600 mb-8">
+                <p className="text-gray-600 mb-8 text-justify">
                   {contactInfo.pageDescription}
                 </p>
               )}
@@ -125,6 +184,7 @@ export function ContactContent() {
                       id="firstName"
                       name="firstName"
                       required
+                      placeholder="Enter your first name"
                       value={formData.firstName}
                       onChange={handleChange}
                       disabled={formLoading}
@@ -140,6 +200,7 @@ export function ContactContent() {
                       id="lastName"
                       name="lastName"
                       required
+                      placeholder="Enter your last name"
                       value={formData.lastName}
                       onChange={handleChange}
                       disabled={formLoading}
@@ -157,6 +218,7 @@ export function ContactContent() {
                     id="email"
                     name="email"
                     required
+                    placeholder="Enter your email address"
                     value={formData.email}
                     onChange={handleChange}
                     disabled={formLoading}
@@ -172,6 +234,7 @@ export function ContactContent() {
                     type="tel"
                     id="phone"
                     name="phone"
+                    placeholder="Enter your phone number (optional)"
                     value={formData.phone}
                     onChange={handleChange}
                     disabled={formLoading}
@@ -181,24 +244,99 @@ export function ContactContent() {
 
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium text-[#1E3A5F] mb-2">
-                    Subject *
+                    Service / Subject *
                   </label>
-                  <select
-                    id="subject"
-                    name="subject"
-                    required
-                    value={formData.subject}
-                    onChange={handleChange}
-                    disabled={formLoading}
-                    className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all bg-white disabled:opacity-50"
-                  >
-                    <option value="">Select a subject</option>
-                    <option value="general">General Enquiry</option>
-                    <option value="services">Services Information</option>
-                    <option value="ndis">NDIS Support</option>
-                    <option value="careers">Careers</option>
-                    <option value="feedback">Feedback</option>
-                  </select>
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => !formLoading && setIsDropdownOpen(!isDropdownOpen)}
+                      disabled={formLoading}
+                      className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all bg-white disabled:opacity-50 text-left flex items-center justify-between"
+                    >
+                      <span className={formData.subject ? "text-gray-900" : "text-gray-500"}>
+                        {formData.subject || "Select a service or subject"}
+                      </span>
+                      <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`} />
+                    </button>
+                    
+                    {isDropdownOpen && (
+                      <>
+                        <div 
+                          className="fixed inset-0 z-10" 
+                          onClick={() => setIsDropdownOpen(false)}
+                        />
+                        <div className="absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-[#1E3A5F] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-[#2c5282]">
+                          {/* Services */}
+                          {services.filter(s => s.serviceName).length > 0 && (
+                            <>
+                              <div className="px-3 py-1.5 text-[10px] font-semibold text-[#1E3A5F] bg-gray-50 border-b border-gray-100 uppercase tracking-wider">
+                                Our Services
+                              </div>
+                              {services.filter(s => s.serviceName).map((service) => (
+                                <button
+                                  key={service._id}
+                                  type="button"
+                                  onClick={() => {
+                                    setFormData({ ...formData, subject: service.serviceName })
+                                    setIsDropdownOpen(false)
+                                  }}
+                                  className="w-full px-3 py-2 text-left hover:bg-[#8CC63F]/10 flex items-center justify-between transition-colors text-sm"
+                                >
+                                  <span className="text-gray-700">{service.serviceName}</span>
+                                  {formData.subject === service.serviceName && (
+                                    <Check className="h-3.5 w-3.5 text-[#8CC63F]" />
+                                  )}
+                                </button>
+                              ))}
+                            </>
+                          )}
+                          
+                          {/* Support Models */}
+                          {supportModels.filter(m => m.title).length > 0 && (
+                            <>
+                              <div className="px-3 py-1.5 text-[10px] font-semibold text-[#1E3A5F] bg-gray-50 border-b border-gray-100 border-t uppercase tracking-wider">
+                                Support Models
+                              </div>
+                              {supportModels.filter(m => m.title).map((model) => (
+                                <button
+                                  key={model._id}
+                                  type="button"
+                                  onClick={() => {
+                                    setFormData({ ...formData, subject: model.title })
+                                    setIsDropdownOpen(false)
+                                  }}
+                                  className="w-full px-3 py-2 text-left hover:bg-[#8CC63F]/10 flex items-center justify-between transition-colors text-sm"
+                                >
+                                  <span className="text-gray-700">{model.title}</span>
+                                  {formData.subject === model.title && (
+                                    <Check className="h-3.5 w-3.5 text-[#8CC63F]" />
+                                  )}
+                                </button>
+                              ))}
+                            </>
+                          )}
+                          
+                          {/* Other */}
+                          <div className="px-3 py-1.5 text-[10px] font-semibold text-[#1E3A5F] bg-gray-50 border-b border-gray-100 border-t uppercase tracking-wider">
+                            Other
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setFormData({ ...formData, subject: "Other" })
+                              setIsDropdownOpen(false)
+                            }}
+                            className="w-full px-3 py-2 text-left hover:bg-[#8CC63F]/10 flex items-center justify-between transition-colors text-sm"
+                          >
+                            <span className="text-gray-700">Other</span>
+                            {formData.subject === "Other" && (
+                              <Check className="h-3.5 w-3.5 text-[#8CC63F]" />
+                            )}
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
 
                 <div>
@@ -210,6 +348,7 @@ export function ContactContent() {
                     name="message"
                     rows={5}
                     required
+                    placeholder="Tell us how we can help you..."
                     value={formData.message}
                     onChange={handleChange}
                     disabled={formLoading}
@@ -345,7 +484,7 @@ export function ContactContent() {
                   <span className="text-[#8CC63F]">{contactInfo.officeTitle.split(" ").slice(2).join(" ")}</span>
                 </h2>
                 {contactInfo?.officeDescription && (
-                  <p className="text-gray-600 text-sm sm:text-base max-w-3xl mx-auto">
+                  <p className="text-gray-600 text-sm sm:text-base max-w-3xl mx-auto text-justify">
                     {contactInfo.officeDescription}
                   </p>
                 )}

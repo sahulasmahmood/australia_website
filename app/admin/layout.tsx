@@ -164,25 +164,31 @@ export default function AdminLayout({
       name: "Lead Manager",
       href: "/admin/leads",
       icon: <MessageSquare className="h-5 w-5" />,
+      color: "text-[#1E3A5F]",
+    },
+    {
+      name: "Feedback",
+      href: "/admin/feedback",
+      icon: <Heart className="h-5 w-5" />,
       color: "text-[#8CC63F]",
     },
     {
       name: "Testimonials",
       href: "/admin/testimonials",
-      icon: <Heart className="h-5 w-5" />,
+      icon: <MessageSquare className="h-5 w-5" />,
       color: "text-[#1E3A5F]",
     },
     {
       name: "Settings",
       href: "/admin/settings",
       icon: <Settings className="h-5 w-5" />,
-      color: "text-[#1E3A5F]",
+      color: "text-[#8CC63F]",
     },
     {
       name: "Profile",
       href: "/admin/profile",
       icon: <User className="h-5 w-5" />,
-      color: "text-[#8CC63F]",
+      color: "text-[#1E3A5F]",
     },
   ]
 
