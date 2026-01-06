@@ -1,165 +1,330 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { 
-  Users, 
-  Briefcase, 
-  Heart, 
-  MessageSquare,
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/hooks/use-toast";
+import {
+  Users,
+  Loader2,
+  RefreshCw,
+  AlertCircle,
   TrendingUp,
-  CheckCircle,
-  Clock,
-} from "lucide-react"
+  Star,
+  Briefcase,
+  Heart,
+  Image,
+  Globe,
+  Settings,
+  ChevronRight,
+  Eye,
+  MessageSquare,
+} from "lucide-react";
+
+interface DashboardMetrics {
+  totalLeads: number;
+  thisMonthLeads: number;
+  thisWeekLeads: number;
+  leadsGrowth: number;
+  completedLeads: number;
+  pendingLeads: number;
+  newLeads: number;
+  completionRate: number;
+  totalFeedback: number;
+  newFeedback: number;
+  resolvedFeedback: number;
+  totalTestimonials: number;
+  publishedTestimonials: number;
+  totalServices: number;
+  activeServices: number;
+  totalServiceViews: number;
+  totalSupportModels: number;
+  activeSupportModels: number;
+  totalSupportModelViews: number;
+}
+
+interface RecentLead {
+  _id: string;
+  fullName: string;
+  email: string;
+  subject: string;
+  status: string;
+  priority: string;
+  submittedAt: string;
+}
+
+interface DashboardData {
+  metrics: DashboardMetrics;
+  recentLeads: RecentLead[];
+  analytics: {
+    leadsByStatus: { status: string; count: number }[];
+    feedbackByType: { type: string; count: number }[];
+  };
+}
 
 export default function AdminDashboard() {
-  const stats = [
-    {
-      title: "Total Services",
-      value: "12",
-      change: "+2 this month",
-      icon: <Briefcase className="h-6 w-6" />,
-      color: "text-[#8CC63F]",
-      bgColor: "bg-[#F0F9E8]",
-    },
-    {
-      title: "Support Workers",
-      value: "24",
-      change: "+5 this month",
-      icon: <Users className="h-6 w-6" />,
-      color: "text-[#1E3A5F]",
-      bgColor: "bg-blue-50",
-    },
-    {
-      title: "Testimonials",
-      value: "48",
-      change: "+8 this month",
-      icon: <Heart className="h-6 w-6" />,
-      color: "text-[#8CC63F]",
-      bgColor: "bg-[#F0F9E8]",
-    },
-    {
-      title: "Inquiries",
-      value: "15",
-      change: "3 pending",
-      icon: <MessageSquare className="h-6 w-6" />,
-      color: "text-[#1E3A5F]",
-      bgColor: "bg-blue-50",
-    },
-  ]
+  const { toast } = useToast();
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const recentActivities = [
-    { title: "New inquiry received", time: "2 hours ago", status: "new" },
-    { title: "Service updated", time: "5 hours ago", status: "completed" },
-    { title: "New testimonial added", time: "1 day ago", status: "completed" },
-    { title: "Worker profile updated", time: "2 days ago", status: "completed" },
-  ]
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async (showRefreshToast = false) => {
+    try {
+      if (showRefreshToast) setRefreshing(true);
+      else setLoading(true);
+
+      const response = await fetch("/api/admin/dashboard");
+      const result = await response.json();
+
+      if (result.success) {
+        setDashboardData(result.data);
+        if (showRefreshToast) {
+          toast({
+            title: "Dashboard Updated",
+            description: "Latest data has been loaded successfully.",
+          });
+        }
+      } else {
+        throw new Error(result.message || "Failed to fetch dashboard data");
+      }
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load dashboard data. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  const handleRefresh = () => {
+    fetchDashboardData(true);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-[#8CC63F]" />
+          <p className="text-gray-600">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!dashboardData) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="text-center">
+          <AlertCircle className="h-8 w-8 mx-auto mb-4 text-red-400" />
+          <p className="text-gray-600 mb-4">Failed to load dashboard data</p>
+          <Button onClick={() => fetchDashboardData()} variant="outline">
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Try Again
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  const { metrics, recentLeads } = dashboardData;
+
+  const stats = [
+    { title: "Total Leads", value: metrics.totalLeads, change: `${metrics.leadsGrowth >= 0 ? "+" : ""}${metrics.leadsGrowth}%`, icon: Users },
+    { title: "Pending Leads", value: metrics.pendingLeads, change: `${metrics.newLeads} new`, icon: TrendingUp },
+    { title: "Service Views", value: metrics.totalServiceViews, change: `${metrics.activeServices} active`, icon: Eye },
+    { title: "Total Feedback", value: metrics.totalFeedback, change: `${metrics.newFeedback} new`, icon: MessageSquare },
+    { title: "Testimonials", value: metrics.publishedTestimonials, change: `${metrics.totalTestimonials} total`, icon: Star },
+    { title: "Support Models", value: metrics.activeSupportModels, change: `${metrics.totalSupportModels} total`, icon: Heart },
+  ];
+
+  const formatDate = (date: string) => {
+    return new Date(date).toLocaleDateString("en-AU", { day: "numeric", month: "short" });
+  };
+
+  const getTimeAgo = (date: string): string => {
+    const now = new Date();
+    const past = new Date(date);
+    const diffInMs = now.getTime() - past.getTime();
+    const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
+
+    if (diffInMinutes < 1) return "Just now";
+    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
+    if (diffInHours < 24) return `${diffInHours}h ago`;
+    if (diffInDays < 7) return `${diffInDays}d ago`;
+    return formatDate(date);
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "new": return "bg-blue-100 text-blue-800";
+      case "contacted": return "bg-yellow-100 text-yellow-800";
+      case "consulting": return "bg-purple-100 text-purple-800";
+      case "confirmed": return "bg-indigo-100 text-indigo-800";
+      case "completed": return "bg-green-100 text-green-800";
+      case "cancelled": return "bg-red-100 text-red-800";
+      default: return "bg-gray-100 text-gray-800";
+    }
+  };
+
+  const quickActions = [
+    { title: "Services", href: "/admin/services", icon: Briefcase },
+    { title: "Support Models", href: "/admin/support-models", icon: Heart },
+    { title: "Leads", href: "/admin/leads", icon: Users },
+    { title: "Testimonials", href: "/admin/testimonials", icon: Star },
+    { title: "Banners", href: "/admin/banners", icon: Image },
+    { title: "SEO", href: "/admin/seo", icon: Globe },
+    { title: "Feedback", href: "/admin/feedback", icon: MessageSquare },
+    { title: "Profile", href: "/admin/profile", icon: Settings },
+  ];
 
   return (
     <div className="space-y-6">
-      {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-[#8CC63F] to-[#7AB82F] rounded-lg p-6 text-white shadow-lg">
-        <h1 className="text-3xl font-bold mb-2">Welcome to Elegant Care Service!</h1>
-        <p className="text-white/90">Manage your care services, support workers, and client inquiries.</p>
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-[#1E3A5F]">Dashboard</h1>
+          <p className="text-gray-600 mt-1">Welcome back! Here&apos;s your overview.</p>
+        </div>
+        <Button
+          onClick={handleRefresh}
+          disabled={refreshing}
+          variant="outline"
+          className="border-[#1E3A5F]/20 text-[#1E3A5F] hover:bg-[#1E3A5F]/10 hover:text-[#1E3A5F] hover:border-[#1E3A5F]/30"
+        >
+          <RefreshCw className={`h-4 w-4 mr-2 ${refreshing ? "animate-spin" : ""}`} />
+          {refreshing ? "Refreshing..." : "Refresh"}
+        </Button>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => (
-          <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className={`w-12 h-12 ${stat.bgColor} rounded-lg flex items-center justify-center`}>
-                  <div className={stat.color}>{stat.icon}</div>
-                </div>
-                <Badge variant="secondary" className="bg-[#F0F9E8] text-[#8CC63F]">
-                  {stat.change}
-                </Badge>
+      {/* Stats Grid - 6 columns on large screens */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        {stats.map((stat) => (
+          <Card key={stat.title} className="border-0 shadow-lg">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between mb-2">
+                <stat.icon className="h-5 w-5 text-[#1E3A5F]" />
+                <span className="text-xs text-gray-500">{stat.change}</span>
               </div>
-              <div className="space-y-1">
-                <p className="text-3xl font-bold text-[#1E3A5F]">{stat.value}</p>
-                <p className="text-sm text-gray-600 font-medium">{stat.title}</p>
-              </div>
+              <p className="text-2xl font-bold text-[#1E3A5F]">{stat.value}</p>
+              <p className="text-xs text-gray-500 mt-1">{stat.title}</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
-        {/* Recent Activities */}
-        <Card>
-          <CardHeader className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#8CC63F]/10 p-4 border-b">
-            <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
-              <TrendingUp className="h-5 w-5 text-[#8CC63F]" />
-              Recent Activities
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-6">
-            <div className="space-y-4">
-              {recentActivities.map((activity, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:shadow-md transition-all"
-                >
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                    activity.status === "new" ? "bg-[#8CC63F]" : "bg-gray-300"
-                  }`}>
-                    {activity.status === "new" ? (
-                      <Clock className="h-5 w-5 text-white" />
-                    ) : (
-                      <CheckCircle className="h-5 w-5 text-white" />
-                    )}
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-semibold text-[#1E3A5F]">{activity.title}</p>
-                    <p className="text-sm text-gray-500">{activity.time}</p>
-                  </div>
-                  <Badge
-                    variant={activity.status === "new" ? "default" : "secondary"}
-                    className={activity.status === "new" ? "bg-[#8CC63F] text-white" : ""}
-                  >
-                    {activity.status}
-                  </Badge>
-                </div>
-              ))}
+      {/* Main Content - Recent Leads & Quick Actions */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {/* Recent Leads - Takes 3 columns */}
+        <Card className="border-0 shadow-lg lg:col-span-3">
+          <CardHeader className="bg-linear-to-r from-[#1E3A5F]/10 to-[#8CC63F]/10 p-4 border-b">
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
+                <Users className="h-5 w-5 text-[#8CC63F]" />
+                Recent Leads
+              </CardTitle>
+              <Link href="/admin/leads">
+                <Button variant="outline" size="sm" className="text-[#1E3A5F] hover:bg-[#1E3A5F]/10 hover:text-[#1E3A5F] border-[#1E3A5F]/20 hover:border-[#1E3A5F]/30">
+                  View All
+                  <ChevronRight className="h-4 w-4 ml-1" />
+                </Button>
+              </Link>
             </div>
+          </CardHeader>
+          <CardContent className="p-0">
+            {recentLeads.length > 0 ? (
+              <div className="divide-y">
+                {recentLeads.map((lead) => (
+                  <div key={lead._id} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors">
+                    <div className="w-10 h-10 bg-[#1E3A5F] rounded-full flex items-center justify-center shrink-0">
+                      <span className="text-white font-medium text-sm">
+                        {lead.fullName.split(" ").slice(0, 2).map((n) => n[0]).join("").toUpperCase()}
+                      </span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-[#1E3A5F] truncate">{lead.fullName}</p>
+                      <p className="text-sm text-gray-500 truncate">{lead.subject}</p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <Badge className={`${getStatusColor(lead.status)} border-0`}>
+                        {lead.status.toUpperCase()}
+                      </Badge>
+                      <p className="text-xs text-gray-500 mt-1">{getTimeAgo(lead.submittedAt)}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12 text-gray-500">
+                <Users className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                <p>No recent leads found</p>
+              </div>
+            )}
           </CardContent>
         </Card>
 
-        {/* Quick Stats */}
-        <Card>
-          <CardHeader className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#8CC63F]/10 p-4 border-b">
+        {/* Quick Actions - Takes 1 column */}
+        <Card className="border-0 shadow-lg h-fit">
+          <CardHeader className="bg-linear-to-r from-[#1E3A5F]/10 to-[#8CC63F]/10 p-4 border-b">
             <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
-              <Briefcase className="h-5 w-5 text-[#8CC63F]" />
-              Quick Overview
+              <Settings className="h-5 w-5 text-[#8CC63F]" />
+              Quick Actions
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-6">
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-[#F0F9E8] rounded-lg">
-                  <p className="text-2xl font-bold text-[#8CC63F]">95%</p>
-                  <p className="text-sm text-gray-600">Client Satisfaction</p>
-                </div>
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <p className="text-2xl font-bold text-[#1E3A5F]">24/7</p>
-                  <p className="text-sm text-gray-600">Support Available</p>
-                </div>
+          <CardContent className="p-4">
+            <div className="grid grid-cols-2 gap-2">
+              {quickActions.map((action) => (
+                <Link key={action.title} href={action.href}>
+                  <Button
+                    variant="outline"
+                    className="w-full h-auto py-3 flex flex-col items-center gap-1 hover:bg-[#8CC63F]/10 hover:border-[#8CC63F]"
+                  >
+                    <action.icon className="h-5 w-5 text-[#1E3A5F]" />
+                    <span className="text-xs font-medium text-[#1E3A5F]">{action.title}</span>
+                  </Button>
+                </Link>
+              ))}
+            </div>
+            
+            {/* Completion Rate */}
+            <div className="mt-4 pt-4 border-t">
+              <div className="flex items-center justify-between text-sm mb-2">
+                <span className="text-gray-600">Lead Completion</span>
+                <span className="font-semibold text-[#8CC63F]">{metrics.completionRate}%</span>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-[#F0F9E8] rounded-lg">
-                  <p className="text-2xl font-bold text-[#8CC63F]">150+</p>
-                  <p className="text-sm text-gray-600">Active Clients</p>
-                </div>
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <p className="text-2xl font-bold text-[#1E3A5F]">8+</p>
-                  <p className="text-sm text-gray-600">Years Experience</p>
-                </div>
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  className="bg-[#8CC63F] h-2 rounded-full transition-all duration-500"
+                  style={{ width: `${metrics.completionRate}%` }}
+                />
+              </div>
+            </div>
+
+            {/* Additional Stats */}
+            <div className="mt-4 pt-4 border-t grid grid-cols-2 gap-3">
+              <div className="text-center p-2 bg-gray-50 rounded-lg">
+                <p className="text-lg font-bold text-[#1E3A5F]">{metrics.thisMonthLeads}</p>
+                <p className="text-[10px] text-gray-500">This Month</p>
+              </div>
+              <div className="text-center p-2 bg-gray-50 rounded-lg">
+                <p className="text-lg font-bold text-[#1E3A5F]">{metrics.completedLeads}</p>
+                <p className="text-[10px] text-gray-500">Completed</p>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
     </div>
-  )
+  );
 }

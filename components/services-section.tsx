@@ -75,7 +75,7 @@ export function ServicesSection() {
                 <h3 className="text-xs sm:text-sm font-semibold text-[#1E3A5F] uppercase tracking-wide mb-2">
                   {service.serviceName}
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed line-clamp-2 text-justify">
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed line-clamp-2">
                   {service.shortDescription || stripHtml(service.description)}
                 </p>
               </div>

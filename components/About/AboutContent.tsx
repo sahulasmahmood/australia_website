@@ -112,7 +112,7 @@ export function AboutContent() {
             {values.map((value) => (
               <div key={value.title} className="bg-[#F5F5F5] p-6 rounded-lg hover:shadow-md transition-shadow">
                 <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2">{value.title}</h3>
-                <p className="text-gray-600 text-sm text-justify">{value.description}</p>
+                <p className="text-gray-600 text-sm">{value.description}</p>
               </div>
             ))}
           </div>

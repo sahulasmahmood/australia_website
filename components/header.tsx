@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useServices } from "@/hooks/use-services"
 import { useSupportModels } from "@/hooks/use-support-models"
+import { useContact } from "@/hooks/use-contact"
 
 const staticNavItems = [
   { label: "HOME", href: "/" },
@@ -28,6 +29,7 @@ const staticNavItems = [
 export function Header() {
   const { services, isLoading: servicesLoading } = useServices(1, 50)
   const { supportModels, isLoading: supportModelsLoading } = useSupportModels(1, 50)
+  const { contactInfo } = useContact()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedItems, setExpandedItems] = useState<string[]>([])
   
@@ -172,9 +174,15 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2 lg:hidden">
-            <a href="tel:0870060200" className="p-2 text-[#8CC63F] sm:hidden" aria-label="Call us">
-              <Phone className="h-5 w-5" />
-            </a>
+            {contactInfo?.primaryPhone && (
+              <a 
+                href={`tel:${contactInfo.primaryPhone.replace(/[^0-9+]/g, '')}`} 
+                className="p-2 text-[#8CC63F] sm:hidden" 
+                aria-label="Call us"
+              >
+                <Phone className="h-5 w-5" />
+              </a>
+            )}
             <button
               className="p-2 text-[#333] hover:bg-gray-100 rounded-md transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -276,13 +284,15 @@ export function Header() {
                 <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
                   <Button className="w-full bg-[#8CC63F] hover:bg-[#7AB82F] text-white font-medium py-3">LOGIN</Button>
                 </Link>
-                <a
-                  href="tel:0870060200"
-                  className="flex items-center justify-center gap-2 mt-4 text-[#1E3A5F] font-medium"
-                >
-                  <Phone className="h-4 w-4" />
-                  (08) 7006 0200
-                </a>
+                {contactInfo?.primaryPhone && (
+                  <a
+                    href={`tel:${contactInfo.primaryPhone.replace(/[^0-9+]/g, '')}`}
+                    className="flex items-center justify-center gap-2 mt-4 text-[#1E3A5F] font-medium"
+                  >
+                    <Phone className="h-4 w-4" />
+                    {contactInfo.primaryPhone}
+                  </a>
+                )}
               </div>
             </div>
           </nav>
