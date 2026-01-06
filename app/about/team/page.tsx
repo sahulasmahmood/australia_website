@@ -88,7 +88,7 @@ export default function TeamPage() {
                 <div className="p-6 text-center">
                   <h3 className="text-lg font-semibold text-[#8CC63F] mb-1">{member.name}</h3>
                   <p className="text-[#1E3A5F] font-medium text-sm mb-3">{member.role}</p>
-                  <p className="text-gray-600 text-sm text-justify">{member.bio}</p>
+                  <p className="text-gray-600 text-sm">{member.bio}</p>
                 </div>
               </div>
             ))}

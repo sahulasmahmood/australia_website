@@ -55,7 +55,7 @@ export function WhyChooseUsSection() {
               className="bg-white/90 backdrop-blur-sm p-6 sm:p-8 border-t-4 border-[#8CC63F] shadow-md hover:shadow-lg active:shadow-lg transition-shadow min-h-[120px] sm:min-h-[140px] flex flex-col"
             >
               <h3 className="text-base sm:text-lg font-semibold text-[#1E3A5F] mb-2">{feature.title}</h3>
-              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed flex-1 text-justify">{feature.description}</p>
+              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed flex-1">{feature.description}</p>
             </div>
           ))}
         </div>
