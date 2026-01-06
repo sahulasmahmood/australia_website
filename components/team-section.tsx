@@ -40,7 +40,7 @@ export function TeamSection() {
             <span className="text-[#1E3A5F]">MEET OUR</span> <span className="text-[#8CC63F]">TEAM</span>
           </h2>
           <div className="w-16 sm:w-20 h-1 bg-[#8CC63F] mx-auto mt-3 sm:mt-4 mb-4 sm:mb-6" />
-          <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base px-4 sm:px-0">
+          <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base px-4 sm:px-0 text-justify">
             Our dedicated team of professionals is committed to providing exceptional support services with compassion
             and expertise.
           </p>

@@ -93,6 +93,16 @@ const contactSchema = new mongoose.Schema(
       trim: true,
       maxlength: 200,
     },
+    whatsapp: {
+      type: String,
+      trim: true,
+      maxlength: 200,
+    },
+    telegram: {
+      type: String,
+      trim: true,
+      maxlength: 200,
+    },
     
     // Google Maps Integration
     mapEmbedCode: {
@@ -132,6 +142,13 @@ const contactSchema = new mongoose.Schema(
     officeDescription: {
       type: String,
       required: true,
+      trim: true,
+      maxlength: 500,
+    },
+    
+    // Service Areas
+    serviceAreas: {
+      type: String,
       trim: true,
       maxlength: 500,
     },

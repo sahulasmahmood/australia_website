@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useServices } from "@/hooks/use-services";
 import { Briefcase } from "lucide-react";
+import { HomeServicesSkeleton } from "@/components/ui/skeletons";
 
 // Helper function to strip HTML tags and decode entities
 const stripHtml = (html: string) => {
@@ -21,22 +22,7 @@ export function ServicesSection() {
   const { services, isLoading } = useServices(1, 8);
 
   if (isLoading) {
-    return (
-      <section id="services" className="py-12 sm:py-16 md:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-              <span className="text-[#8CC63F]">SERVICES</span>{" "}
-              <span className="text-[#1E3A5F]">WE OFFER</span>
-            </h2>
-            <div className="w-16 sm:w-20 h-1 bg-[#8CC63F] mx-auto mt-3 sm:mt-4" />
-          </div>
-          <div className="flex justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8CC63F]"></div>
-          </div>
-        </div>
-      </section>
-    );
+    return <HomeServicesSkeleton />;
   }
 
   if (!services || services.length === 0) {

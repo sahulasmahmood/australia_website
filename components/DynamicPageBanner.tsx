@@ -2,6 +2,7 @@
 
 import { PageBanner } from "@/components/page-banner";
 import { useBanner } from "@/hooks/use-banner";
+import { PageBannerSkeleton } from "@/components/ui/skeletons";
 
 interface DynamicPageBannerProps {
   pageKey: string;
@@ -17,12 +18,7 @@ export function DynamicPageBanner({
   const { banner, isLoading } = useBanner(pageKey);
 
   if (isLoading) {
-    return (
-      <PageBanner
-        title={title}
-        breadcrumb={breadcrumb}
-      />
-    );
+    return <PageBannerSkeleton />;
   }
 
   return (

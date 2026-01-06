@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useBanner } from "@/hooks/use-banner";
+import { HeroSkeleton } from "@/components/ui/skeletons";
 import Image from "next/image";
 
 const defaultSlides = [
@@ -53,6 +54,10 @@ export function DynamicHeroSection() {
   const prevSlide = () =>
     setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % totalSlides);
+
+  if (isLoading) {
+    return <HeroSkeleton />;
+  }
 
   return (
     <section className="relative min-h-[450px] sm:min-h-[500px] md:min-h-[550px] lg:min-h-[600px] flex items-center overflow-hidden">
@@ -120,89 +125,23 @@ export function DynamicHeroSection() {
               <Button
                 size="lg"
                 className="bg-[#8CC63F] hover:bg-[#7AB82F] text-white font-semibold px-6 sm:px-8 text-sm sm:text-base"
+                asChild
               >
-                Get Started
+                <a href="/contact">Get Started</a>
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 className="border-2 border-white text-white hover:bg-white hover:text-[#1E3A5F] font-semibold px-6 sm:px-8 bg-transparent text-sm sm:text-base"
+                asChild
               >
-                Learn More
+                <a href="/about">Learn More</a>
               </Button>
             </div>
           </div>
 
-          <div className="hidden md:flex justify-center items-center">
-            <div className="relative">
-              <svg viewBox="0 0 400 400" className="w-60 h-60 lg:w-80 lg:h-80">
-                <defs>
-                  <linearGradient
-                    id="ribbon1"
-                    x1="0%"
-                    y1="0%"
-                    x2="100%"
-                    y2="100%"
-                  >
-                    <stop offset="0%" stopColor="#8CC63F" />
-                    <stop offset="100%" stopColor="#7AB82F" />
-                  </linearGradient>
-                  <linearGradient
-                    id="ribbon2"
-                    x1="0%"
-                    y1="0%"
-                    x2="100%"
-                    y2="100%"
-                  >
-                    <stop offset="0%" stopColor="#FF9F43" />
-                    <stop offset="100%" stopColor="#F7B731" />
-                  </linearGradient>
-                  <linearGradient
-                    id="ribbon3"
-                    x1="0%"
-                    y1="0%"
-                    x2="100%"
-                    y2="100%"
-                  >
-                    <stop offset="0%" stopColor="#54A0FF" />
-                    <stop offset="100%" stopColor="#2E86DE" />
-                  </linearGradient>
-                </defs>
-
-                <circle cx="200" cy="120" r="45" fill="white" />
-                <ellipse cx="200" cy="220" rx="35" ry="60" fill="white" />
-
-                <path
-                  d="M160 150 Q100 180 80 250 Q60 320 120 350"
-                  stroke="url(#ribbon1)"
-                  strokeWidth="20"
-                  fill="none"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M240 150 Q300 180 320 250 Q340 320 280 350"
-                  stroke="url(#ribbon2)"
-                  strokeWidth="20"
-                  fill="none"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M200 280 Q200 320 160 360"
-                  stroke="url(#ribbon3)"
-                  strokeWidth="15"
-                  fill="none"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M200 280 Q200 320 240 360"
-                  stroke="url(#ribbon1)"
-                  strokeWidth="15"
-                  fill="none"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </div>
-          </div>
+          {/* Right side - can be used for additional content if needed */}
+          <div className="hidden lg:block" />
         </div>
 
         <div className="flex items-center justify-center gap-2 sm:gap-4 mt-6 sm:mt-8">

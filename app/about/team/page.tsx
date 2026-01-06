@@ -65,7 +65,7 @@ export default function TeamPage() {
               <span className="text-[#1E3A5F]">MEET </span>
               <span className="text-[#8CC63F]">OUR TEAM</span>
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-gray-600 max-w-2xl mx-auto text-justify">
               Our dedicated team of professionals is committed to providing exceptional support and making a positive
               difference in the lives of our participants.
             </p>
@@ -88,7 +88,7 @@ export default function TeamPage() {
                 <div className="p-6 text-center">
                   <h3 className="text-lg font-semibold text-[#8CC63F] mb-1">{member.name}</h3>
                   <p className="text-[#1E3A5F] font-medium text-sm mb-3">{member.role}</p>
-                  <p className="text-gray-600 text-sm">{member.bio}</p>
+                  <p className="text-gray-600 text-sm text-justify">{member.bio}</p>
                 </div>
               </div>
             ))}

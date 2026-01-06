@@ -249,7 +249,7 @@ export default function SEOManagerPage() {
 
       {/* SEO Pages List */}
       <Card className="shadow-lg">
-        <CardHeader className="bg-[#F0F9E8]">
+        <CardHeader className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#8CC63F]/10 p-4 border-b">
           <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
             <Search className="h-5 w-5 text-[#8CC63F]" />
             Page SEO Settings

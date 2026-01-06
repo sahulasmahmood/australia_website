@@ -25,7 +25,7 @@ export function SupportedLivingSection() {
             </h2>
             <div className="w-16 sm:w-20 h-1 bg-[#8CC63F] mb-4 sm:mb-6" />
 
-            <p className="text-gray-700 mb-6 sm:mb-8 leading-relaxed text-sm sm:text-base">
+            <p className="text-gray-700 mb-6 sm:mb-8 leading-relaxed text-sm sm:text-base text-justify">
               Our Supported Independent Living (SIL) services are designed to help individuals with disabilities live as
               independently as possible in their own homes. We provide tailored support that respects your choices and
               promotes your wellbeing.
@@ -42,8 +42,8 @@ export function SupportedLivingSection() {
               ))}
             </div>
 
-            <Button className="w-full sm:w-auto bg-transparent border-2 border-[#8CC63F] text-[#8CC63F] hover:bg-[#8CC63F] hover:text-white font-semibold px-6 sm:px-8">
-              READ MORE
+            <Button className="w-full sm:w-auto bg-transparent border-2 border-[#8CC63F] text-[#8CC63F] hover:bg-[#8CC63F] hover:text-white font-semibold px-6 sm:px-8" asChild>
+              <a href="/support-model">READ MORE</a>
             </Button>
           </div>
 
