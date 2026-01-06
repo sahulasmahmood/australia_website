@@ -103,21 +103,21 @@ export default function ForgotPassword() {
       <TopBar />
       <Header />
 
-      <section className="flex-1 flex items-center justify-center py-12 sm:py-16 bg-[#F5F5F5]">
+      <section className="flex-1 flex items-center justify-center py-12 sm:py-16 bg-light-gray">
         <div className="w-full max-w-md mx-auto px-4 sm:px-6">
           <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
             <div className="flex justify-center mb-6">
               <Logo />
             </div>
 
-            <h1 className="text-2xl font-bold text-center text-[#1E3A5F] mb-2">Forgot Password</h1>
+            <h1 className="text-2xl font-bold text-center text-secondary mb-2">Forgot Password</h1>
             <p className="text-gray-600 text-center text-sm mb-8">
               Enter your email address and we'll send you a link to reset your password
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-secondary mb-2">
                   Email Address
                 </label>
                 <div className="relative">
@@ -130,7 +130,7 @@ export default function ForgotPassword() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={isLoading}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all disabled:opacity-50"
                     placeholder="you@example.com"
                   />
                 </div>
@@ -139,7 +139,7 @@ export default function ForgotPassword() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-[#8CC63F] text-white font-medium py-3 rounded hover:bg-[#7AB82F] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full bg-primary text-white font-medium py-3 rounded hover:bg-[#7AB82F] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isLoading ? (
                   <>
@@ -154,7 +154,7 @@ export default function ForgotPassword() {
               <div className="text-center">
                 <Link
                   href="/login"
-                  className="inline-flex items-center justify-center text-sm text-[#8CC63F] hover:underline"
+                  className="inline-flex items-center justify-center text-sm text-primary hover:underline"
                 >
                   <ArrowLeft className="h-4 w-4 mr-1" />
                   Back to Login

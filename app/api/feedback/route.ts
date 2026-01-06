@@ -98,18 +98,18 @@ async function sendAdminFeedbackNotification(smtpConfig: any, feedbackData: any)
 
   const emailHTML = `
     <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; background-color: #f8fafc;">
-      <div style="background: linear-gradient(135deg, #8CC63F 0%, #6BA32D 100%); padding: 30px; text-align: center;">
+      <div style="background: linear-gradient(135deg, primary 0%, #6BA32D 100%); padding: 30px; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 28px;">New Feedback Received</h1>
         <p style="color: #E8F5E0; margin: 10px 0 0 0; font-size: 16px;">Elegant Care Service Admin Panel</p>
       </div>
       
       <div style="padding: 30px; background-color: white; margin: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-        <div style="border-left: 4px solid #8CC63F; padding-left: 20px; margin-bottom: 30px;">
+        <div style="border-left: 4px solid primary; padding-left: 20px; margin-bottom: 30px;">
           <h2 style="color: #1f2937; margin: 0 0 10px 0;">Feedback Information</h2>
           <div style="background-color: #F0F9E8; padding: 15px; border-radius: 8px;">
-            <p style="margin: 5px 0;"><strong>Status:</strong> <span style="background-color: #8CC63F; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">NEW FEEDBACK</span></p>
+            <p style="margin: 5px 0;"><strong>Status:</strong> <span style="background-color: primary; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">NEW FEEDBACK</span></p>
             <p style="margin: 5px 0;"><strong>Type:</strong> <span style="background-color: ${typeStyle.color}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">${typeStyle.label.toUpperCase()}</span></p>
-            <p style="margin: 5px 0;"><strong>Anonymous:</strong> <span style="background-color: ${feedbackData.isAnonymous ? '#6B7280' : '#8CC63F'}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">${feedbackData.isAnonymous ? 'YES' : 'NO'}</span></p>
+            <p style="margin: 5px 0;"><strong>Anonymous:</strong> <span style="background-color: ${feedbackData.isAnonymous ? '#6B7280' : 'primary'}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">${feedbackData.isAnonymous ? 'YES' : 'NO'}</span></p>
           </div>
         </div>
 
@@ -117,8 +117,8 @@ async function sendAdminFeedbackNotification(smtpConfig: any, feedbackData: any)
         <div style="margin-bottom: 30px;">
           <h3 style="color: #1f2937; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">Contact Details</h3>
           <p style="margin: 10px 0;"><strong>Name:</strong> ${feedbackData.name || 'Not provided'}</p>
-          ${feedbackData.email ? `<p style="margin: 10px 0;"><strong>Email:</strong> <a href="mailto:${feedbackData.email}" style="color: #8CC63F;">${feedbackData.email}</a></p>` : ''}
-          ${feedbackData.phone ? `<p style="margin: 10px 0;"><strong>Phone:</strong> <a href="tel:${feedbackData.phone}" style="color: #8CC63F;">${feedbackData.phone}</a></p>` : ''}
+          ${feedbackData.email ? `<p style="margin: 10px 0;"><strong>Email:</strong> <a href="mailto:${feedbackData.email}" style="color: primary;">${feedbackData.email}</a></p>` : ''}
+          ${feedbackData.phone ? `<p style="margin: 10px 0;"><strong>Phone:</strong> <a href="tel:${feedbackData.phone}" style="color: primary;">${feedbackData.phone}</a></p>` : ''}
         </div>
         ` : `
         <div style="margin-bottom: 30px;">
@@ -171,7 +171,7 @@ async function sendCustomerFeedbackConfirmation(smtpConfig: any, feedbackData: a
 
   const emailHTML = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8fafc;">
-      <div style="background: linear-gradient(135deg, #8CC63F 0%, #6BA32D 100%); padding: 30px; text-align: center;">
+      <div style="background: linear-gradient(135deg, primary 0%, #6BA32D 100%); padding: 30px; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 28px;">Thank You for Your Feedback!</h1>
         <p style="color: #E8F5E0; margin: 10px 0 0 0; font-size: 16px;">Elegant Care Service</p>
       </div>

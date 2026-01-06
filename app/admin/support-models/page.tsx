@@ -459,7 +459,7 @@ export default function SupportModelsPage() {
               isActive={currentPage === i}
               className={`cursor-pointer ${
                 currentPage === i
-                  ? "bg-[#8CC63F] text-white border-0 hover:bg-[#7AB52F]"
+                  ? "bg-primary text-white border-0 hover:bg-primary-hover"
                   : ""
               }`}
             >
@@ -477,7 +477,7 @@ export default function SupportModelsPage() {
             isActive={currentPage === 1}
             className={`cursor-pointer ${
               currentPage === 1
-                ? "bg-[#8CC63F] text-white border-0 hover:bg-[#7AB52F]"
+                ? "bg-primary text-white border-0 hover:bg-primary-hover"
                 : ""
             }`}
           >
@@ -505,7 +505,7 @@ export default function SupportModelsPage() {
               isActive={currentPage === i}
               className={`cursor-pointer ${
                 currentPage === i
-                  ? "bg-[#8CC63F] text-white border-0 hover:bg-[#7AB52F]"
+                  ? "bg-primary text-white border-0 hover:bg-primary-hover"
                   : ""
               }`}
             >
@@ -530,7 +530,7 @@ export default function SupportModelsPage() {
             isActive={currentPage === totalPages}
             className={`cursor-pointer ${
               currentPage === totalPages
-                ? "bg-[#8CC63F] text-white border-0 hover:bg-[#7AB52F]"
+                ? "bg-primary text-white border-0 hover:bg-primary-hover"
                 : ""
             }`}
           >
@@ -561,7 +561,7 @@ export default function SupportModelsPage() {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8CC63F] mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-gray-600">Loading support models...</p>
         </div>
       </div>
@@ -573,7 +573,7 @@ export default function SupportModelsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-[#1E3A5F]">
+          <h1 className="text-4xl font-bold text-secondary">
             Support Models Manager
           </h1>
           <p className="text-gray-600 mt-2">
@@ -602,7 +602,7 @@ export default function SupportModelsPage() {
             });
             setIsAddModalOpen(true);
           }}
-          className="bg-[#8CC63F] hover:bg-[#7AB52F] text-white"
+          className="bg-primary hover:bg-primary-hover text-white"
         >
           <Plus className="h-4 w-4 mr-2" />
           Add New Support Model
@@ -615,7 +615,7 @@ export default function SupportModelsPage() {
           <div className="bg-gray-50 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-4">
             <Briefcase className="h-8 w-8 text-gray-400" />
           </div>
-          <h3 className="text-lg font-semibold text-[#1E3A5F] mb-1">
+          <h3 className="text-lg font-semibold text-secondary mb-1">
             No support models found
           </h3>
           <p className="text-gray-500 mb-6">
@@ -643,7 +643,7 @@ export default function SupportModelsPage() {
               });
               setIsAddModalOpen(true);
             }}
-            className="bg-[#8CC63F] hover:bg-[#7AB52F] text-white"
+            className="bg-primary hover:bg-primary-hover text-white"
           >
             <Plus className="h-4 w-4 mr-2" />
             Add New Support Model
@@ -695,7 +695,7 @@ export default function SupportModelsPage() {
                   <div className="flex-1 flex justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-2xl font-semibold text-[#1E3A5F]">
+                        <h3 className="text-2xl font-semibold text-secondary">
                           {model.title}
                         </h3>
                         <Badge
@@ -800,7 +800,7 @@ export default function SupportModelsPage() {
       >
         <DialogContent className="!max-w-6xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl text-[#1E3A5F]">
+            <DialogTitle className="text-2xl text-secondary">
               {editingId ? "Edit Support Model" : "Add New Support Model"}
             </DialogTitle>
           </DialogHeader>
@@ -808,7 +808,7 @@ export default function SupportModelsPage() {
           <div className="space-y-6">
             {/* Basic Information */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#1E3A5F]">
+              <h3 className="text-lg font-semibold text-secondary">
                 Basic Information
               </h3>
               <div className="grid md:grid-cols-2 gap-4">
@@ -884,7 +884,7 @@ export default function SupportModelsPage() {
 
             {/* Image */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#1E3A5F]">Image</h3>
+              <h3 className="text-lg font-semibold text-secondary">Image</h3>
               <div>
                 <Label>Cover Image *</Label>
                 <div className="mt-2 border-2 border-dashed rounded-lg p-4">
@@ -917,7 +917,7 @@ export default function SupportModelsPage() {
 
             {/* Gallery Images */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#1E3A5F]">
+              <h3 className="text-lg font-semibold text-secondary">
                 Gallery Images (Optional)
               </h3>
               <div>
@@ -967,7 +967,7 @@ export default function SupportModelsPage() {
 
             {/* Settings */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#1E3A5F]">Settings</h3>
+              <h3 className="text-lg font-semibold text-secondary">Settings</h3>
               <div>
                 <Label>Status</Label>
                 <Select
@@ -989,7 +989,7 @@ export default function SupportModelsPage() {
 
             {/* SEO */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#1E3A5F]">
+              <h3 className="text-lg font-semibold text-secondary">
                 SEO (Optional)
               </h3>
               <div>
@@ -1041,7 +1041,7 @@ export default function SupportModelsPage() {
                 type="button"
                 onClick={handleSave}
                 disabled={isSaving}
-                className="bg-[#8CC63F] hover:bg-[#7AB52F] text-white"
+                className="bg-primary hover:bg-primary-hover text-white"
               >
                 {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {editingId ? "Update Model" : "Save Model"}

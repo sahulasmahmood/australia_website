@@ -276,7 +276,7 @@ export default function EmailSMTP() {
       {/* SMTP Configuration */}
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h4 className="text-lg font-semibold text-[#1E3A5F]">
+          <h4 className="text-lg font-semibold text-secondary">
             SMTP Email Configuration
           </h4>
           {connectionStatus.status !== "never" && (
@@ -422,7 +422,7 @@ export default function EmailSMTP() {
               onClick={testEmailConnection}
               disabled={isTestingConnection || loading}
               variant="outline"
-              className="border-[#8CC63F] text-[#8CC63F] hover:bg-[#8CC63F] hover:text-white"
+              className="border-primary text-primary hover:bg-primary hover:text-white"
             >
               {isTestingConnection ? (
                 <>
@@ -448,7 +448,7 @@ export default function EmailSMTP() {
           <Button
             onClick={handleEmailSave}
             disabled={loading}
-            className="bg-[#8CC63F] hover:bg-[#7AB52F] text-white"
+            className="bg-primary hover:bg-primary-hover text-white"
           >
             {loading ? (
               <>
@@ -467,7 +467,7 @@ export default function EmailSMTP() {
 
       {/* Test Email Section */}
       <div className="space-y-6">
-        <h4 className="text-lg font-semibold text-[#1E3A5F]">
+        <h4 className="text-lg font-semibold text-secondary">
           Send Test Email
         </h4>
 
@@ -513,7 +513,7 @@ export default function EmailSMTP() {
             <Button
               onClick={sendTestEmail}
               disabled={isSendingTestEmail || !testEmailData.email}
-              className="bg-[#1E3A5F] hover:bg-[#152B47] text-white w-full"
+              className="bg-secondary hover:bg-[#152B47] text-white w-full"
             >
               <Send className="h-4 w-4 mr-2" />
               {isSendingTestEmail ? "Sending..." : "Send Test Email"}

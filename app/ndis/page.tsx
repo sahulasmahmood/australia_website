@@ -48,8 +48,8 @@ export default function NdisPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold mb-4">
-              <span className="text-[#1E3A5F]">UNDERSTANDING </span>
-              <span className="text-[#8CC63F]">THE NDIS</span>
+              <span className="text-secondary">UNDERSTANDING </span>
+              <span className="text-primary">THE NDIS</span>
             </h2>
             <p className="text-gray-600 leading-relaxed text-justify">
               The National Disability Insurance Scheme (NDIS) is a way of providing support for Australians with
@@ -59,31 +59,31 @@ export default function NdisPage() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-[#F5F5F5] p-6 rounded-lg text-center">
-              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-[#8CC63F]/10 rounded-full">
-                <Users className="w-8 h-8 text-[#8CC63F]" />
+            <div className="bg-light-gray p-6 rounded-lg text-center">
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-primary/10 rounded-full">
+                <Users className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2">Who We Support</h3>
+              <h3 className="text-lg font-semibold text-secondary mb-2">Who We Support</h3>
               <p className="text-gray-600 text-sm text-justify">
                 We support NDIS participants of all ages with a wide range of disabilities across South Australia.
               </p>
             </div>
 
-            <div className="bg-[#F5F5F5] p-6 rounded-lg text-center">
-              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-[#8CC63F]/10 rounded-full">
-                <FileText className="w-8 h-8 text-[#8CC63F]" />
+            <div className="bg-light-gray p-6 rounded-lg text-center">
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-primary/10 rounded-full">
+                <FileText className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2">Registered Provider</h3>
+              <h3 className="text-lg font-semibold text-secondary mb-2">Registered Provider</h3>
               <p className="text-gray-600 text-sm text-justify">
                 We are a registered NDIS provider, meaning we meet strict quality and safety standards.
               </p>
             </div>
 
-            <div className="bg-[#F5F5F5] p-6 rounded-lg text-center sm:col-span-2 lg:col-span-1">
-              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-[#8CC63F]/10 rounded-full">
-                <HelpCircle className="w-8 h-8 text-[#8CC63F]" />
+            <div className="bg-light-gray p-6 rounded-lg text-center sm:col-span-2 lg:col-span-1">
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-primary/10 rounded-full">
+                <HelpCircle className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2">Plan Management</h3>
+              <h3 className="text-lg font-semibold text-secondary mb-2">Plan Management</h3>
               <p className="text-gray-600 text-sm text-justify">
                 Whether you're self-managed, plan-managed, or agency-managed, we can work with you.
               </p>
@@ -93,11 +93,11 @@ export default function NdisPage() {
       </section>
 
       {/* How to Get Started */}
-      <section className="py-12 sm:py-16 md:py-20 bg-[#F5F5F5]">
+      <section className="py-12 sm:py-16 md:py-20 bg-light-gray">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-center">
-            <span className="text-[#1E3A5F]">HOW TO </span>
-            <span className="text-[#8CC63F]">GET STARTED</span>
+            <span className="text-secondary">HOW TO </span>
+            <span className="text-primary">GET STARTED</span>
           </h2>
 
           <div className="grid md:grid-cols-4 gap-6">
@@ -117,8 +117,8 @@ export default function NdisPage() {
             ].map((item) => (
               <div key={item.step} className="relative">
                 <div className="bg-white p-6 rounded-lg text-center h-full">
-                  <div className="text-4xl font-bold text-[#8CC63F] mb-3">{item.step}</div>
-                  <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2">{item.title}</h3>
+                  <div className="text-4xl font-bold text-primary mb-3">{item.step}</div>
+                  <h3 className="text-lg font-semibold text-secondary mb-2">{item.title}</h3>
                   <p className="text-gray-600 text-sm text-justify">{item.desc}</p>
                 </div>
               </div>
@@ -131,15 +131,15 @@ export default function NdisPage() {
       <section className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-center">
-            <span className="text-[#1E3A5F]">FREQUENTLY ASKED </span>
-            <span className="text-[#8CC63F]">QUESTIONS</span>
+            <span className="text-secondary">FREQUENTLY ASKED </span>
+            <span className="text-primary">QUESTIONS</span>
           </h2>
 
           <div className="space-y-4">
             {faqs.map((faq) => (
-              <div key={faq.question} className="bg-[#F5F5F5] rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2 flex items-start gap-2">
-                  <div className="mt-0.5 p-1 bg-[#8CC63F] rounded-full flex-shrink-0">
+              <div key={faq.question} className="bg-light-gray rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-secondary mb-2 flex items-start gap-2">
+                  <div className="mt-0.5 p-1 bg-primary rounded-full flex-shrink-0">
                     <Check className="h-3 w-3 text-white" />
                   </div>
                   {faq.question}
@@ -152,7 +152,7 @@ export default function NdisPage() {
           <div className="mt-8 text-center">
             <Link
               href="/contact"
-              className="inline-block bg-[#8CC63F] text-white font-medium px-8 py-3 rounded hover:bg-[#7AB82F] transition-colors"
+              className="inline-block bg-primary text-white font-medium px-8 py-3 rounded hover:bg-[#7AB82F] transition-colors"
             >
               Contact Us For More Information
             </Link>

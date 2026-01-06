@@ -67,7 +67,7 @@ export default function FloatingContactButtons() {
           {contactInfo?.primaryPhone && (
             <Button
               onClick={handleCallClick}
-              className="bg-[#1E3A5F] hover:bg-[#2c5282] text-white rounded-full w-12 h-12 shadow-lg"
+              className="bg-secondary hover:bg-secondary-hover text-white rounded-full w-12 h-12 shadow-lg"
               aria-label="Call us"
             >
               <Phone className="h-5 w-5" />
@@ -81,7 +81,7 @@ export default function FloatingContactButtons() {
           className={`rounded-full w-14 h-14 shadow-2xl transition-all duration-300 ${
             isExpanded 
               ? 'bg-gray-600 hover:bg-gray-700 rotate-0' 
-              : 'bg-[#8CC63F] hover:bg-[#7AB52F] animate-pulse'
+              : 'bg-primary hover:bg-primary-hover animate-pulse'
           }`}
           aria-label={isExpanded ? "Close contact menu" : "Open contact menu"}
           aria-expanded={isExpanded}
@@ -120,11 +120,11 @@ export default function FloatingContactButtons() {
           
           {showWhatsAppTooltip && (
             <div 
-              className="absolute right-14 sm:right-16 top-1/2 transform -translate-y-1/2 bg-[#1E3A5F] text-white px-3 py-2 rounded-lg text-xs sm:text-sm whitespace-nowrap shadow-lg"
+              className="absolute right-14 sm:right-16 top-1/2 transform -translate-y-1/2 bg-secondary text-white px-3 py-2 rounded-lg text-xs sm:text-sm whitespace-nowrap shadow-lg"
               role="tooltip"
             >
               WhatsApp: {contactInfo.whatsappNumber}
-              <div className="absolute right-0 top-1/2 transform translate-x-1 -translate-y-1/2 w-0 h-0 border-l-4 border-l-[#1E3A5F] border-t-4 border-t-transparent border-b-4 border-b-transparent" aria-hidden="true"></div>
+              <div className="absolute right-0 top-1/2 transform translate-x-1 -translate-y-1/2 w-0 h-0 border-l-4 border-l-secondary border-t-4 border-t-transparent border-b-4 border-b-transparent" aria-hidden="true"></div>
             </div>
           )}
         </div>
@@ -139,7 +139,7 @@ export default function FloatingContactButtons() {
             onMouseLeave={() => setShowCallTooltip(false)}
             onFocus={() => setShowCallTooltip(true)}
             onBlur={() => setShowCallTooltip(false)}
-            className="bg-[#1E3A5F] hover:bg-[#2c5282] text-white rounded-full w-12 h-12 sm:w-14 sm:h-14 shadow-2xl hover:scale-110 transition-all duration-300 hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+            className="bg-secondary hover:bg-secondary-hover text-white rounded-full w-12 h-12 sm:w-14 sm:h-14 shadow-2xl hover:scale-110 transition-all duration-300 hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
             aria-label={`Call us: ${contactInfo.primaryPhone}`}
           >
             <Phone className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -147,11 +147,11 @@ export default function FloatingContactButtons() {
           
           {showCallTooltip && (
             <div 
-              className="absolute right-14 sm:right-16 top-1/2 transform -translate-y-1/2 bg-[#1E3A5F] text-white px-3 py-2 rounded-lg text-xs sm:text-sm whitespace-nowrap shadow-lg"
+              className="absolute right-14 sm:right-16 top-1/2 transform -translate-y-1/2 bg-secondary text-white px-3 py-2 rounded-lg text-xs sm:text-sm whitespace-nowrap shadow-lg"
               role="tooltip"
             >
               Call: {contactInfo.primaryPhone}
-              <div className="absolute right-0 top-1/2 transform translate-x-1 -translate-y-1/2 w-0 h-0 border-l-4 border-l-[#1E3A5F] border-t-4 border-t-transparent border-b-4 border-b-transparent" aria-hidden="true"></div>
+              <div className="absolute right-0 top-1/2 transform translate-x-1 -translate-y-1/2 w-0 h-0 border-l-4 border-l-secondary border-t-4 border-t-transparent border-b-4 border-b-transparent" aria-hidden="true"></div>
             </div>
           )}
         </div>

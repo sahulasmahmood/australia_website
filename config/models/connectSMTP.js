@@ -55,10 +55,10 @@ export const sendTestEmail = async (smtpConfig, testEmailData) => {
       subject: 'SMTP Test Email - Elegant Care Service',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #8CC63F;">SMTP Test Email</h2>
+          <h2 style="color: primary;">SMTP Test Email</h2>
           <p><strong>From:</strong> ${smtpConfig.fromName}</p>
           <p><strong>Message:</strong></p>
-          <div style="background-color: #F0F9E8; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #8CC63F;">
+          <div style="background-color: #F0F9E8; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid primary;">
             ${testEmailData.message}
           </div>
           <p style="color: #6b7280; font-size: 14px;">

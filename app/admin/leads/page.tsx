@@ -156,7 +156,7 @@ export default function LeadManager() {
             <PaginationLink
               onClick={() => handlePageChange(i)}
               isActive={currentPage === i}
-              className={`cursor-pointer ${currentPage === i ? "bg-[#8CC63F] text-white hover:bg-[#7AB82F] hover:text-white border-0" : ""}`}
+              className={`cursor-pointer ${currentPage === i ? "bg-primary text-white hover:bg-[#7AB82F] hover:text-white border-0" : ""}`}
             >
               {i}
             </PaginationLink>
@@ -318,10 +318,10 @@ export default function LeadManager() {
   }
 
   const stats = [
-    { title: "Total Enquiries", value: statsData?.total || 0, icon: Users, color: "text-[#1E3A5F]" },
-    { title: "New Leads", value: statsData?.newLeads || 0, icon: AlertCircle, color: "text-[#1E3A5F]" },
-    { title: "Active Consulting", value: statsData?.consulting || 0, icon: Activity, color: "text-[#1E3A5F]" },
-    { title: "High Priority", value: statsData?.highPriority || 0, icon: Star, color: "text-[#1E3A5F]" },
+    { title: "Total Enquiries", value: statsData?.total || 0, icon: Users, color: "text-secondary" },
+    { title: "New Leads", value: statsData?.newLeads || 0, icon: AlertCircle, color: "text-secondary" },
+    { title: "Active Consulting", value: statsData?.consulting || 0, icon: Activity, color: "text-secondary" },
+    { title: "High Priority", value: statsData?.highPriority || 0, icon: Star, color: "text-secondary" },
   ]
 
 
@@ -330,7 +330,7 @@ export default function LeadManager() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-[#1E3A5F]">Lead Manager</h1>
+          <h1 className="text-3xl font-bold text-secondary">Lead Manager</h1>
           <p className="text-gray-600 mt-1">Manage enquiries and potential clients for Elegant Care</p>
         </div>
         <div className="flex gap-3">
@@ -343,7 +343,7 @@ export default function LeadManager() {
               setFormData({ firstName: "", lastName: "", email: "", phone: "", subject: "", message: "", status: "new", priority: "medium", source: "website", estimatedCost: "", notes: "" })
               setIsAddModalOpen(true)
             }}
-            className="bg-[#8CC63F] hover:bg-[#7AB82F] text-white"
+            className="bg-primary hover:bg-[#7AB82F] text-white"
           >
             <UserPlus className="h-4 w-4 mr-2" />
             Add New Lead
@@ -359,7 +359,7 @@ export default function LeadManager() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-500">{stat.title}</p>
-                  <h3 className="text-3xl font-bold mt-1 text-[#1E3A5F]">{stat.value}</h3>
+                  <h3 className="text-3xl font-bold mt-1 text-secondary">{stat.value}</h3>
                 </div>
                 <div className={`${stat.color}`}>
                   <stat.icon className="h-6 w-6" />
@@ -418,9 +418,9 @@ export default function LeadManager() {
 
       {/* Table */}
       <Card className="border-0 shadow-lg">
-        <CardHeader className="bg-linear-to-r from-[#1E3A5F]/10 to-[#8CC63F]/10 p-4 border-b">
-          <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
-            <Users className="h-5 w-5 text-[#8CC63F]" />
+        <CardHeader className="bg-linear-to-r from-secondary/10 to-primary/10 p-4 border-b">
+          <CardTitle className="flex items-center gap-2 text-secondary">
+            <Users className="h-5 w-5 text-primary" />
             Enquiries List
           </CardTitle>
         </CardHeader>
@@ -429,20 +429,20 @@ export default function LeadManager() {
             <Table>
               <TableHeader>
                 <TableRow className="bg-gray-50">
-                  <TableHead className="font-semibold text-[#1E3A5F]">Name & Contact</TableHead>
-                  <TableHead className="font-semibold text-[#1E3A5F]">Subject</TableHead>
-                  <TableHead className="font-semibold text-[#1E3A5F]">Status</TableHead>
-                  <TableHead className="font-semibold text-[#1E3A5F]">Priority</TableHead>
-                  <TableHead className="font-semibold text-[#1E3A5F]">Est. Cost</TableHead>
-                  <TableHead className="font-semibold text-[#1E3A5F]">Date</TableHead>
-                  <TableHead className="text-right font-semibold text-[#1E3A5F]">Actions</TableHead>
+                  <TableHead className="font-semibold text-secondary">Name & Contact</TableHead>
+                  <TableHead className="font-semibold text-secondary">Subject</TableHead>
+                  <TableHead className="font-semibold text-secondary">Status</TableHead>
+                  <TableHead className="font-semibold text-secondary">Priority</TableHead>
+                  <TableHead className="font-semibold text-secondary">Est. Cost</TableHead>
+                  <TableHead className="font-semibold text-secondary">Date</TableHead>
+                  <TableHead className="text-right font-semibold text-secondary">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {isLoading ? (
                   <TableRow>
                     <TableCell colSpan={7} className="h-48 text-center">
-                      <Loader2 className="h-8 w-8 animate-spin text-[#8CC63F] mx-auto mb-2" />
+                      <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto mb-2" />
                       <p className="text-gray-500">Loading enquiries...</p>
                     </TableCell>
                   </TableRow>
@@ -457,7 +457,7 @@ export default function LeadManager() {
                     <TableRow key={lead._id} className="hover:bg-gray-50">
                       <TableCell className="py-4">
                         <div className="flex flex-col">
-                          <span className="font-semibold text-[#1E3A5F]">{lead.firstName} {lead.lastName}</span>
+                          <span className="font-semibold text-secondary">{lead.firstName} {lead.lastName}</span>
                           <span className="text-xs text-gray-500">{lead.email}</span>
                           {lead.phone && <span className="text-xs text-gray-400">{lead.phone}</span>}
                         </div>
@@ -490,7 +490,7 @@ export default function LeadManager() {
                       </TableCell>
                       <TableCell className="text-right py-4">
                         <div className="flex justify-end gap-1">
-                          <Button variant="ghost" size="icon" onClick={() => handleViewLead(lead)} className="h-8 w-8 text-[#1E3A5F] hover:text-blue-700 hover:bg-blue-50">
+                          <Button variant="ghost" size="icon" onClick={() => handleViewLead(lead)} className="h-8 w-8 text-secondary hover:text-blue-700 hover:bg-blue-50">
                             <Eye className="h-4 w-4" />
                           </Button>
                           <Button variant="ghost" size="icon" onClick={() => handleEditLead(lead)} className="h-8 w-8 text-amber-600 hover:text-amber-700 hover:bg-amber-50">
@@ -527,8 +527,8 @@ export default function LeadManager() {
       <Dialog open={isAddModalOpen} onOpenChange={(open) => { if (!open) { setIsAddModalOpen(false); setIsFormSubmitted(false) } }}>
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-[#1E3A5F] flex items-center gap-2">
-              <UserPlus className="h-6 w-6 text-[#8CC63F]" />
+            <DialogTitle className="text-2xl font-bold text-secondary flex items-center gap-2">
+              <UserPlus className="h-6 w-6 text-primary" />
               Add Manual Lead
             </DialogTitle>
           </DialogHeader>
@@ -662,7 +662,7 @@ export default function LeadManager() {
           </div>
           <div className="flex gap-3 justify-end pt-4 border-t">
             <Button variant="outline" onClick={() => { setIsAddModalOpen(false); setIsFormSubmitted(false) }}>Cancel</Button>
-            <Button onClick={handleAddLead} disabled={isSaving} className="bg-[#8CC63F] hover:bg-[#7AB82F] text-white min-w-[120px]">
+            <Button onClick={handleAddLead} disabled={isSaving} className="bg-primary hover:bg-[#7AB82F] text-white min-w-[120px]">
               {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : "Add Lead"}
             </Button>
           </div>
@@ -674,8 +674,8 @@ export default function LeadManager() {
       <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-[#1E3A5F] flex items-center gap-2">
-              <Edit className="h-6 w-6 text-[#8CC63F]" />
+            <DialogTitle className="text-2xl font-bold text-secondary flex items-center gap-2">
+              <Edit className="h-6 w-6 text-primary" />
               Update Lead Status & Details
             </DialogTitle>
             <p className="text-gray-600 text-sm mt-2">
@@ -687,7 +687,7 @@ export default function LeadManager() {
               {/* Read-only Customer Information */}
               <div className="bg-gray-50 p-6 rounded-lg border">
                 <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                  <User className="h-5 w-5 text-[#1E3A5F]" />
+                  <User className="h-5 w-5 text-secondary" />
                   Customer Information (Read-only)
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -721,9 +721,9 @@ export default function LeadManager() {
               </div>
 
               {/* Editable Administrative Fields */}
-              <div className="bg-[#8CC63F]/10 p-6 rounded-lg border border-[#8CC63F]/30">
+              <div className="bg-primary/10 p-6 rounded-lg border border-primary/30">
                 <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                  <Settings className="h-5 w-5 text-[#8CC63F]" />
+                  <Settings className="h-5 w-5 text-primary" />
                   Administrative Details (Editable)
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -817,7 +817,7 @@ export default function LeadManager() {
             <Button variant="outline" onClick={() => setIsEditModalOpen(false)} disabled={isSaving}>
               Cancel
             </Button>
-            <Button onClick={handleUpdateLead} disabled={isSaving} className="bg-[#8CC63F] hover:bg-[#7AB82F] text-white min-w-[140px]">
+            <Button onClick={handleUpdateLead} disabled={isSaving} className="bg-primary hover:bg-[#7AB82F] text-white min-w-[140px]">
               {isSaving ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />

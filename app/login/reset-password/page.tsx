@@ -151,21 +151,21 @@ function ResetPasswordForm() {
   )
 
   return (
-    <section className="flex-1 flex items-center justify-center py-12 sm:py-16 bg-[#F5F5F5]">
+    <section className="flex-1 flex items-center justify-center py-12 sm:py-16 bg-light-gray">
       <div className="w-full max-w-md mx-auto px-4 sm:px-6">
         <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
           <div className="flex justify-center mb-6">
             <Logo />
           </div>
 
-          <h1 className="text-2xl font-bold text-center text-[#1E3A5F] mb-2">Reset Password</h1>
+          <h1 className="text-2xl font-bold text-center text-secondary mb-2">Reset Password</h1>
           <p className="text-gray-600 text-center text-sm mb-8">
             Enter your new password below
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="newPassword" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+              <label htmlFor="newPassword" className="block text-sm font-medium text-secondary mb-2">
                 New Password
               </label>
               <div className="relative">
@@ -178,7 +178,7 @@ function ResetPasswordForm() {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   disabled={isLoading}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50"
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all disabled:opacity-50"
                   placeholder="Enter new password"
                 />
                 <button
@@ -193,7 +193,7 @@ function ResetPasswordForm() {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-secondary mb-2">
                 Confirm Password
               </label>
               <div className="relative">
@@ -206,7 +206,7 @@ function ResetPasswordForm() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   disabled={isLoading}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50"
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all disabled:opacity-50"
                   placeholder="Confirm new password"
                 />
                 <button
@@ -221,7 +221,7 @@ function ResetPasswordForm() {
             </div>
 
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-2">
-              <p className="text-sm font-medium text-[#1E3A5F] mb-2">Password Requirements:</p>
+              <p className="text-sm font-medium text-secondary mb-2">Password Requirements:</p>
               <PasswordRequirement met={passwordStrength.length} text="At least 8 characters" />
               <PasswordRequirement met={passwordStrength.uppercase} text="One uppercase letter" />
               <PasswordRequirement met={passwordStrength.lowercase} text="One lowercase letter" />
@@ -232,7 +232,7 @@ function ResetPasswordForm() {
             <button
               type="submit"
               disabled={isLoading || !token}
-              className="w-full bg-[#8CC63F] text-white font-medium py-3 rounded hover:bg-[#7AB82F] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-primary text-white font-medium py-3 rounded hover:bg-[#7AB82F] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>
@@ -247,7 +247,7 @@ function ResetPasswordForm() {
             <div className="text-center">
               <Link
                 href="/login"
-                className="text-sm text-[#8CC63F] hover:underline"
+                className="text-sm text-primary hover:underline"
               >
                 Back to Login
               </Link>
@@ -265,8 +265,8 @@ export default function ResetPassword() {
       <TopBar />
       <Header />
       <Suspense fallback={
-        <section className="flex-1 flex items-center justify-center py-12 sm:py-16 bg-[#F5F5F5]">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8CC63F]"></div>
+        <section className="flex-1 flex items-center justify-center py-12 sm:py-16 bg-light-gray">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
         </section>
       }>
         <ResetPasswordForm />

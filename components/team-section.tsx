@@ -33,13 +33,13 @@ const teamMembers = [
 
 export function TeamSection() {
   return (
-    <section className="py-12 sm:py-16 md:py-20 bg-[#F5F5F5]">
+    <section className="py-12 sm:py-16 md:py-20 bg-light-gray">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-            <span className="text-[#1E3A5F]">MEET OUR</span> <span className="text-[#8CC63F]">TEAM</span>
+            <span className="text-secondary">MEET OUR</span> <span className="text-primary">TEAM</span>
           </h2>
-          <div className="w-16 sm:w-20 h-1 bg-[#8CC63F] mx-auto mt-3 sm:mt-4 mb-4 sm:mb-6" />
+          <div className="w-16 sm:w-20 h-1 bg-primary mx-auto mt-3 sm:mt-4 mb-4 sm:mb-6" />
           <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base px-4 sm:px-0 text-justify">
             Our dedicated team of professionals is committed to providing exceptional support services with compassion
             and expertise.
@@ -54,7 +54,7 @@ export function TeamSection() {
             >
               <div className="mb-3 sm:mb-4 flex justify-center">
                 <div className="relative">
-                  <div className="w-20 h-20 sm:w-28 sm:h-28 lg:w-36 lg:h-36 rounded-full overflow-hidden border-3 sm:border-4 border-[#8CC63F] group-hover:scale-105 transition-transform">
+                  <div className="w-20 h-20 sm:w-28 sm:h-28 lg:w-36 lg:h-36 rounded-full overflow-hidden border-3 sm:border-4 border-primary group-hover:scale-105 transition-transform">
                     <img
                       src={member.image || "/placeholder.svg"}
                       alt={member.name}
@@ -63,7 +63,7 @@ export function TeamSection() {
                   </div>
                 </div>
               </div>
-              <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-[#8CC63F] hover:text-[#7AB82F] cursor-pointer transition-colors">
+              <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-primary hover:text-primary-hover cursor-pointer transition-colors">
                 {member.name}
               </h3>
               <p className="text-gray-600 text-xs sm:text-sm mt-1">{member.position}</p>

@@ -119,19 +119,19 @@ export default function LoginPage() {
       <TopBar />
       <Header />
 
-      <section className="flex-1 flex items-center justify-center py-12 sm:py-16 bg-[#F5F5F5]">
+      <section className="flex-1 flex items-center justify-center py-12 sm:py-16 bg-light-gray">
         <div className="w-full max-w-md mx-auto px-4 sm:px-6">
           <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
             <div className="flex justify-center mb-6">
               <Logo />
             </div>
 
-            <h1 className="text-2xl font-bold text-center text-[#1E3A5F] mb-2">Welcome Back</h1>
+            <h1 className="text-2xl font-bold text-center text-secondary mb-2">Welcome Back</h1>
             <p className="text-gray-600 text-center text-sm mb-8">Sign in to access your account</p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-secondary mb-2">
                   Email Address
                 </label>
                 <input
@@ -142,17 +142,17 @@ export default function LoginPage() {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   disabled={isLoading}
-                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50"
+                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all disabled:opacity-50"
                   placeholder="you@example.com"
                 />
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label htmlFor="password" className="block text-sm font-medium text-[#1E3A5F]">
+                  <label htmlFor="password" className="block text-sm font-medium text-secondary">
                     Password
                   </label>
-                  <Link href="/login/forgot-password" className="text-sm text-[#8CC63F] hover:underline">
+                  <Link href="/login/forgot-password" className="text-sm text-primary hover:underline">
                     Forgot password?
                   </Link>
                 </div>
@@ -165,7 +165,7 @@ export default function LoginPage() {
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     disabled={isLoading}
-                    className="w-full px-4 py-3 pr-12 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50"
+                    className="w-full px-4 py-3 pr-12 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all disabled:opacity-50"
                     placeholder="Enter your password"
                   />
                   <button
@@ -182,7 +182,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-[#8CC63F] text-white font-medium py-3 rounded hover:bg-[#7AB82F] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full bg-primary text-white font-medium py-3 rounded hover:bg-[#7AB82F] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isLoading ? (
                   <>

@@ -138,7 +138,7 @@ function ReviewPageContent() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#F0F9E8] to-[#E8F5E0] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#8CC63F]"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
     );
   }
@@ -162,13 +162,13 @@ function ReviewPageContent() {
       <div className="min-h-screen bg-gradient-to-br from-[#F0F9E8] to-[#E8F5E0] flex items-center justify-center px-4">
         <Card className="max-w-md mx-auto">
           <CardContent className="p-8 text-center">
-            <CheckCircle className="h-12 w-12 mx-auto text-[#8CC63F] mb-4" />
-            <h2 className="text-xl font-semibold text-[#1E3A5F] mb-2">Thank You!</h2>
+            <CheckCircle className="h-12 w-12 mx-auto text-primary mb-4" />
+            <h2 className="text-xl font-semibold text-secondary mb-2">Thank You!</h2>
             <p className="text-gray-600">
               Your review has been submitted successfully. It will be published after admin approval.
             </p>
             <div className="mt-6">
-              <Heart className="h-6 w-6 mx-auto text-[#8CC63F]" />
+              <Heart className="h-6 w-6 mx-auto text-primary" />
             </div>
           </CardContent>
         </Card>
@@ -185,15 +185,15 @@ function ReviewPageContent() {
           transition={{ duration: 0.6 }}
         >
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-[#1E3A5F] mb-2">Share Your Experience</h1>
+            <h1 className="text-3xl font-bold text-secondary mb-2">Share Your Experience</h1>
             <p className="text-gray-600">Help others by sharing your experience with Elegant Care Service</p>
           </div>
 
           {leadDetails && (
-            <Card className="mb-6 border-l-4 border-[#8CC63F]">
+            <Card className="mb-6 border-l-4 border-primary">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
-                  <User className="h-5 w-5 text-[#8CC63F]" />
+                <CardTitle className="flex items-center gap-2 text-secondary">
+                  <User className="h-5 w-5 text-primary" />
                   Your Details
                 </CardTitle>
               </CardHeader>
@@ -216,7 +216,7 @@ function ReviewPageContent() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-[#1E3A5F]">Write Your Review</CardTitle>
+              <CardTitle className="text-secondary">Write Your Review</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -299,7 +299,7 @@ function ReviewPageContent() {
 
                 <Button
                   type="submit"
-                  className="w-full bg-[#8CC63F] hover:bg-[#7AB52F] text-white"
+                  className="w-full bg-primary hover:bg-primary-hover text-white"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -328,7 +328,7 @@ export default function ReviewPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gradient-to-br from-[#F0F9E8] to-[#E8F5E0] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#8CC63F]"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
     }>
       <ReviewPageContent />

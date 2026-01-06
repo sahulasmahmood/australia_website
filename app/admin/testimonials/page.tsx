@@ -328,7 +328,7 @@ export default function TestimonialsPage() {
             <PaginationLink
               onClick={() => handlePageChange(i)}
               isActive={currentPage === i}
-              className={`cursor-pointer ${currentPage === i ? "bg-[#8CC63F] text-white hover:bg-[#7AB82F] hover:text-white border-0" : ""}`}
+              className={`cursor-pointer ${currentPage === i ? "bg-primary text-white hover:bg-[#7AB82F] hover:text-white border-0" : ""}`}
             >
               {i}
             </PaginationLink>
@@ -357,9 +357,9 @@ export default function TestimonialsPage() {
   }
 
   const stats = [
-    { title: "Total Testimonials", value: statsData.total, icon: Quote, color: "text-[#1E3A5F]" },
-    { title: "Published", value: statsData.published, icon: Star, color: "text-[#1E3A5F]" },
-    { title: "Draft", value: statsData.draft, icon: Edit, color: "text-[#1E3A5F]" },
+    { title: "Total Testimonials", value: statsData.total, icon: Quote, color: "text-secondary" },
+    { title: "Published", value: statsData.published, icon: Star, color: "text-secondary" },
+    { title: "Draft", value: statsData.draft, icon: Edit, color: "text-secondary" },
   ]
 
   return (
@@ -367,12 +367,12 @@ export default function TestimonialsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-[#1E3A5F]">Testimonials</h1>
+          <h1 className="text-3xl font-bold text-secondary">Testimonials</h1>
           <p className="text-gray-600 mt-1">Manage client feedback and success stories</p>
         </div>
         <Button
           onClick={() => setIsEditing(true)}
-          className="bg-[#8CC63F] hover:bg-[#7AB82F] text-white"
+          className="bg-primary hover:bg-[#7AB82F] text-white"
         >
           <Plus className="h-4 w-4 mr-2" />
           Add Testimonial
@@ -387,7 +387,7 @@ export default function TestimonialsPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-500">{stat.title}</p>
-                  <h3 className="text-3xl font-bold mt-1 text-[#1E3A5F]">{stat.value}</h3>
+                  <h3 className="text-3xl font-bold mt-1 text-secondary">{stat.value}</h3>
                 </div>
                 <div className={`${stat.color}`}>
                   <stat.icon className="h-6 w-6" />
@@ -428,9 +428,9 @@ export default function TestimonialsPage() {
 
       {/* Table */}
       <Card className="border-0 shadow-lg">
-        <CardHeader className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#8CC63F]/10 p-4 border-b">
-          <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
-            <Quote className="h-5 w-5 text-[#8CC63F]" />
+        <CardHeader className="bg-gradient-to-r from-secondary/10 to-primary/10 p-4 border-b">
+          <CardTitle className="flex items-center gap-2 text-secondary">
+            <Quote className="h-5 w-5 text-primary" />
             Testimonials List
           </CardTitle>
         </CardHeader>
@@ -439,19 +439,19 @@ export default function TestimonialsPage() {
             <Table>
               <TableHeader>
                 <TableRow className="bg-gray-50">
-                  <TableHead className="font-semibold text-[#1E3A5F]">Client</TableHead>
-                  <TableHead className="font-semibold text-[#1E3A5F]">Service</TableHead>
-                  <TableHead className="font-semibold text-[#1E3A5F]">Rating</TableHead>
-                  <TableHead className="font-semibold text-[#1E3A5F]">Status</TableHead>
-                  <TableHead className="font-semibold text-[#1E3A5F]">Date</TableHead>
-                  <TableHead className="text-right font-semibold text-[#1E3A5F]">Actions</TableHead>
+                  <TableHead className="font-semibold text-secondary">Client</TableHead>
+                  <TableHead className="font-semibold text-secondary">Service</TableHead>
+                  <TableHead className="font-semibold text-secondary">Rating</TableHead>
+                  <TableHead className="font-semibold text-secondary">Status</TableHead>
+                  <TableHead className="font-semibold text-secondary">Date</TableHead>
+                  <TableHead className="text-right font-semibold text-secondary">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {loading ? (
                   <TableRow>
                     <TableCell colSpan={6} className="h-48 text-center">
-                      <Loader2 className="h-8 w-8 animate-spin text-[#8CC63F] mx-auto mb-2" />
+                      <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto mb-2" />
                       <p className="text-gray-500">Loading testimonials...</p>
                     </TableCell>
                   </TableRow>
@@ -470,13 +470,13 @@ export default function TestimonialsPage() {
                             {testimonial.avatar ? (
                               <img src={testimonial.avatar} alt={testimonial.name} className="h-full w-full object-cover" />
                             ) : (
-                              <div className="h-full w-full flex items-center justify-center bg-[#1E3A5F] text-white font-bold text-sm">
+                              <div className="h-full w-full flex items-center justify-center bg-secondary text-white font-bold text-sm">
                                 {testimonial.name.charAt(0)}
                               </div>
                             )}
                           </div>
                           <div>
-                            <span className="font-semibold text-[#1E3A5F]">{testimonial.name}</span>
+                            <span className="font-semibold text-secondary">{testimonial.name}</span>
                             <p className="text-xs text-gray-400 flex items-center gap-1">
                               <MapPin className="h-3 w-3" /> {testimonial.location}
                             </p>
@@ -527,7 +527,7 @@ export default function TestimonialsPage() {
       <Dialog open={isEditing} onOpenChange={(open) => !open && handleCancel()}>
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-[#1E3A5F]">
+            <DialogTitle className="text-2xl font-bold text-secondary">
               {editingId ? "Edit Testimonial" : "Add New Testimonial"}
             </DialogTitle>
           </DialogHeader>
@@ -600,7 +600,7 @@ export default function TestimonialsPage() {
                   <SelectContent>
                     {services.length > 0 && (
                       <>
-                        <SelectItem value="__services_header__" disabled className="font-semibold text-[#1E3A5F]">
+                        <SelectItem value="__services_header__" disabled className="font-semibold text-secondary">
                           — Services —
                         </SelectItem>
                         {services.map(s => (
@@ -612,7 +612,7 @@ export default function TestimonialsPage() {
                     )}
                     {supportModels.length > 0 && (
                       <>
-                        <SelectItem value="__support_header__" disabled className="font-semibold text-[#1E3A5F]">
+                        <SelectItem value="__support_header__" disabled className="font-semibold text-secondary">
                           — Support Models —
                         </SelectItem>
                         {supportModels.map(sm => (
@@ -672,7 +672,7 @@ export default function TestimonialsPage() {
             <Button 
               onClick={handleSave} 
               disabled={isSaving}
-              className="bg-[#8CC63F] hover:bg-[#7AB82F] text-white min-w-[120px]"
+              className="bg-primary hover:bg-[#7AB82F] text-white min-w-[120px]"
             >
               {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <><Save className="h-4 w-4 mr-2" /> Save</>}
             </Button>

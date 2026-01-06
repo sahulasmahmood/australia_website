@@ -14,13 +14,13 @@ export function TopBar() {
   }
 
   return (
-    <div className="hidden sm:block bg-[#1E3A5F] text-white py-2.5 px-4">
+    <div className="hidden sm:block bg-secondary text-white py-2.5 px-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
         <div className="flex items-center gap-4 md:gap-6 text-xs md:text-sm">
           {contactInfo?.primaryPhone && (
             <a 
               href={`tel:${contactInfo.primaryPhone}`} 
-              className="flex items-center gap-2 hover:text-[#8CC63F] transition-colors"
+              className="flex items-center gap-2 hover:text-primary transition-colors"
             >
               <Phone className="h-3.5 w-3.5 md:h-4 md:w-4" />
               <span>{contactInfo.primaryPhone}</span>
@@ -29,7 +29,7 @@ export function TopBar() {
           {contactInfo?.email && (
             <a
               href={`mailto:${contactInfo.email}`}
-              className="flex items-center gap-2 hover:text-[#8CC63F] transition-colors"
+              className="flex items-center gap-2 hover:text-primary transition-colors"
             >
               <Mail className="h-3.5 w-3.5 md:h-4 md:w-4" />
               <span className="hidden md:inline">{contactInfo.email}</span>
@@ -42,7 +42,7 @@ export function TopBar() {
             <a 
               href={contactInfo.facebook} 
               aria-label="Facebook" 
-              className="hover:text-[#8CC63F] transition-colors p-1"
+              className="hover:text-primary transition-colors p-1"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -53,7 +53,7 @@ export function TopBar() {
             <a 
               href={contactInfo.instagram} 
               aria-label="Instagram" 
-              className="hover:text-[#8CC63F] transition-colors p-1"
+              className="hover:text-primary transition-colors p-1"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -64,7 +64,7 @@ export function TopBar() {
             <a 
               href={contactInfo.twitter} 
               aria-label="Twitter" 
-              className="hover:text-[#8CC63F] transition-colors p-1"
+              className="hover:text-primary transition-colors p-1"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -75,7 +75,7 @@ export function TopBar() {
             <a 
               href={contactInfo.linkedin} 
               aria-label="LinkedIn" 
-              className="hover:text-[#8CC63F] transition-colors p-1"
+              className="hover:text-primary transition-colors p-1"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -86,7 +86,7 @@ export function TopBar() {
             <a 
               href={contactInfo.youtube} 
               aria-label="YouTube" 
-              className="hover:text-[#8CC63F] transition-colors p-1"
+              className="hover:text-primary transition-colors p-1"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -97,7 +97,7 @@ export function TopBar() {
             <a 
               href={contactInfo.whatsapp} 
               aria-label="WhatsApp" 
-              className="hover:text-[#8CC63F] transition-colors p-1"
+              className="hover:text-primary transition-colors p-1"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -108,7 +108,7 @@ export function TopBar() {
             <a 
               href={contactInfo.telegram} 
               aria-label="Telegram" 
-              className="hover:text-[#8CC63F] transition-colors p-1"
+              className="hover:text-primary transition-colors p-1"
               target="_blank"
               rel="noopener noreferrer"
             >

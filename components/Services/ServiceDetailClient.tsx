@@ -81,7 +81,7 @@ export default function ServiceDetailClient({
               <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] rounded-xl overflow-hidden shadow-lg mb-3 sm:mb-4 bg-gray-100">
                 {imageLoading && (
                   <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10">
-                    <div className="w-8 h-8 border-2 border-[#8CC63F] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                   </div>
                 )}
                 {imageError ? (
@@ -109,17 +109,17 @@ export default function ServiceDetailClient({
                   <>
                     <button
                       onClick={handlePrevImage}
-                      className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 bg-white/90 hover:bg-white rounded-full shadow-md transition-all z-20 focus:outline-none focus:ring-2 focus:ring-[#8CC63F]"
+                      className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 bg-white/90 hover:bg-white rounded-full shadow-md transition-all z-20 focus:outline-none focus:ring-2 focus:ring-primary"
                       aria-label="Previous image"
                     >
-                      <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 text-[#1E3A5F]" />
+                      <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 text-secondary" />
                     </button>
                     <button
                       onClick={handleNextImage}
-                      className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 bg-white/90 hover:bg-white rounded-full shadow-md transition-all z-20 focus:outline-none focus:ring-2 focus:ring-[#8CC63F]"
+                      className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 bg-white/90 hover:bg-white rounded-full shadow-md transition-all z-20 focus:outline-none focus:ring-2 focus:ring-primary"
                       aria-label="Next image"
                     >
-                      <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-[#1E3A5F]" />
+                      <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-secondary" />
                     </button>
                     {/* Image Counter */}
                     <div className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 px-2 py-1 bg-black/60 rounded-md text-white text-xs sm:text-sm z-20">
@@ -136,9 +136,9 @@ export default function ServiceDetailClient({
                     <button
                       key={index}
                       onClick={() => handleThumbnailClick(image)}
-                      className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden shrink-0 border-2 transition-all focus:outline-none focus:ring-2 focus:ring-[#8CC63F] ${
+                      className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden shrink-0 border-2 transition-all focus:outline-none focus:ring-2 focus:ring-primary ${
                         selectedImage === image
-                          ? "border-[#8CC63F] ring-1 ring-[#8CC63F]"
+                          ? "border-primary ring-1 ring-primary"
                           : "border-gray-200 hover:border-gray-400"
                       }`}
                       aria-label={`View image ${index + 1}`}
@@ -164,30 +164,30 @@ export default function ServiceDetailClient({
               transition={{ duration: 0.5, delay: 0.1 }}
               className="order-2 lg:order-2"
             >
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1E3A5F] mb-4 sm:mb-6">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-secondary mb-4 sm:mb-6">
                 About This Service
               </h2>
 
               <div
                 className="prose prose-sm sm:prose-base lg:prose-lg max-w-none text-gray-600 mb-6 sm:mb-8 
-                  prose-headings:text-[#1E3A5F] prose-headings:font-semibold
+                  prose-headings:text-secondary prose-headings:font-semibold
                   prose-p:leading-relaxed prose-p:text-gray-600
                   prose-li:text-gray-600 prose-li:leading-relaxed
-                  prose-a:text-[#8CC63F] prose-a:no-underline hover:prose-a:underline
-                  prose-strong:text-[#1E3A5F]"
+                  prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+                  prose-strong:text-secondary"
                 dangerouslySetInnerHTML={{ __html: serviceData.description }}
               />
 
               {/* Features */}
               {serviceData.features && serviceData.features.length > 0 && (
                 <div className="mb-6 sm:mb-8">
-                  <h3 className="text-lg sm:text-xl font-semibold text-[#1E3A5F] mb-3 sm:mb-4">
+                  <h3 className="text-lg sm:text-xl font-semibold text-secondary mb-3 sm:mb-4">
                     Key Features
                   </h3>
                   <ul className="space-y-2 sm:space-y-3">
                     {serviceData.features.map((feature, index) => (
                       <li key={index} className="flex items-start gap-2 sm:gap-3">
-                        <div className="mt-0.5 p-1 bg-[#8CC63F] rounded-full shrink-0">
+                        <div className="mt-0.5 p-1 bg-primary rounded-full shrink-0">
                           <Check className="h-3 w-3 text-white" />
                         </div>
                         <span className="text-sm sm:text-base text-gray-600 leading-relaxed">{feature}</span>
@@ -205,7 +205,7 @@ export default function ServiceDetailClient({
                 >
                   <Button
                     size="lg"
-                    className="bg-[#8CC63F] hover:bg-[#7AB52F] text-white w-full h-11 sm:h-12 text-sm sm:text-base"
+                    className="bg-primary hover:bg-primary-hover text-white w-full h-11 sm:h-12 text-sm sm:text-base"
                   >
                     <Phone className="h-4 w-4 mr-2" />
                     Contact Us
@@ -220,7 +220,7 @@ export default function ServiceDetailClient({
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-[#1E3A5F] text-[#1E3A5F] hover:bg-[#1E3A5F] hover:text-white w-full h-11 sm:h-12 text-sm sm:text-base"
+                    className="border-secondary text-secondary hover:bg-secondary hover:text-white w-full h-11 sm:h-12 text-sm sm:text-base"
                   >
                     <WhatsAppIcon className="h-4 w-4 mr-2" />
                     Get a Quote
@@ -233,7 +233,7 @@ export default function ServiceDetailClient({
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-10 sm:py-12 lg:py-16 bg-[#F5F5F5]">
+      <section className="py-10 sm:py-12 lg:py-16 bg-light-gray">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -243,10 +243,10 @@ export default function ServiceDetailClient({
             className="text-center mb-8 sm:mb-10"
           >
             <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold">
-              <span className="text-[#1E3A5F]">WHY CHOOSE</span>{" "}
-              <span className="text-[#8CC63F]">US</span>
+              <span className="text-secondary">WHY CHOOSE</span>{" "}
+              <span className="text-primary">US</span>
             </h3>
-            <div className="w-12 sm:w-16 h-1 bg-[#8CC63F] mx-auto mt-3 sm:mt-4" />
+            <div className="w-12 sm:w-16 h-1 bg-primary mx-auto mt-3 sm:mt-4" />
           </motion.div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 bg-white rounded-xl overflow-hidden shadow-sm">
@@ -277,12 +277,12 @@ export default function ServiceDetailClient({
                 `}
               >
                 {/* Hover gradient effect */}
-                <div className="opacity-0 group-hover/feature:opacity-100 transition duration-300 absolute inset-0 h-full w-full bg-gradient-to-b from-[#8CC63F]/10 to-transparent pointer-events-none" />
+                <div className="opacity-0 group-hover/feature:opacity-100 transition duration-300 absolute inset-0 h-full w-full bg-gradient-to-b from-primary/10 to-transparent pointer-events-none" />
                 
                 {/* Title with animated bar */}
                 <div className="text-base sm:text-lg font-semibold mb-2 relative z-10">
-                  <div className="absolute left-0 inset-y-0 h-5 group-hover/feature:h-7 w-1 rounded-tr-full rounded-br-full bg-gray-200 group-hover/feature:bg-[#8CC63F] transition-all duration-300 origin-center -ml-5 sm:-ml-6" />
-                  <span className="group-hover/feature:translate-x-2 transition duration-300 inline-block text-[#1E3A5F]">
+                  <div className="absolute left-0 inset-y-0 h-5 group-hover/feature:h-7 w-1 rounded-tr-full rounded-br-full bg-gray-200 group-hover/feature:bg-primary transition-all duration-300 origin-center -ml-5 sm:-ml-6" />
+                  <span className="group-hover/feature:translate-x-2 transition duration-300 inline-block text-secondary">
                     {item.title}
                   </span>
                 </div>

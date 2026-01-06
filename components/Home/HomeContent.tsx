@@ -21,9 +21,9 @@ export function HomeContent() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-              <span className="text-[#1E3A5F]">WHAT OUR</span> <span className="text-[#8CC63F]">CLIENTS SAY</span>
+              <span className="text-secondary">WHAT OUR</span> <span className="text-primary">CLIENTS SAY</span>
             </h2>
-            <div className="w-16 sm:w-20 h-1 bg-[#8CC63F] mx-auto mt-3 sm:mt-4 mb-4 sm:mb-6" />
+            <div className="w-16 sm:w-20 h-1 bg-primary mx-auto mt-3 sm:mt-4 mb-4 sm:mb-6" />
             <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base px-4 sm:px-0">
               Hear from the families and individuals we've had the privilege to support
             </p>

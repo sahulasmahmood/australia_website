@@ -172,7 +172,7 @@ export function Testimonial() {
           <motion.div
             key={i}
             className={`w-6 h-6 rounded-full border-2 border-background overflow-hidden transition-all duration-300 ${
-              i === activeIndex ? "ring-1 ring-[#8CC63F] ring-offset-1 ring-offset-background" : "grayscale opacity-50"
+              i === activeIndex ? "ring-1 ring-primary ring-offset-1 ring-offset-background" : "grayscale opacity-50"
             }`}
             whileHover={{ scale: 1.1, opacity: 1 }}
           >
@@ -207,7 +207,7 @@ export function Testimonial() {
               key={i}
               className={`h-4 w-4 ${
                 i < currentTestimonial.rating
-                  ? "fill-[#8CC63F] text-[#8CC63F]"
+                  ? "fill-primary text-primary"
                   : "fill-gray-200 text-gray-200"
               }`}
             />
@@ -220,7 +220,7 @@ export function Testimonial() {
             {/* Avatar container with all images stacked */}
             <div className="relative w-12 h-12">
               <motion.div
-                className="absolute -inset-1.5 rounded-full border border-[#8CC63F]/40"
+                className="absolute -inset-1.5 rounded-full border border-primary/40"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -251,7 +251,7 @@ export function Testimonial() {
                 transition={{ duration: 0.3 }}
               >
                 <motion.div
-                  className="absolute left-0 top-0 bottom-0 w-px bg-[#8CC63F]"
+                  className="absolute left-0 top-0 bottom-0 w-px bg-primary"
                   initial={{ scaleY: 0 }}
                   animate={{ scaleY: 1 }}
                   transition={{ duration: 0.4, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
@@ -271,7 +271,7 @@ export function Testimonial() {
         {/* Progress bar */}
         <div className="mt-16 h-px bg-border relative overflow-hidden">
           <motion.div
-            className="absolute inset-y-0 left-0 bg-[#8CC63F]"
+            className="absolute inset-y-0 left-0 bg-primary"
             initial={{ width: "0%" }}
             animate={{ width: `${((activeIndex + 1) / testimonials.length) * 100}%` }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}

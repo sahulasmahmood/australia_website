@@ -134,13 +134,13 @@ export function ContactContent() {
                 <div className="h-4 w-16 bg-gray-200 rounded animate-pulse" />
                 <div className="h-32 w-full bg-gray-100 rounded animate-pulse" />
               </div>
-              <div className="h-12 w-full bg-[#8CC63F]/30 rounded animate-pulse" />
+              <div className="h-12 w-full bg-primary/30 rounded animate-pulse" />
             </div>
             {/* Contact Info Skeleton */}
             <div className="space-y-6">
               {Array.from({ length: 4 }).map((_, i) => (
                 <div key={i} className="flex items-start gap-4">
-                  <div className="h-12 w-12 rounded-full bg-[#8CC63F]/20 animate-pulse" />
+                  <div className="h-12 w-12 rounded-full bg-primary/20 animate-pulse" />
                   <div className="space-y-2 flex-1">
                     <div className="h-4 w-20 bg-gray-300 rounded animate-pulse" />
                     <div className="h-4 w-full bg-gray-200 rounded animate-pulse" />
@@ -163,8 +163,8 @@ export function ContactContent() {
             <div>
               {contactInfo?.pageTitle && (
                 <h2 className="text-2xl sm:text-3xl font-bold mb-6">
-                  <span className="text-[#1E3A5F]">{contactInfo.pageTitle.split(" ").slice(0, 2).join(" ")} </span>
-                  <span className="text-[#8CC63F]">{contactInfo.pageTitle.split(" ").slice(2).join(" ")}</span>
+                  <span className="text-secondary">{contactInfo.pageTitle.split(" ").slice(0, 2).join(" ")} </span>
+                  <span className="text-primary">{contactInfo.pageTitle.split(" ").slice(2).join(" ")}</span>
                 </h2>
               )}
               {contactInfo?.pageDescription && (
@@ -176,7 +176,7 @@ export function ContactContent() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                    <label htmlFor="firstName" className="block text-sm font-medium text-secondary mb-2">
                       First Name *
                     </label>
                     <input
@@ -188,11 +188,11 @@ export function ContactContent() {
                       value={formData.firstName}
                       onChange={handleChange}
                       disabled={formLoading}
-                      className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50"
+                      className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all disabled:opacity-50"
                     />
                   </div>
                   <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                    <label htmlFor="lastName" className="block text-sm font-medium text-secondary mb-2">
                       Last Name *
                     </label>
                     <input
@@ -204,13 +204,13 @@ export function ContactContent() {
                       value={formData.lastName}
                       onChange={handleChange}
                       disabled={formLoading}
-                      className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50"
+                      className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all disabled:opacity-50"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-secondary mb-2">
                     Email Address *
                   </label>
                   <input
@@ -222,12 +222,12 @@ export function ContactContent() {
                     value={formData.email}
                     onChange={handleChange}
                     disabled={formLoading}
-                    className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50"
+                    className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all disabled:opacity-50"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                  <label htmlFor="phone" className="block text-sm font-medium text-secondary mb-2">
                     Phone Number
                   </label>
                   <input
@@ -238,12 +238,12 @@ export function ContactContent() {
                     value={formData.phone}
                     onChange={handleChange}
                     disabled={formLoading}
-                    className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50"
+                    className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all disabled:opacity-50"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                  <label htmlFor="subject" className="block text-sm font-medium text-secondary mb-2">
                     Service / Subject *
                   </label>
                   <div className="relative">
@@ -251,7 +251,7 @@ export function ContactContent() {
                       type="button"
                       onClick={() => !formLoading && setIsDropdownOpen(!isDropdownOpen)}
                       disabled={formLoading}
-                      className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all bg-white disabled:opacity-50 text-left flex items-center justify-between"
+                      className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all bg-white disabled:opacity-50 text-left flex items-center justify-between"
                     >
                       <span className={formData.subject ? "text-gray-900" : "text-gray-500"}>
                         {formData.subject || "Select a service or subject"}
@@ -265,11 +265,11 @@ export function ContactContent() {
                           className="fixed inset-0 z-10" 
                           onClick={() => setIsDropdownOpen(false)}
                         />
-                        <div className="absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-[#1E3A5F] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-[#2c5282]">
+                        <div className="absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-secondary [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-secondary-hover">
                           {/* Services */}
                           {services.filter(s => s.serviceName).length > 0 && (
                             <>
-                              <div className="px-3 py-1.5 text-[10px] font-semibold text-[#1E3A5F] bg-gray-50 border-b border-gray-100 uppercase tracking-wider">
+                              <div className="px-3 py-1.5 text-[10px] font-semibold text-secondary bg-gray-50 border-b border-gray-100 uppercase tracking-wider">
                                 Our Services
                               </div>
                               {services.filter(s => s.serviceName).map((service) => (
@@ -280,11 +280,11 @@ export function ContactContent() {
                                     setFormData({ ...formData, subject: service.serviceName })
                                     setIsDropdownOpen(false)
                                   }}
-                                  className="w-full px-3 py-2 text-left hover:bg-[#8CC63F]/10 flex items-center justify-between transition-colors text-sm"
+                                  className="w-full px-3 py-2 text-left hover:bg-primary/10 flex items-center justify-between transition-colors text-sm"
                                 >
                                   <span className="text-gray-700">{service.serviceName}</span>
                                   {formData.subject === service.serviceName && (
-                                    <Check className="h-3.5 w-3.5 text-[#8CC63F]" />
+                                    <Check className="h-3.5 w-3.5 text-primary" />
                                   )}
                                 </button>
                               ))}
@@ -294,7 +294,7 @@ export function ContactContent() {
                           {/* Support Models */}
                           {supportModels.filter(m => m.title).length > 0 && (
                             <>
-                              <div className="px-3 py-1.5 text-[10px] font-semibold text-[#1E3A5F] bg-gray-50 border-b border-gray-100 border-t uppercase tracking-wider">
+                              <div className="px-3 py-1.5 text-[10px] font-semibold text-secondary bg-gray-50 border-b border-gray-100 border-t uppercase tracking-wider">
                                 Support Models
                               </div>
                               {supportModels.filter(m => m.title).map((model) => (
@@ -305,11 +305,11 @@ export function ContactContent() {
                                     setFormData({ ...formData, subject: model.title })
                                     setIsDropdownOpen(false)
                                   }}
-                                  className="w-full px-3 py-2 text-left hover:bg-[#8CC63F]/10 flex items-center justify-between transition-colors text-sm"
+                                  className="w-full px-3 py-2 text-left hover:bg-primary/10 flex items-center justify-between transition-colors text-sm"
                                 >
                                   <span className="text-gray-700">{model.title}</span>
                                   {formData.subject === model.title && (
-                                    <Check className="h-3.5 w-3.5 text-[#8CC63F]" />
+                                    <Check className="h-3.5 w-3.5 text-primary" />
                                   )}
                                 </button>
                               ))}
@@ -317,7 +317,7 @@ export function ContactContent() {
                           )}
                           
                           {/* Other */}
-                          <div className="px-3 py-1.5 text-[10px] font-semibold text-[#1E3A5F] bg-gray-50 border-b border-gray-100 border-t uppercase tracking-wider">
+                          <div className="px-3 py-1.5 text-[10px] font-semibold text-secondary bg-gray-50 border-b border-gray-100 border-t uppercase tracking-wider">
                             Other
                           </div>
                           <button
@@ -326,11 +326,11 @@ export function ContactContent() {
                               setFormData({ ...formData, subject: "Other" })
                               setIsDropdownOpen(false)
                             }}
-                            className="w-full px-3 py-2 text-left hover:bg-[#8CC63F]/10 flex items-center justify-between transition-colors text-sm"
+                            className="w-full px-3 py-2 text-left hover:bg-primary/10 flex items-center justify-between transition-colors text-sm"
                           >
                             <span className="text-gray-700">Other</span>
                             {formData.subject === "Other" && (
-                              <Check className="h-3.5 w-3.5 text-[#8CC63F]" />
+                              <Check className="h-3.5 w-3.5 text-primary" />
                             )}
                           </button>
                         </div>
@@ -340,7 +340,7 @@ export function ContactContent() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-secondary mb-2">
                     Message *
                   </label>
                   <textarea
@@ -352,14 +352,14 @@ export function ContactContent() {
                     value={formData.message}
                     onChange={handleChange}
                     disabled={formLoading}
-                    className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all resize-none disabled:opacity-50"
+                    className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all resize-none disabled:opacity-50"
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
                   disabled={formLoading}
-                  className="w-full sm:w-auto bg-[#8CC63F] text-white font-medium px-8 py-3 rounded hover:bg-[#7AB82F] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto bg-primary text-white font-medium px-8 py-3 rounded hover:bg-primary-hover transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {formLoading ? (
                     <>
@@ -375,9 +375,9 @@ export function ContactContent() {
 
             {/* Contact Information */}
             <div>
-              <div className="bg-[#F5F5F5] rounded-lg p-6 sm:p-8 mb-8">
+              <div className="bg-light-gray rounded-lg p-6 sm:p-8 mb-8">
                 {contactInfo?.officeTitle && (
-                  <h3 className="text-xl font-bold text-[#1E3A5F] mb-6">
+                  <h3 className="text-xl font-bold text-secondary mb-6">
                     {contactInfo.officeTitle}
                   </h3>
                 )}
@@ -385,21 +385,21 @@ export function ContactContent() {
                 <div className="space-y-6">
                   {contactInfo?.primaryPhone && (
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-[#8CC63F]/10 rounded-full flex items-center justify-center shrink-0">
-                        <Phone className="w-5 h-5 text-[#8CC63F]" />
+                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                        <Phone className="w-5 h-5 text-primary" />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-[#1E3A5F] mb-1">Phone</h4>
+                        <h4 className="font-semibold text-secondary mb-1">Phone</h4>
                         <a 
                           href={`tel:${contactInfo.primaryPhone}`} 
-                          className="text-gray-600 hover:text-[#8CC63F] transition-colors block"
+                          className="text-gray-600 hover:text-primary transition-colors block"
                         >
                           {formatPhone(contactInfo.primaryPhone)}
                         </a>
                         {contactInfo?.secondaryPhone && (
                           <a 
                             href={`tel:${contactInfo.secondaryPhone}`} 
-                            className="text-gray-600 hover:text-[#8CC63F] transition-colors block"
+                            className="text-gray-600 hover:text-primary transition-colors block"
                           >
                             {formatPhone(contactInfo.secondaryPhone)}
                           </a>
@@ -410,14 +410,14 @@ export function ContactContent() {
 
                   {contactInfo?.email && (
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-[#8CC63F]/10 rounded-full flex items-center justify-center shrink-0">
-                        <Mail className="w-5 h-5 text-[#8CC63F]" />
+                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                        <Mail className="w-5 h-5 text-primary" />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-[#1E3A5F] mb-1">Email</h4>
+                        <h4 className="font-semibold text-secondary mb-1">Email</h4>
                         <a
                           href={`mailto:${contactInfo.email}`}
-                          className="text-gray-600 hover:text-[#8CC63F] transition-colors break-all"
+                          className="text-gray-600 hover:text-primary transition-colors break-all"
                         >
                           {contactInfo.email}
                         </a>
@@ -427,11 +427,11 @@ export function ContactContent() {
 
                   {getFullAddress() && (
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-[#8CC63F]/10 rounded-full flex items-center justify-center shrink-0">
-                        <MapPin className="w-5 h-5 text-[#8CC63F]" />
+                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                        <MapPin className="w-5 h-5 text-primary" />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-[#1E3A5F] mb-1">Address</h4>
+                        <h4 className="font-semibold text-secondary mb-1">Address</h4>
                         <p className="text-gray-600">{getFullAddress()}</p>
                       </div>
                     </div>
@@ -439,11 +439,11 @@ export function ContactContent() {
 
                   {contactInfo?.businessHours && (
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-[#8CC63F]/10 rounded-full flex items-center justify-center shrink-0">
-                        <Clock className="w-5 h-5 text-[#8CC63F]" />
+                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                        <Clock className="w-5 h-5 text-primary" />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-[#1E3A5F] mb-1">Office Hours</h4>
+                        <h4 className="font-semibold text-secondary mb-1">Office Hours</h4>
                         <p className="text-gray-600 whitespace-pre-line">
                           {contactInfo.businessHours}
                         </p>
@@ -455,13 +455,13 @@ export function ContactContent() {
 
               {/* Service Areas */}
               {contactInfo?.serviceAreas && (
-                <div className="bg-[#1E3A5F] rounded-lg p-6 sm:p-8 text-white">
+                <div className="bg-secondary rounded-lg p-6 sm:p-8 text-white">
                   <h3 className="text-xl font-bold mb-4">Service Areas</h3>
                   <p className="text-white/80 mb-4">We provide services across the following regions:</p>
                   <ul className="grid grid-cols-2 gap-2 text-sm">
                     {contactInfo.serviceAreas.split(',').map(area => area.trim()).filter(area => area.length > 0).map((area) => (
                       <li key={area} className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 bg-[#8CC63F] rounded-full"></span>
+                        <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
                         {area}
                       </li>
                     ))}
@@ -475,13 +475,13 @@ export function ContactContent() {
 
       {/* Google Map Section */}
       {contactInfo?.mapEmbedCode && (
-        <section className="bg-[#F5F5F5]">
+        <section className="bg-light-gray">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
             {contactInfo?.officeTitle && (
               <div className="text-center mb-8">
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
-                  <span className="text-[#1E3A5F]">{contactInfo.officeTitle.split(" ").slice(0, 2).join(" ")} </span>
-                  <span className="text-[#8CC63F]">{contactInfo.officeTitle.split(" ").slice(2).join(" ")}</span>
+                  <span className="text-secondary">{contactInfo.officeTitle.split(" ").slice(0, 2).join(" ")} </span>
+                  <span className="text-primary">{contactInfo.officeTitle.split(" ").slice(2).join(" ")}</span>
                 </h2>
                 {contactInfo?.officeDescription && (
                   <p className="text-gray-600 text-sm sm:text-base max-w-3xl mx-auto text-justify">

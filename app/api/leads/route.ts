@@ -94,16 +94,16 @@ async function sendAdminNotification(smtpConfig: any, lead: any) {
 
   const emailHTML = `
     <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; background-color: #f8fafc;">
-      <div style="background: linear-gradient(135deg, #8CC63F 0%, #6BA32D 100%); padding: 30px; text-align: center;">
+      <div style="background: linear-gradient(135deg, primary 0%, #6BA32D 100%); padding: 30px; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 28px;">New Contact Form Submission</h1>
         <p style="color: #E8F5E0; margin: 10px 0 0 0; font-size: 16px;">Elegant Care Service Admin Panel</p>
       </div>
       
       <div style="padding: 30px; background-color: white; margin: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-        <div style="border-left: 4px solid #8CC63F; padding-left: 20px; margin-bottom: 30px;">
+        <div style="border-left: 4px solid primary; padding-left: 20px; margin-bottom: 30px;">
           <h2 style="color: #1f2937; margin: 0 0 10px 0;">Enquiry Information</h2>
           <div style="background-color: #F0F9E8; padding: 15px; border-radius: 8px;">
-            <p style="margin: 5px 0;"><strong>Status:</strong> <span style="background-color: #8CC63F; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">NEW ENQUIRY</span></p>
+            <p style="margin: 5px 0;"><strong>Status:</strong> <span style="background-color: primary; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">NEW ENQUIRY</span></p>
             <p style="margin: 5px 0;"><strong>Subject:</strong> <span style="background-color: #6BA32D; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">${lead.subject}</span></p>
             <p style="margin: 5px 0;"><strong>Priority:</strong> <span style="background-color: #4A8C1F; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">${lead.priority?.toUpperCase() || 'MEDIUM'}</span></p>
           </div>
@@ -113,8 +113,8 @@ async function sendAdminNotification(smtpConfig: any, lead: any) {
           <div>
             <h3 style="color: #1f2937; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">Contact Details</h3>
             <p style="margin: 10px 0;"><strong>Name:</strong> ${lead.firstName} ${lead.lastName}</p>
-            <p style="margin: 10px 0;"><strong>Email:</strong> <a href="mailto:${lead.email}" style="color: #8CC63F;">${lead.email}</a></p>
-            ${lead.phone ? `<p style="margin: 10px 0;"><strong>Phone:</strong> <a href="tel:${lead.phone}" style="color: #8CC63F;">${lead.phone}</a></p>` : ''}
+            <p style="margin: 10px 0;"><strong>Email:</strong> <a href="mailto:${lead.email}" style="color: primary;">${lead.email}</a></p>
+            ${lead.phone ? `<p style="margin: 10px 0;"><strong>Phone:</strong> <a href="tel:${lead.phone}" style="color: primary;">${lead.phone}</a></p>` : ''}
           </div>
           
           <div>
@@ -126,7 +126,7 @@ async function sendAdminNotification(smtpConfig: any, lead: any) {
 
         <div style="margin-bottom: 30px;">
           <h3 style="color: #1f2937; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">Message</h3>
-          <div style="background-color: #F0F9E8; padding: 20px; border-radius: 8px; border-left: 4px solid #8CC63F;">
+          <div style="background-color: #F0F9E8; padding: 20px; border-radius: 8px; border-left: 4px solid primary;">
             <p style="margin: 0; line-height: 1.6; color: #1f2937;">${lead.message}</p>
           </div>
         </div>
@@ -163,7 +163,7 @@ async function sendCustomerConfirmation(smtpConfig: any, lead: any) {
 
   const emailHTML = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8fafc;">
-      <div style="background: linear-gradient(135deg, #8CC63F 0%, #6BA32D 100%); padding: 30px; text-align: center;">
+      <div style="background: linear-gradient(135deg, primary 0%, #6BA32D 100%); padding: 30px; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 28px;">Thank You for Contacting Us!</h1>
         <p style="color: #E8F5E0; margin: 10px 0 0 0; font-size: 16px;">Elegant Care Service</p>
       </div>
@@ -176,7 +176,7 @@ async function sendCustomerConfirmation(smtpConfig: any, lead: any) {
           </p>
         </div>
 
-        <div style="background-color: #F0F9E8; padding: 20px; border-radius: 8px; border-left: 4px solid #8CC63F; margin-bottom: 30px;">
+        <div style="background-color: #F0F9E8; padding: 20px; border-radius: 8px; border-left: 4px solid primary; margin-bottom: 30px;">
           <h3 style="color: #1f2937; margin: 0 0 15px 0;">Your Enquiry Details:</h3>
           <p style="margin: 5px 0;"><strong>Subject:</strong> ${lead.subject}</p>
           <p style="margin: 5px 0;"><strong>Message:</strong></p>

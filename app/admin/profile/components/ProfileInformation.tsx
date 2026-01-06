@@ -189,7 +189,7 @@ export default function ProfileInformation() {
         <div className="relative">
           <Avatar className="w-24 h-24">
             <AvatarImage src={profileData.avatar} alt="Profile picture" />
-            <AvatarFallback className="bg-[#8CC63F] text-white text-xl font-semibold">
+            <AvatarFallback className="bg-primary text-white text-xl font-semibold">
               {profileData.firstName && profileData.lastName
                 ? `${profileData.firstName[0]}${profileData.lastName[0]}`.toUpperCase()
                 : "EC"}
@@ -205,7 +205,7 @@ export default function ProfileInformation() {
             />
             <Button
               size="sm"
-              className="rounded-full w-8 h-8 p-0 bg-[#8CC63F] hover:bg-[#7AB52F]"
+              className="rounded-full w-8 h-8 p-0 bg-primary hover:bg-primary-hover"
               type="button"
               asChild
             >
@@ -225,8 +225,8 @@ export default function ProfileInformation() {
 
       {/* Basic Information */}
       <div className="space-y-6">
-        <h4 className="text-lg font-semibold text-[#1E3A5F] flex items-center gap-2">
-          <User className="h-5 w-5 text-[#8CC63F]" />
+        <h4 className="text-lg font-semibold text-secondary flex items-center gap-2">
+          <User className="h-5 w-5 text-primary" />
           Personal Information
         </h4>
         <div className="grid md:grid-cols-2 gap-6">
@@ -320,7 +320,7 @@ export default function ProfileInformation() {
       <div className="flex justify-end pt-6 border-t">
         <Button
           onClick={handleProfileSave}
-          className="bg-[#8CC63F] hover:bg-[#7AB52F] text-white"
+          className="bg-primary hover:bg-primary-hover text-white"
           disabled={isSaving}
         >
           {isSaving ? (
@@ -341,7 +341,7 @@ export default function ProfileInformation() {
       {isLoading && (
         <div className="absolute inset-0 bg-white/50 flex items-center justify-center">
           <div className="flex flex-col items-center space-y-4">
-            <Loader2 className="h-8 w-8 animate-spin text-[#8CC63F]" />
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
             <p className="text-gray-600">Loading profile...</p>
           </div>
         </div>

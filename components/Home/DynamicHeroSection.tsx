@@ -81,11 +81,11 @@ export function DynamicHeroSection() {
           </div>
         ))
       ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1E3A5F] via-[#2A4A6F] to-[#1E3A5F]">
+        <div className="absolute inset-0 bg-gradient-to-br from-secondary via-secondary to-secondary">
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-10 sm:top-20 left-4 sm:left-10 w-20 sm:w-32 h-20 sm:h-32 rounded-full bg-[#8CC63F]" />
-            <div className="absolute bottom-10 sm:bottom-20 right-10 sm:right-20 w-32 sm:w-48 h-32 sm:h-48 rounded-full bg-[#8CC63F]" />
+            <div className="absolute top-10 sm:top-20 left-4 sm:left-10 w-20 sm:w-32 h-20 sm:h-32 rounded-full bg-primary" />
+            <div className="absolute bottom-10 sm:bottom-20 right-10 sm:right-20 w-32 sm:w-48 h-32 sm:h-48 rounded-full bg-primary" />
             <div className="absolute top-20 sm:top-40 right-20 sm:right-40 w-16 sm:w-24 h-16 sm:h-24 rounded-full bg-white" />
           </div>
         </div>
@@ -107,7 +107,7 @@ export function DynamicHeroSection() {
                 >
                   {currentSlide === index && (
                     <>
-                      <p className="text-[#8CC63F] font-medium mb-2 text-xs sm:text-sm uppercase tracking-wider">
+                      <p className="text-primary font-medium mb-2 text-xs sm:text-sm uppercase tracking-wider">
                         {slide.subtitle}
                       </p>
                       <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 leading-tight text-balance">
@@ -124,7 +124,7 @@ export function DynamicHeroSection() {
             <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4">
               <Button
                 size="lg"
-                className="bg-[#8CC63F] hover:bg-[#7AB82F] text-white font-semibold px-6 sm:px-8 text-sm sm:text-base"
+                className="bg-primary hover:bg-primary-hover text-white font-semibold px-6 sm:px-8 text-sm sm:text-base"
                 asChild
               >
                 <a href="/contact">Get Started</a>
@@ -132,7 +132,7 @@ export function DynamicHeroSection() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-2 border-white text-white hover:bg-white hover:text-[#1E3A5F] font-semibold px-6 sm:px-8 bg-transparent text-sm sm:text-base"
+                className="border-2 border-white text-white hover:bg-white hover:text-secondary font-semibold px-6 sm:px-8 bg-transparent text-sm sm:text-base"
                 asChild
               >
                 <a href="/about">Learn More</a>
@@ -158,7 +158,7 @@ export function DynamicHeroSection() {
                 key={index}
                 onClick={() => goToSlide(index)}
                 className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-colors touch-manipulation ${
-                  currentSlide === index ? "bg-[#8CC63F]" : "bg-white/40"
+                  currentSlide === index ? "bg-primary" : "bg-white/40"
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />

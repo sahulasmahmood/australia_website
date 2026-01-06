@@ -12,7 +12,7 @@ export function CtaBanner() {
   }
 
   return (
-    <section className="bg-[#8CC63F] py-4 sm:py-5">
+    <section className="bg-primary py-4 sm:py-5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col items-center gap-4 sm:gap-6 md:flex-row md:justify-center md:gap-10 lg:gap-14 text-white">
           <a

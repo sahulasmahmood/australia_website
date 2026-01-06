@@ -27,12 +27,12 @@ export function AboutContent() {
             </div>
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold mb-6">
-                <span className="text-[#1E3A5F]">OUR </span>
-                <span className="text-[#8CC63F]">STORY</span>
+                <span className="text-secondary">OUR </span>
+                <span className="text-primary">STORY</span>
               </h2>
               <p className="text-gray-600 leading-relaxed mb-4 text-justify">
                 Elegant Care Service was founded with a simple yet powerful vision: to provide
-                <strong className="text-[#1E3A5F]"> person-centered disability support services</strong> that truly make
+                <strong className="text-secondary"> person-centered disability support services</strong> that truly make
                 a difference in people's lives.
               </p>
               <p className="text-gray-600 leading-relaxed mb-4 text-justify">
@@ -51,16 +51,16 @@ export function AboutContent() {
       </section>
 
       {/* Mission Section */}
-      <section id="mission" className="py-12 sm:py-16 md:py-20 bg-[#F5F5F5]">
+      <section id="mission" className="py-12 sm:py-16 md:py-20 bg-light-gray">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold mb-6">
-                <span className="text-[#1E3A5F]">OUR </span>
-                <span className="text-[#8CC63F]">MISSION</span>
+                <span className="text-secondary">OUR </span>
+                <span className="text-primary">MISSION</span>
               </h2>
               <p className="text-gray-600 leading-relaxed mb-4 text-justify">
-                Our mission is to <strong className="text-[#1E3A5F]">empower individuals with disabilities</strong> to
+                Our mission is to <strong className="text-secondary">empower individuals with disabilities</strong> to
                 live fulfilling, independent lives by providing tailored support services that respect their choices and
                 promote their wellbeing.
               </p>
@@ -76,7 +76,7 @@ export function AboutContent() {
                   "Continuous improvement",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3 text-gray-700">
-                    <div className="mt-0.5 p-1 bg-[#8CC63F] rounded-full flex-shrink-0">
+                    <div className="mt-0.5 p-1 bg-primary rounded-full flex-shrink-0">
                       <Check className="h-3 w-3 text-white" />
                     </div>
                     <span>{item}</span>
@@ -101,8 +101,8 @@ export function AboutContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-10 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold mb-4">
-              <span className="text-[#1E3A5F]">OUR </span>
-              <span className="text-[#8CC63F]">VALUES</span>
+              <span className="text-secondary">OUR </span>
+              <span className="text-primary">VALUES</span>
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Our core values guide everything we do and shape how we deliver our services.
@@ -110,8 +110,8 @@ export function AboutContent() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {values.map((value) => (
-              <div key={value.title} className="bg-[#F5F5F5] p-6 rounded-lg hover:shadow-md transition-shadow">
-                <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2">{value.title}</h3>
+              <div key={value.title} className="bg-light-gray p-6 rounded-lg hover:shadow-md transition-shadow">
+                <h3 className="text-lg font-semibold text-secondary mb-2">{value.title}</h3>
                 <p className="text-gray-600 text-sm">{value.description}</p>
               </div>
             ))}

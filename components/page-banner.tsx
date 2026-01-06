@@ -7,7 +7,7 @@ interface PageBannerProps {
 export function PageBanner({ title, breadcrumb, backgroundImage }: PageBannerProps) {
   return (
     <section 
-      className="relative bg-[#1E3A5F] py-10 sm:py-14 md:py-16 lg:py-20"
+      className="relative bg-secondary py-10 sm:py-14 md:py-16 lg:py-20"
       style={backgroundImage ? {
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${backgroundImage})`,
         backgroundSize: 'cover',
@@ -26,9 +26,9 @@ export function PageBanner({ title, breadcrumb, backgroundImage }: PageBannerPro
           >
             {breadcrumb.map((item, index) => (
               <span key={item.href} className="flex items-center gap-1.5 sm:gap-2">
-                {index > 0 && <span className="text-[#8CC63F]" aria-hidden="true">/</span>}
+                {index > 0 && <span className="text-primary" aria-hidden="true">/</span>}
                 {index === breadcrumb.length - 1 ? (
-                  <span className="text-[#8CC63F] font-medium truncate max-w-[150px] sm:max-w-[200px] md:max-w-none" aria-current="page">
+                  <span className="text-primary font-medium truncate max-w-[150px] sm:max-w-[200px] md:max-w-none" aria-current="page">
                     {item.label}
                   </span>
                 ) : (

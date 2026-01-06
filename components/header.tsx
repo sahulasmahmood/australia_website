@@ -101,7 +101,7 @@ export function Header() {
             {navItems.map((item) =>
               item.dropdown ? (
                 <DropdownMenu key={item.label}>
-                  <DropdownMenuTrigger className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-[#333] hover:text-[#8CC63F] transition-colors group">
+                  <DropdownMenuTrigger className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-text-dark hover:text-primary transition-colors group">
                     {item.label}
                     <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
                   </DropdownMenuTrigger>
@@ -128,7 +128,7 @@ export function Header() {
                           <DropdownMenuItem asChild>
                             <Link 
                               href="/services" 
-                              className="cursor-pointer hover:bg-[#8CC63F]/10 hover:text-[#8CC63F] rounded-md px-3 py-1.5 font-semibold text-[#1E3A5F] border-b border-gray-100 mb-0.5 text-sm"
+                              className="cursor-pointer hover:bg-primary/10 hover:text-primary rounded-md px-3 py-1.5 font-semibold text-secondary border-b border-gray-100 mb-0.5 text-sm"
                             >
                               View All Services
                             </Link>
@@ -138,7 +138,7 @@ export function Header() {
                           <DropdownMenuItem asChild>
                             <Link 
                               href="/support-model" 
-                              className="cursor-pointer hover:bg-[#8CC63F]/10 hover:text-[#8CC63F] rounded-md px-3 py-1.5 font-semibold text-[#1E3A5F] border-b border-gray-100 mb-0.5 text-sm"
+                              className="cursor-pointer hover:bg-primary/10 hover:text-primary rounded-md px-3 py-1.5 font-semibold text-secondary border-b border-gray-100 mb-0.5 text-sm"
                             >
                               View All Support Models
                             </Link>
@@ -148,7 +148,7 @@ export function Header() {
                           <DropdownMenuItem key={`${item.label}-${subItem.href}`} asChild>
                             <Link 
                               href={subItem.href} 
-                              className="cursor-pointer hover:bg-[#8CC63F]/10 hover:text-[#8CC63F] rounded-md px-3 py-1.5 text-sm transition-colors"
+                              className="cursor-pointer hover:bg-primary/10 hover:text-primary rounded-md px-3 py-1.5 text-sm transition-colors"
                             >
                               {subItem.label}
                             </Link>
@@ -162,14 +162,14 @@ export function Header() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="px-3 py-2 text-sm font-medium text-[#333] hover:text-[#8CC63F] transition-colors"
+                  className="px-3 py-2 text-sm font-medium text-text-dark hover:text-primary transition-colors"
                 >
                   {item.label}
                 </Link>
               ),
             )}
             <Link href="/login">
-              <Button className="ml-4 bg-[#8CC63F] hover:bg-[#7AB82F] text-white font-medium">LOGIN</Button>
+              <Button className="ml-4 bg-primary hover:bg-primary-hover text-white font-medium">LOGIN</Button>
             </Link>
           </nav>
 
@@ -177,14 +177,14 @@ export function Header() {
             {contactInfo?.primaryPhone && (
               <a 
                 href={`tel:${contactInfo.primaryPhone.replace(/[^0-9+]/g, '')}`} 
-                className="p-2 text-[#8CC63F] sm:hidden" 
+                className="p-2 text-primary sm:hidden" 
                 aria-label="Call us"
               >
                 <Phone className="h-5 w-5" />
               </a>
             )}
             <button
-              className="p-2 text-[#333] hover:bg-gray-100 rounded-md transition-colors"
+              className="p-2 text-text-dark hover:bg-gray-100 rounded-md transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileMenuOpen}
@@ -206,7 +206,7 @@ export function Header() {
                     <div>
                       <button
                         onClick={() => toggleDropdown(item.label)}
-                        className="w-full flex items-center justify-between px-6 py-4 text-sm font-medium text-[#333] hover:bg-gray-50 transition-colors"
+                        className="w-full flex items-center justify-between px-6 py-4 text-sm font-medium text-text-dark hover:bg-gray-50 transition-colors"
                       >
                         {item.label}
                         <ChevronDown
@@ -238,7 +238,7 @@ export function Header() {
                               {item.label === "SERVICES" && (
                                 <Link
                                   href="/services"
-                                  className="block px-10 py-2 text-sm font-semibold text-[#1E3A5F] hover:text-[#8CC63F] hover:bg-gray-100 transition-colors border-b border-gray-200 mb-0.5"
+                                  className="block px-10 py-2 text-sm font-semibold text-secondary hover:text-primary hover:bg-gray-100 transition-colors border-b border-gray-200 mb-0.5"
                                   onClick={() => setMobileMenuOpen(false)}
                                 >
                                   View All Services
@@ -247,7 +247,7 @@ export function Header() {
                               {item.label === "SUPPORT MODEL" && (
                                 <Link
                                   href="/support-model"
-                                  className="block px-10 py-2 text-sm font-semibold text-[#1E3A5F] hover:text-[#8CC63F] hover:bg-gray-100 transition-colors border-b border-gray-200 mb-0.5"
+                                  className="block px-10 py-2 text-sm font-semibold text-secondary hover:text-primary hover:bg-gray-100 transition-colors border-b border-gray-200 mb-0.5"
                                   onClick={() => setMobileMenuOpen(false)}
                                 >
                                   View All Support Models
@@ -257,7 +257,7 @@ export function Header() {
                                 <Link
                                   key={`${item.label}-mobile-${subItem.href}`}
                                   href={subItem.href}
-                                  className="block px-10 py-2 text-sm text-gray-600 hover:text-[#8CC63F] hover:bg-gray-100 transition-colors"
+                                  className="block px-10 py-2 text-sm text-gray-600 hover:text-primary hover:bg-gray-100 transition-colors"
                                   onClick={() => setMobileMenuOpen(false)}
                                 >
                                   {subItem.label}
@@ -271,7 +271,7 @@ export function Header() {
                   ) : (
                     <Link
                       href={item.href}
-                      className="block px-6 py-4 text-sm font-medium text-[#333] hover:text-[#8CC63F] hover:bg-gray-50 transition-colors"
+                      className="block px-6 py-4 text-sm font-medium text-text-dark hover:text-primary hover:bg-gray-50 transition-colors"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {item.label}
@@ -282,12 +282,12 @@ export function Header() {
 
               <div className="px-6 py-6 bg-gray-50 mt-2">
                 <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                  <Button className="w-full bg-[#8CC63F] hover:bg-[#7AB82F] text-white font-medium py-3">LOGIN</Button>
+                  <Button className="w-full bg-primary hover:bg-primary-hover text-white font-medium py-3">LOGIN</Button>
                 </Link>
                 {contactInfo?.primaryPhone && (
                   <a
                     href={`tel:${contactInfo.primaryPhone.replace(/[^0-9+]/g, '')}`}
-                    className="flex items-center justify-center gap-2 mt-4 text-[#1E3A5F] font-medium"
+                    className="flex items-center justify-center gap-2 mt-4 text-secondary font-medium"
                   >
                     <Phone className="h-4 w-4" />
                     {contactInfo.primaryPhone}

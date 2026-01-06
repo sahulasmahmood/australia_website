@@ -62,8 +62,8 @@ export default function TeamPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-10 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold mb-4">
-              <span className="text-[#1E3A5F]">MEET </span>
-              <span className="text-[#8CC63F]">OUR TEAM</span>
+              <span className="text-secondary">MEET </span>
+              <span className="text-primary">OUR TEAM</span>
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto text-justify">
               Our dedicated team of professionals is committed to providing exceptional support and making a positive
@@ -75,7 +75,7 @@ export default function TeamPage() {
             {teamMembers.map((member) => (
               <div
                 key={member.name}
-                className="bg-[#F5F5F5] rounded-lg overflow-hidden hover:shadow-lg transition-shadow group"
+                className="bg-light-gray rounded-lg overflow-hidden hover:shadow-lg transition-shadow group"
               >
                 <div className="relative h-64 sm:h-72 overflow-hidden">
                   <Image
@@ -86,8 +86,8 @@ export default function TeamPage() {
                   />
                 </div>
                 <div className="p-6 text-center">
-                  <h3 className="text-lg font-semibold text-[#8CC63F] mb-1">{member.name}</h3>
-                  <p className="text-[#1E3A5F] font-medium text-sm mb-3">{member.role}</p>
+                  <h3 className="text-lg font-semibold text-primary mb-1">{member.name}</h3>
+                  <p className="text-secondary font-medium text-sm mb-3">{member.role}</p>
                   <p className="text-gray-600 text-sm">{member.bio}</p>
                 </div>
               </div>

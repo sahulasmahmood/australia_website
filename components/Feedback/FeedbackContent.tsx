@@ -107,8 +107,8 @@ export function FeedbackContent() {
         {/* Header */}
         <div className="text-center mb-10 sm:mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-[#1E3A5F]">WE VALUE YOUR </span>
-            <span className="text-[#8CC63F]">FEEDBACK</span>
+            <span className="text-secondary">WE VALUE YOUR </span>
+            <span className="text-primary">FEEDBACK</span>
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-justify">
             Your feedback helps us improve our services and provide better care for you and your loved ones.
@@ -119,7 +119,7 @@ export function FeedbackContent() {
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Anonymous Option - Custom Radio Buttons */}
           <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-            <span className="text-sm font-medium text-[#1E3A5F]">
+            <span className="text-sm font-medium text-secondary">
               Would you like your feedback to be anonymous?
             </span>
             <div className="flex items-center gap-6">
@@ -127,8 +127,8 @@ export function FeedbackContent() {
                 <div 
                   className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
                     isAnonymous 
-                      ? "border-[#8CC63F] bg-[#8CC63F]" 
-                      : "border-gray-300 group-hover:border-[#8CC63F]"
+                      ? "border-primary bg-primary" 
+                      : "border-gray-300 group-hover:border-primary"
                   }`}
                   onClick={() => !loading && setIsAnonymous(true)}
                 >
@@ -140,8 +140,8 @@ export function FeedbackContent() {
                 <div 
                   className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
                     !isAnonymous 
-                      ? "border-[#8CC63F] bg-[#8CC63F]" 
-                      : "border-gray-300 group-hover:border-[#8CC63F]"
+                      ? "border-primary bg-primary" 
+                      : "border-gray-300 group-hover:border-primary"
                   }`}
                   onClick={() => !loading && setIsAnonymous(false)}
                 >
@@ -157,7 +157,7 @@ export function FeedbackContent() {
             {/* Left Column - Contact Info */}
             <div className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                <label htmlFor="name" className="block text-sm font-medium text-secondary mb-2">
                   Name {!isAnonymous && "*"}
                 </label>
                 <input
@@ -169,12 +169,12 @@ export function FeedbackContent() {
                   onChange={handleChange}
                   disabled={loading || isAnonymous}
                   required={!isAnonymous}
-                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50 disabled:bg-gray-100"
+                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all disabled:opacity-50 disabled:bg-gray-100"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-secondary mb-2">
                   Email
                 </label>
                 <input
@@ -185,12 +185,12 @@ export function FeedbackContent() {
                   value={formData.email}
                   onChange={handleChange}
                   disabled={loading || isAnonymous}
-                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50 disabled:bg-gray-100"
+                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all disabled:opacity-50 disabled:bg-gray-100"
                 />
               </div>
 
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                <label htmlFor="phone" className="block text-sm font-medium text-secondary mb-2">
                   Phone
                 </label>
                 <input
@@ -201,13 +201,13 @@ export function FeedbackContent() {
                   value={formData.phone}
                   onChange={handleChange}
                   disabled={loading || isAnonymous}
-                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all disabled:opacity-50 disabled:bg-gray-100"
+                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all disabled:opacity-50 disabled:bg-gray-100"
                 />
               </div>
 
               {/* Custom Dropdown for Feedback Type */}
               <div>
-                <label className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                <label className="block text-sm font-medium text-secondary mb-2">
                   Feedback Type
                 </label>
                 <div className="relative">
@@ -215,7 +215,7 @@ export function FeedbackContent() {
                     type="button"
                     onClick={() => !loading && setIsDropdownOpen(!isDropdownOpen)}
                     disabled={loading}
-                    className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all bg-white disabled:opacity-50 text-left flex items-center justify-between"
+                    className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all bg-white disabled:opacity-50 text-left flex items-center justify-between"
                   >
                     <span className="text-gray-900">{selectedTypeLabel}</span>
                     <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`} />
@@ -227,7 +227,7 @@ export function FeedbackContent() {
                         className="fixed inset-0 z-10" 
                         onClick={() => setIsDropdownOpen(false)}
                       />
-                      <div className="absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-[#1E3A5F] [&::-webkit-scrollbar-thumb]:rounded-full">
+                      <div className="absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-secondary [&::-webkit-scrollbar-thumb]:rounded-full">
                         {feedbackTypes.map((type) => (
                           <button
                             key={type.value}
@@ -236,11 +236,11 @@ export function FeedbackContent() {
                               setFormData({ ...formData, feedbackType: type.value })
                               setIsDropdownOpen(false)
                             }}
-                            className="w-full px-4 py-2.5 text-left hover:bg-[#8CC63F]/10 flex items-center justify-between transition-colors text-sm"
+                            className="w-full px-4 py-2.5 text-left hover:bg-primary/10 flex items-center justify-between transition-colors text-sm"
                           >
                             <span className="text-gray-700">{type.label}</span>
                             {formData.feedbackType === type.value && (
-                              <Check className="h-4 w-4 text-[#8CC63F]" />
+                              <Check className="h-4 w-4 text-primary" />
                             )}
                           </button>
                         ))}
@@ -254,7 +254,7 @@ export function FeedbackContent() {
             {/* Right Column - Feedback Content */}
             <div className="space-y-6">
               <div>
-                <label htmlFor="feedback" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                <label htmlFor="feedback" className="block text-sm font-medium text-secondary mb-2">
                   What would you like to tell us? *
                 </label>
                 <textarea
@@ -266,12 +266,12 @@ export function FeedbackContent() {
                   value={formData.feedback}
                   onChange={handleChange}
                   disabled={loading}
-                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all resize-none disabled:opacity-50"
+                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all resize-none disabled:opacity-50"
                 />
               </div>
 
               <div>
-                <label htmlFor="resolution" className="block text-sm font-medium text-[#1E3A5F] mb-2">
+                <label htmlFor="resolution" className="block text-sm font-medium text-secondary mb-2">
                   If you are making a complaint, how would you like us to address the problem?
                 </label>
                 <textarea
@@ -282,7 +282,7 @@ export function FeedbackContent() {
                   value={formData.resolution}
                   onChange={handleChange}
                   disabled={loading}
-                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-[#8CC63F] focus:border-transparent outline-none transition-all resize-none disabled:opacity-50"
+                  className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all resize-none disabled:opacity-50"
                 />
               </div>
             </div>
@@ -293,7 +293,7 @@ export function FeedbackContent() {
             <button
               type="submit"
               disabled={loading}
-              className="bg-[#8CC63F] text-white font-semibold px-8 py-3 rounded hover:bg-[#7AB82F] transition-colors disabled:opacity-50 flex items-center justify-center gap-2 uppercase tracking-wide"
+              className="bg-primary text-white font-semibold px-8 py-3 rounded hover:bg-primary-hover transition-colors disabled:opacity-50 flex items-center justify-center gap-2 uppercase tracking-wide"
             >
               {loading ? (
                 <>

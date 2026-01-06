@@ -155,7 +155,7 @@ export default function SettingsPage() {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8CC63F] mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-gray-600">Loading settings...</p>
         </div>
       </div>
@@ -167,8 +167,8 @@ export default function SettingsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-[#1E3A5F] flex items-center gap-3">
-            <SettingsIcon className="h-8 w-8 text-[#8CC63F]" />
+          <h1 className="text-4xl font-bold text-secondary flex items-center gap-3">
+            <SettingsIcon className="h-8 w-8 text-primary" />
             Site Settings
           </h1>
           <p className="text-gray-600 mt-2">
@@ -187,7 +187,7 @@ export default function SettingsPage() {
           </Button>
           <Button
             onClick={saveSettings}
-            className="flex items-center bg-[#8CC63F] hover:bg-[#7AB52F] text-white"
+            className="flex items-center bg-primary hover:bg-primary-hover text-white"
             disabled={loading}
           >
             <Save className="h-4 w-4 mr-2" />
@@ -199,9 +199,9 @@ export default function SettingsPage() {
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Site Information */}
         <Card className="shadow-lg border-0">
-          <CardHeader className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#8CC63F]/10 p-6">
-            <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
-              <Building2 className="h-5 w-5 text-[#8CC63F]" />
+          <CardHeader className="bg-gradient-to-r from-secondary/10 to-primary/10 p-6">
+            <CardTitle className="flex items-center gap-2 text-secondary">
+              <Building2 className="h-5 w-5 text-primary" />
               Site Information
             </CardTitle>
           </CardHeader>
@@ -242,9 +242,9 @@ export default function SettingsPage() {
 
         {/* Brand Assets */}
         <Card className="shadow-lg border-0">
-          <CardHeader className="bg-gradient-to-r from-[#8CC63F]/10 to-[#1E3A5F]/10 p-6">
-            <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
-              <ImageIcon className="h-5 w-5 text-[#8CC63F]" />
+          <CardHeader className="bg-gradient-to-r from-primary/10 to-secondary/10 p-6">
+            <CardTitle className="flex items-center gap-2 text-secondary">
+              <ImageIcon className="h-5 w-5 text-primary" />
               Brand Assets
             </CardTitle>
           </CardHeader>
@@ -332,9 +332,9 @@ export default function SettingsPage() {
 
       {/* Preview Card */}
       <Card className="shadow-lg border-0">
-        <CardHeader className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#8CC63F]/10 p-6">
-          <CardTitle className="flex items-center gap-2 text-[#1E3A5F]">
-            <ImageIcon className="h-5 w-5 text-[#8CC63F]" />
+        <CardHeader className="bg-gradient-to-r from-secondary/10 to-primary/10 p-6">
+          <CardTitle className="flex items-center gap-2 text-secondary">
+            <ImageIcon className="h-5 w-5 text-primary" />
             Preview
           </CardTitle>
         </CardHeader>
@@ -349,12 +349,12 @@ export default function SettingsPage() {
                     className="w-12 h-12 object-contain"
                   />
                 ) : (
-                  <div className="w-12 h-12 rounded-full bg-[#8CC63F] flex items-center justify-center text-white text-xl font-bold">
+                  <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white text-xl font-bold">
                     {siteName.charAt(0)}
                   </div>
                 )}
                 <div>
-                  <div className="font-bold text-[#1E3A5F] text-lg">
+                  <div className="font-bold text-secondary text-lg">
                     {siteName}
                   </div>
                   {siteTagline && (
