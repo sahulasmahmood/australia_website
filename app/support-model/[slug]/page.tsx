@@ -15,34 +15,44 @@ interface PageProps {
   }>;
 }
 
+import { cache } from "react";
+
+// Base fetcher to be deduplicated
+const getSupportModelBase = cache(async (slug: string) => {
+  const connectDB = (await import("@/config/models/connectDB")).default;
+  const SupportModel = (
+    await import("@/config/utils/admin/supportModel/supportModelSchema")
+  ).default;
+
+  await connectDB();
+
+  const supportModel = await SupportModel.findOne({
+    slug,
+    status: "active",
+    $or: [{ isDeleted: false }, { isDeleted: { $exists: false } }],
+  })
+    .select("-isDeleted -__v")
+    .lean();
+
+  return supportModel ? JSON.parse(JSON.stringify(supportModel)) : null;
+});
+
 // Fetch single support model by slug
-async function getSupportModelBySlug(slug: string) {
+async function getSupportModelBySlug(slug: string, increment = false) {
   try {
-    const connectDB = (await import("@/config/models/connectDB")).default;
-    const SupportModel = (
-      await import("@/config/utils/admin/supportModel/supportModelSchema")
-    ).default;
+    const supportModel = await getSupportModelBase(slug);
 
-    await connectDB();
-
-    const supportModel = await SupportModel.findOne({
-      slug,
-      status: "active",
-      $or: [{ isDeleted: false }, { isDeleted: { $exists: false } }],
-    })
-      .select("-isDeleted -__v")
-      .lean();
-
-    if (!supportModel) {
-      return null;
+    if (supportModel && increment) {
+      const SupportModel = (
+        await import("@/config/utils/admin/supportModel/supportModelSchema")
+      ).default;
+      // Increment view count separately from fetch
+      await SupportModel.findByIdAndUpdate(supportModel._id, {
+        $inc: { views: 1 },
+      });
     }
 
-    // Increment view count
-    await SupportModel.findByIdAndUpdate((supportModel as any)._id, {
-      $inc: { views: 1 },
-    });
-
-    return JSON.parse(JSON.stringify(supportModel));
+    return supportModel;
   } catch (error) {
     console.error("Error fetching support model:", error);
     return null;
@@ -73,7 +83,7 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function SupportModelDetailPage({ params }: PageProps) {
   const resolvedParams = await params;
-  const supportModelData = await getSupportModelBySlug(resolvedParams.slug);
+  const supportModelData = await getSupportModelBySlug(resolvedParams.slug, true);
 
   if (!supportModelData) {
     notFound();

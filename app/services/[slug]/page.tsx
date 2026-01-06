@@ -15,34 +15,44 @@ interface PageProps {
   }>;
 }
 
+import { cache } from "react";
+
+// Base fetcher to be deduplicated
+const getServiceBase = cache(async (slug: string) => {
+  const connectDB = (await import("@/config/models/connectDB")).default;
+  const Service = (
+    await import("@/config/utils/admin/services/serviceSchema")
+  ).default;
+
+  await connectDB();
+
+  const service = await Service.findOne({
+    slug,
+    status: "active",
+    $or: [{ isDeleted: false }, { isDeleted: { $exists: false } }],
+  })
+    .select("-isDeleted -__v")
+    .lean();
+
+  return service ? JSON.parse(JSON.stringify(service)) : null;
+});
+
 // Fetch single service by slug
-async function getServiceBySlug(slug: string) {
+async function getServiceBySlug(slug: string, increment = false) {
   try {
-    const connectDB = (await import("@/config/models/connectDB")).default;
-    const Service = (
-      await import("@/config/utils/admin/services/serviceSchema")
-    ).default;
+    const service = await getServiceBase(slug);
 
-    await connectDB();
-
-    const service = await Service.findOne({
-      slug,
-      status: "active",
-      $or: [{ isDeleted: false }, { isDeleted: { $exists: false } }],
-    })
-      .select("-isDeleted -__v")
-      .lean();
-
-    if (!service) {
-      return null;
+    if (service && increment) {
+      const Service = (
+        await import("@/config/utils/admin/services/serviceSchema")
+      ).default;
+      // Increment view count separately from fetch
+      await Service.findByIdAndUpdate(service._id, {
+        $inc: { views: 1 },
+      });
     }
 
-    // Increment view count
-    await Service.findByIdAndUpdate((service as any)._id, {
-      $inc: { views: 1 },
-    });
-
-    return JSON.parse(JSON.stringify(service));
+    return service;
   } catch (error) {
     console.error("Error fetching service:", error);
     return null;
@@ -73,7 +83,7 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function ServiceDetailPage({ params }: PageProps) {
   const resolvedParams = await params;
-  const serviceData = await getServiceBySlug(resolvedParams.slug);
+  const serviceData = await getServiceBySlug(resolvedParams.slug, true);
 
   if (!serviceData) {
     notFound();
