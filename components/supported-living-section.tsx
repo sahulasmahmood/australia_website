@@ -3,7 +3,7 @@ import { Check } from "lucide-react"
 
 const options = [
   "24/7 supported living arrangements",
-  "Shared or individual accommodation",
+  "Individual accommodation",
   "Skill development programs",
   "Community access support",
   "Personal care assistance",
