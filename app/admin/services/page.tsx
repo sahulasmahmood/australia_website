@@ -723,10 +723,10 @@ export default function ServicesPage() {
                           <Eye className="h-4 w-4" />
                           <span>{service.views || 0} views</span>
                         </div>
-                        <div className="flex items-center gap-2">
+                        {/* <div className="flex items-center gap-2">
                           <Calendar className="h-4 w-4" />
                           <span>{service.bookings || 0} bookings</span>
-                        </div>
+                        </div> */}
                       </div>
 
                       {service.features && service.features.length > 0 && (
