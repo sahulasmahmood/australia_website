@@ -249,7 +249,7 @@ export default function SupportModelDetailClient({
             <div className="w-12 sm:w-16 h-1 bg-[#8CC63F] mx-auto mt-3 sm:mt-4" />
           </motion.div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 bg-white rounded-xl overflow-hidden shadow-sm">
             {[
               {
                 title: "NDIS Registered",
@@ -270,12 +270,24 @@ export default function SupportModelDetailClient({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white p-5 sm:p-6 rounded-xl border-l-4 border-[#8CC63F] shadow-sm hover:shadow-md transition-shadow"
+                className={`relative group/feature py-6 sm:py-8 px-5 sm:px-6 border-gray-100
+                  ${index < 2 ? 'sm:border-r lg:border-r' : ''}
+                  ${index === 0 ? 'border-b sm:border-b-0' : ''}
+                  ${index === 1 ? 'border-b lg:border-b-0' : ''}
+                `}
               >
-                <h4 className="font-semibold text-[#1E3A5F] mb-2 text-base sm:text-lg">
-                  {item.title}
-                </h4>
-                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                {/* Hover gradient effect */}
+                <div className="opacity-0 group-hover/feature:opacity-100 transition duration-300 absolute inset-0 h-full w-full bg-gradient-to-b from-[#8CC63F]/10 to-transparent pointer-events-none" />
+                
+                {/* Title with animated bar */}
+                <div className="text-base sm:text-lg font-semibold mb-2 relative z-10">
+                  <div className="absolute left-0 inset-y-0 h-5 group-hover/feature:h-7 w-1 rounded-tr-full rounded-br-full bg-gray-200 group-hover/feature:bg-[#8CC63F] transition-all duration-300 origin-center -ml-5 sm:-ml-6" />
+                  <span className="group-hover/feature:translate-x-2 transition duration-300 inline-block text-[#1E3A5F]">
+                    {item.title}
+                  </span>
+                </div>
+                
+                <p className="text-gray-600 text-sm sm:text-base leading-relaxed relative z-10">
                   {item.description}
                 </p>
               </motion.div>
