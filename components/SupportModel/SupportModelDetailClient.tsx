@@ -113,7 +113,7 @@ export default function SupportModelDetailClient({
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <a 
-                  href={`tel:${contactInfo?.primaryPhone || ""}`}
+                  href="/contact"
                   className="w-full sm:w-auto"
                 >
                   <Button
