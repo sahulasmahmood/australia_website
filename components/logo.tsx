@@ -32,7 +32,7 @@ export function Logo({ className = "" }: { className?: string }) {
           {settings?.siteName?.split(" ")[0] || "Elegant"}
         </span>
         <span className="text-[#8CC63F] font-bold text-base sm:text-lg leading-tight">
-          {settings?.siteName?.split(" ").slice(1).join(" ") || "Care Service"}
+          {settings?.siteName?.split(" ").slice(1).join(" ") || "Care Services"}
         </span>
       </div>
     </div>

@@ -11,7 +11,7 @@ export async function GET() {
     let seoData = await SEO.find({}).sort({ lastUpdated: -1 });
     
     if (seoData.length === 0) {
-      // Create default SEO data for Elegant Care Service
+      // Create default SEO data for Elegant Care Services
       const defaultSEOData = [
         {
           id: "home",

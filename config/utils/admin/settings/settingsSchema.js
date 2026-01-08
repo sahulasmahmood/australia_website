@@ -49,7 +49,7 @@ settingsSchema.index({ isActive: 1 });
 const Settings =
   mongoose.models.Settings || mongoose.model("Settings", settingsSchema);
 
-// Default settings data for Elegant Care Service
+// Default settings data for Elegant Care Services
 const defaultSettingsData = {
   id: "default",
   siteName: "Elegant Care Services",
