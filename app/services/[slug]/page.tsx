@@ -54,7 +54,6 @@ async function getServiceBySlug(slug: string, increment = false) {
 
     return service;
   } catch (error) {
-    console.error("Error fetching service:", error);
     return null;
   }
 }

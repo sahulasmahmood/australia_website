@@ -147,7 +147,6 @@ export default function TestimonialsPage() {
         }
       }
     } catch (error) {
-      console.error('Error fetching testimonials:', error)
       toast({
         title: "Error",
         description: "Failed to fetch testimonials",
@@ -235,12 +234,16 @@ export default function TestimonialsPage() {
           description: "Testimonial has been saved successfully.",
         })
       } else {
-        throw new Error(result.message || 'Failed to save testimonial')
+        toast({
+          title: "Error",
+          description: result.message || 'Failed to save testimonial',
+          variant: "destructive",
+        })
       }
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message || "Failed to save testimonial",
+        description: "Failed to save testimonial",
         variant: "destructive",
       })
     } finally {

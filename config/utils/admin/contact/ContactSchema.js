@@ -43,7 +43,6 @@ const contactSchema = new mongoose.Schema(
     },
     state: {
       type: String,
-      required: true,
       trim: true,
       maxlength: 50,
     },

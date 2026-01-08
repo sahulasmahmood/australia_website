@@ -60,7 +60,6 @@ function ReviewPageContent() {
           setError(result.message);
         }
       } catch (error) {
-        console.error("Error fetching lead details:", error);
         setError("Failed to load review form");
       } finally {
         setIsLoading(false);
@@ -124,7 +123,6 @@ function ReviewPageContent() {
         });
       }
     } catch (error) {
-      console.error("Error submitting review:", error);
       toast({
         title: "Error",
         description: "Failed to submit review. Please try again.",
