@@ -61,7 +61,7 @@ export function AboutContent() {
                 a difference in people's lives.
               </p>
               <p className="text-gray-600 leading-relaxed mb-4 text-justify">
-                As a registered NDIS service provider, we understand that each individual has unique needs, goals, and
+                As a registered NDIS services provider, we understand that each individual has unique needs, goals, and
                 aspirations. Our team of dedicated professionals works tirelessly to ensure that every participant
                 receives the support they need to live their best life.
               </p>

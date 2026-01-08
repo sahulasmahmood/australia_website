@@ -7,7 +7,7 @@ import { HomeContent } from "@/components/Home/HomeContent"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: 'Elegant Care Services | NDIS Disability Service Provider',
+  title: 'Elegant Care Services | NDIS Disability Services Provider',
   description: 'Professional NDIS disability support services. We provide supported independent living, respite support, community participation, and personalized care services.',
   keywords: 'NDIS provider, disability support, supported independent living, respite care, community participation'
 }

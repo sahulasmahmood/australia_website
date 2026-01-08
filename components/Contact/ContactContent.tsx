@@ -162,9 +162,9 @@ export function ContactContent() {
     <>
       <section className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid lg:grid-cols-3 gap-8 md:gap-12">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
             {/* Contact Form */}
-            <div className="lg:col-span-2">
+            <div>
               {contactInfo?.pageTitle && (
                 <h2 className="text-2xl sm:text-3xl font-bold mb-6">
                   <span className="text-[#1E3A5F]">{contactInfo.pageTitle.split(" ").slice(0, 2).join(" ")} </span>
@@ -378,7 +378,7 @@ export function ContactContent() {
             </div>
 
             {/* Contact Information */}
-            <div className="lg:col-span-1 lg:sticky lg:top-28 h-fit">
+            <div className="lg:sticky lg:top-28 h-fit">
               <div className="bg-[#F5F5F5] rounded-xl p-6 sm:p-8 border border-gray-100 shadow-sm relative overflow-hidden">
                 {/* Decorative background element */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#8CC63F]/5 rounded-bl-full -mr-16 -mt-16" />

@@ -34,7 +34,7 @@ export function DynamicMetadata() {
     // Update document title with siteName and siteTagline
     if (settings?.siteName || settings?.siteTagline) {
       const siteName = settings.siteName || "Elegant Care Services"
-      const tagline = settings.siteTagline || "NDIS Disability Service Provider"
+      const tagline = settings.siteTagline || "NDIS Disability Services Provider"
       document.title = `${siteName} | ${tagline}`
     }
   }, [settings])
