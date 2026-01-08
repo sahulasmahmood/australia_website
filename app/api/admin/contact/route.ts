@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
         mapEmbedCode: "",
         latitude: "",
         longitude: "",
-        pageTitle: "Get in Touch with Elegant Care Service",
+        pageTitle: "Get in Touch with Elegant Care Services",
         pageDescription: "Ready to start your journey with us? Contact our support team today and let us help you achieve your goals with quality NDIS support services.",
         officeTitle: "Visit Our Office",
         officeDescription: "Conveniently located in Melbourne, our office is your gateway to quality NDIS support services tailored to your needs.",

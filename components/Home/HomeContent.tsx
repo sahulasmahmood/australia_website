@@ -5,7 +5,7 @@ import { ServicesSection } from "@/components/services-section"
 import { AboutSection } from "@/components/about-section"
 import { WhyChooseUsSection } from "@/components/why-choose-us-section"
 import { SupportedLivingSection } from "@/components/supported-living-section"
-import { TeamSection } from "@/components/team-section"
+// import { TeamSection } from "@/components/team-section"
 import { Testimonial } from "@/components/clean-testimonial"
 
 export function HomeContent() {
@@ -16,7 +16,7 @@ export function HomeContent() {
       <AboutSection />
       <WhyChooseUsSection />
       <SupportedLivingSection />
-      <TeamSection />
+      {/* <TeamSection /> */}
       <section className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8 sm:mb-12">

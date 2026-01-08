@@ -36,7 +36,7 @@ export function useSEOMeta({ pageId, fallback }: SEOMetaOptions) {
   
   useEffect(() => {
     // Set initial values with fallback
-    const initialTitle = fallback?.title || 'Elegant Care Service | NDIS Disability Service Provider'
+    const initialTitle = fallback?.title || 'Elegant Care Services | NDIS Disability Services Provider'
     const initialDesc = fallback?.description || 'Professional NDIS disability support services. We provide supported independent living, respite support, community participation, and personalized care services.'
     const initialKeys = fallback?.keywords || 'NDIS provider, disability support, supported independent living, respite care, community participation'
     

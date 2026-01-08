@@ -154,7 +154,7 @@ export default function SEOManagerPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-[#1E3A5F]">SEO Manager</h1>
-          <p className="text-gray-600 mt-2">Optimize SEO for Elegant Care Service website pages - manage meta titles, descriptions, and keywords</p>
+          <p className="text-gray-600 mt-2">Optimize SEO for Elegant Care Services website pages - manage meta titles, descriptions, and keywords</p>
         </div>
       </div>
 

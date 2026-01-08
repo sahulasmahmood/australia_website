@@ -1006,7 +1006,7 @@ export default function ServicesPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, seoTitle: e.target.value })
                   }
-                  placeholder="e.g., Supported Independent Living Services | Elegant Care Service"
+                  placeholder="e.g., Supported Independent Living Services | Elegant Care Services"
                   maxLength={200}
                   className="mt-2"
                 />

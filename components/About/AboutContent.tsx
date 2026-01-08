@@ -1,17 +1,42 @@
 "use client"
 
 import { Logo } from "@/components/logo"
-import { CheckCircle, Check } from "lucide-react"
+import { CheckCircle, Check, HeartHandshake, Scale, Award, Heart, Lightbulb, Users } from "lucide-react"
+import { cn } from "@/lib/utils"
 import Image from "next/image"
 
 export function AboutContent() {
   const values = [
-    { title: "Respect", description: "We treat every individual with dignity and respect their choices." },
-    { title: "Integrity", description: "We operate with honesty and transparency in all our services." },
-    { title: "Excellence", description: "We strive for the highest quality in everything we do." },
-    { title: "Compassion", description: "We provide care with empathy and understanding." },
-    { title: "Empowerment", description: "We support individuals to achieve their goals and independence." },
-    { title: "Inclusion", description: "We embrace diversity and create welcoming environments for all." },
+    { 
+      title: "Respect", 
+      description: "We treat every individual with dignity and respect their choices.",
+      icon: <HeartHandshake className="h-6 w-6" />
+    },
+    { 
+      title: "Integrity", 
+      description: "We operate with honesty and transparency in all our services.",
+      icon: <Scale className="h-6 w-6" />
+    },
+    { 
+      title: "Excellence", 
+      description: "We strive for the highest quality in everything we do.",
+      icon: <Award className="h-6 w-6" />
+    },
+    { 
+      title: "Compassion", 
+      description: "We provide care with empathy and understanding.",
+      icon: <Heart className="h-6 w-6" />
+    },
+    { 
+      title: "Empowerment", 
+      description: "We support individuals to achieve their goals and independence.",
+      icon: <Lightbulb className="h-6 w-6" />
+    },
+    { 
+      title: "Inclusion", 
+      description: "We embrace diversity and create welcoming environments for all.",
+      icon: <Users className="h-6 w-6" />
+    },
   ]
 
   return (
@@ -31,7 +56,7 @@ export function AboutContent() {
                 <span className="text-[#8CC63F]">STORY</span>
               </h2>
               <p className="text-gray-600 leading-relaxed mb-4 text-justify">
-                Elegant Care Service was founded with a simple yet powerful vision: to provide
+                Elegant Care Services was founded with a simple yet powerful vision: to provide
                 <strong className="text-[#1E3A5F]"> person-centered disability support services</strong> that truly make
                 a difference in people's lives.
               </p>
@@ -97,8 +122,15 @@ export function AboutContent() {
       </section>
 
       {/* Values Section */}
-      <section className="py-12 sm:py-16 md:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <section id="values" className="py-12 sm:py-16 md:py-20 bg-white relative">
+        {/* Background image strip */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-fixed opacity-5"
+          style={{
+            backgroundImage: `url('/people-helping-community-care.jpg')`,
+          }}
+        />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-10 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold mb-4">
               <span className="text-[#1E3A5F]">OUR </span>
@@ -108,11 +140,49 @@ export function AboutContent() {
               Our core values guide everything we do and shape how we deliver our services.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {values.map((value) => (
-              <div key={value.title} className="bg-[#F5F5F5] p-6 rounded-lg hover:shadow-md transition-shadow">
-                <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2">{value.title}</h3>
-                <p className="text-gray-600 text-sm">{value.description}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 relative">
+            {values.map((value, index) => (
+              <div 
+                key={value.title} 
+                className={cn(
+                  "flex flex-col py-8 sm:py-10 px-6 sm:px-8 relative group/value border-gray-100",
+                  // Right border for all except last in row
+                  index % 3 !== 2 && "lg:border-r",
+                  index % 2 !== 1 && "sm:border-r lg:border-r-0",
+                  // Bottom border for top rows
+                  index < 3 && "lg:border-b",
+                  index < 4 && "sm:border-b lg:border-b-0",
+                  // Mobile: all have bottom border except last
+                  index < 5 && "border-b sm:border-b-0",
+                  index < 4 && "sm:border-b"
+                )}
+              >
+                {/* Hover gradient effect - top rows */}
+                {index < 3 && (
+                  <div className="opacity-0 group-hover/value:opacity-100 transition duration-300 absolute inset-0 h-full w-full bg-gradient-to-t from-[#8CC63F]/10 to-transparent pointer-events-none" />
+                )}
+                {/* Hover gradient effect - bottom rows */}
+                {index >= 3 && (
+                  <div className="opacity-0 group-hover/value:opacity-100 transition duration-300 absolute inset-0 h-full w-full bg-gradient-to-b from-[#8CC63F]/10 to-transparent pointer-events-none" />
+                )}
+
+                {/* Icon */}
+                <div className="mb-4 relative z-10 text-[#8CC63F]">
+                  {value.icon}
+                </div>
+
+                {/* Title with animated bar */}
+                <div className="text-base sm:text-lg font-semibold mb-2 relative z-10">
+                  <div className="absolute left-0 inset-y-0 h-6 group-hover/value:h-8 w-1 rounded-tr-full rounded-br-full bg-gray-200 group-hover/value:bg-[#8CC63F] transition-all duration-300 origin-center -ml-6 sm:-ml-8" />
+                  <span className="group-hover/value:translate-x-2 transition duration-300 inline-block text-[#1E3A5F]">
+                    {value.title}
+                  </span>
+                </div>
+
+                {/* Description */}
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed relative z-10">
+                  {value.description}
+                </p>
               </div>
             ))}
           </div>

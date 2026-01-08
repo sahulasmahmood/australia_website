@@ -188,7 +188,7 @@ adminSchema.statics.createInitialAdmin = async function () {
       })
 
       await initialAdmin.save()
-      console.log("Initial admin created successfully for Elegant Care Service")
+      console.log("Initial admin created successfully for Elegant Care Services")
       return initialAdmin
     } else {
       console.log("Initial admin already exists")

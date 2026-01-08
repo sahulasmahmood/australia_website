@@ -217,7 +217,7 @@ export default function LoginPage() {
           </div>
 
           <p className="text-center text-sm text-gray-500 mt-6">
-            © {new Date().getFullYear()} Elegant Care Service. All rights reserved.
+            © {new Date().getFullYear()} Elegant Care Services. All rights reserved.
           </p>
         </div>
       </section>

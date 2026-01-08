@@ -15,7 +15,7 @@ export function AboutSection() {
               {settings?.logo ? (
                 <Image
                   src={settings.logo}
-                  alt={settings.siteName || "Elegant Care Service"}
+                  alt={settings.siteName || "Elegant Care Services"}
                   width={320}
                   height={384}
                   className="w-48 h-60 sm:w-64 sm:h-80 md:w-80 md:h-96 object-contain"
@@ -24,7 +24,7 @@ export function AboutSection() {
               ) : (
                 <Image
                   src="/placeholder-logo.png"
-                  alt="Elegant Care Service Logo"
+                  alt="Elegant Care Services Logo"
                   width={320}
                   height={384}
                   className="w-48 h-60 sm:w-64 sm:h-80 md:w-80 md:h-96 object-contain"
@@ -43,7 +43,7 @@ export function AboutSection() {
 
             <div className="space-y-3 sm:space-y-4 text-gray-700 leading-relaxed text-sm sm:text-base text-justify">
               <p>
-                At <strong className="text-[#1E3A5F]">Elegant Care Service</strong>, we believe that everyone deserves to
+                At <strong className="text-[#1E3A5F]">Elegant Care Services</strong>, we believe that everyone deserves to
                 live a life filled with dignity, independence, and joy. Our dedicated team of experienced professionals
                 is committed to providing{" "}
                 <strong className="text-[#8CC63F]">exceptional disability support services</strong> tailored to your

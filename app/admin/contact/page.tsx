@@ -571,7 +571,7 @@ export default function ContactPage() {
                 id="pageTitle"
                 value={contactInfo.pageTitle}
                 onChange={(e) => handleInputChange("pageTitle", e.target.value)}
-                placeholder="Get in Touch with Elegant Care Service"
+                placeholder="Get in Touch with Elegant Care Services"
                 className="mt-2"
               />
             </div>
@@ -625,7 +625,7 @@ export default function ContactPage() {
                 className="mt-2 w-full"
               />
             </div>
-            <div>
+            {/* <div>
               <Label
                 htmlFor="serviceAreas"
                 className="text-base font-semibold"
@@ -645,7 +645,7 @@ export default function ContactPage() {
               <p className="text-sm text-gray-500 mt-1">
                 Enter service areas separated by commas. These will be displayed on the contact page.
               </p>
-            </div>
+            </div> */}
           </CardContent>
         </Card>
       </Card>

@@ -162,9 +162,9 @@ export function ContactContent() {
     <>
       <section className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
+          <div className="grid lg:grid-cols-3 gap-8 md:gap-12">
             {/* Contact Form */}
-            <div>
+            <div className="lg:col-span-2">
               {contactInfo?.pageTitle && (
                 <h2 className="text-2xl sm:text-3xl font-bold mb-6">
                   <span className="text-[#1E3A5F]">{contactInfo.pageTitle.split(" ").slice(0, 2).join(" ")} </span>
@@ -378,8 +378,11 @@ export function ContactContent() {
             </div>
 
             {/* Contact Information */}
-            <div>
-              <div className="bg-[#F5F5F5] rounded-lg p-6 sm:p-8 mb-8">
+            <div className="lg:col-span-1 lg:sticky lg:top-28 h-fit">
+              <div className="bg-[#F5F5F5] rounded-xl p-6 sm:p-8 border border-gray-100 shadow-sm relative overflow-hidden">
+                {/* Decorative background element */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#8CC63F]/5 rounded-bl-full -mr-16 -mt-16" />
+
                 {contactInfo?.officeTitle && (
                   <h3 className="text-xl font-bold text-[#1E3A5F] mb-6">
                     {contactInfo.officeTitle}
@@ -458,7 +461,7 @@ export function ContactContent() {
               </div>
 
               {/* Service Areas */}
-              {contactInfo?.serviceAreas && (
+              {/* {contactInfo?.serviceAreas && (
                 <div className="bg-[#1E3A5F] rounded-lg p-6 sm:p-8 text-white">
                   <h3 className="text-xl font-bold mb-4">Service Areas</h3>
                   <p className="text-white/80 mb-4">We provide services across the following regions:</p>
@@ -471,7 +474,7 @@ export function ContactContent() {
                     ))}
                   </ul>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>

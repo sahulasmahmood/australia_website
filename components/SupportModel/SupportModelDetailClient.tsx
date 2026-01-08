@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Check, Phone, ChevronLeft, ChevronRight } from "lucide-react";
+import { Check, Phone, ChevronLeft, ChevronRight, Shield, Heart, Clock } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { WhatsAppIcon } from "@/components/ui/whatsapp-icon";
 import Image from "next/image";
 import { useState, useCallback } from "react";
@@ -253,15 +254,18 @@ export default function SupportModelDetailClient({
             {[
               {
                 title: "NDIS Registered",
-                description: "Fully registered NDIS provider with qualified and experienced staff dedicated to your care."
+                description: "Fully registered NDIS provider with qualified and experienced staff dedicated to your care.",
+                icon: <Shield className="h-6 w-6" />
               },
               {
                 title: "Personalized Care",
-                description: "Tailored support plans designed around your unique needs, goals, and preferences."
+                description: "Tailored support plans designed around your unique needs, goals, and preferences.",
+                icon: <Heart className="h-6 w-6" />
               },
               {
                 title: "24/7 Support",
-                description: "Round-the-clock assistance and support whenever you need it most."
+                description: "Round-the-clock assistance and support whenever you need it most.",
+                icon: <Clock className="h-6 w-6" />
               }
             ].map((item, index) => (
               <motion.div
@@ -270,15 +274,23 @@ export default function SupportModelDetailClient({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`relative group/feature py-6 sm:py-8 px-5 sm:px-6 border-gray-100
-                  ${index < 2 ? 'sm:border-r lg:border-r' : ''}
-                  ${index === 0 ? 'border-b sm:border-b-0' : ''}
-                  ${index === 1 ? 'border-b lg:border-b-0' : ''}
-                `}
+                className={cn(
+                  "relative group/feature py-8 sm:py-10 px-6 sm:px-8 border-gray-100 flex flex-col items-start",
+                  index < 2 && "lg:border-r",
+                  index < 2 && "sm:border-r lg:border-r",
+                  index === 0 && "border-b sm:border-b-0",
+                  index === 1 && "border-b lg:border-b-0",
+                  index < 2 && "border-b sm:border-b-0"
+                )}
               >
                 {/* Hover gradient effect */}
                 <div className="opacity-0 group-hover/feature:opacity-100 transition duration-300 absolute inset-0 h-full w-full bg-gradient-to-b from-[#8CC63F]/10 to-transparent pointer-events-none" />
                 
+                {/* Icon */}
+                <div className="mb-4 relative z-10 text-[#8CC63F]">
+                  {item.icon}
+                </div>
+
                 {/* Title with animated bar */}
                 <div className="text-base sm:text-lg font-semibold mb-2 relative z-10">
                   <div className="absolute left-0 inset-y-0 h-5 group-hover/feature:h-7 w-1 rounded-tr-full rounded-br-full bg-gray-200 group-hover/feature:bg-[#8CC63F] transition-all duration-300 origin-center -ml-5 sm:-ml-6" />
@@ -287,7 +299,7 @@ export default function SupportModelDetailClient({
                   </span>
                 </div>
                 
-                <p className="text-gray-600 text-sm sm:text-base leading-relaxed relative z-10">
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed relative z-10">
                   {item.description}
                 </p>
               </motion.div>

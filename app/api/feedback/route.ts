@@ -100,7 +100,7 @@ async function sendAdminFeedbackNotification(smtpConfig: any, feedbackData: any)
     <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; background-color: #f8fafc;">
       <div style="background: linear-gradient(135deg, #8CC63F 0%, #6BA32D 100%); padding: 30px; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 28px;">New Feedback Received</h1>
-        <p style="color: #E8F5E0; margin: 10px 0 0 0; font-size: 16px;">Elegant Care Service Admin Panel</p>
+        <p style="color: #E8F5E0; margin: 10px 0 0 0; font-size: 16px;">Elegant Care Services Admin Panel</p>
       </div>
       
       <div style="padding: 30px; background-color: white; margin: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
@@ -145,7 +145,7 @@ async function sendAdminFeedbackNotification(smtpConfig: any, feedbackData: any)
 
         <div style="text-align: center; margin-top: 40px; padding-top: 30px; border-top: 2px solid #e5e7eb;">
           <p style="color: #6b7280; margin: 0; font-size: 14px;">
-            This email was automatically generated from the Elegant Care Service website.<br>
+            This email was automatically generated from the Elegant Care Services website.<br>
             Feedback ID: #${feedbackData._id}<br>
             Received at: ${new Date().toLocaleString("en-AU", { timeZone: "Australia/Sydney" })}
           </p>
@@ -173,7 +173,7 @@ async function sendCustomerFeedbackConfirmation(smtpConfig: any, feedbackData: a
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8fafc;">
       <div style="background: linear-gradient(135deg, #8CC63F 0%, #6BA32D 100%); padding: 30px; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 28px;">Thank You for Your Feedback!</h1>
-        <p style="color: #E8F5E0; margin: 10px 0 0 0; font-size: 16px;">Elegant Care Service</p>
+        <p style="color: #E8F5E0; margin: 10px 0 0 0; font-size: 16px;">Elegant Care Services</p>
       </div>
       
       <div style="padding: 30px; background-color: white; margin: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
@@ -203,14 +203,14 @@ async function sendCustomerFeedbackConfirmation(smtpConfig: any, feedbackData: a
         <div style="background-color: #fef3c7; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
           <h3 style="color: #1f2937; margin: 0 0 15px 0;">We Value Your Voice</h3>
           <p style="color: #4b5563; line-height: 1.6; margin: 0;">
-            At Elegant Care Service, we are committed to providing the highest quality care. Your feedback, whether it's a compliment, suggestion, or concern, helps us understand how we can better serve you and our community.
+            At Elegant Care Services, we are committed to providing the highest quality care. Your feedback, whether it's a compliment, suggestion, or concern, helps us understand how we can better serve you and our community.
           </p>
         </div>
 
         <div style="text-align: center; margin-top: 40px; padding-top: 30px; border-top: 2px solid #e5e7eb;">
           <p style="color: #6b7280; margin: 0; font-size: 14px;">
             Best regards,<br>
-            Elegant Care Service Team<br>
+            Elegant Care Services Team<br>
             Quality Care, Compassionate Support
           </p>
         </div>
@@ -221,7 +221,7 @@ async function sendCustomerFeedbackConfirmation(smtpConfig: any, feedbackData: a
   const mailOptions = {
     from: `"${smtpConfig.fromName}" <${smtpConfig.fromEmail}>`,
     to: feedbackData.email,
-    subject: "Thank You for Your Feedback - Elegant Care Service",
+    subject: "Thank You for Your Feedback - Elegant Care Services",
     html: emailHTML,
   };
 

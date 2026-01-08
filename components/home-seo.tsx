@@ -7,7 +7,7 @@ export function HomeSeo() {
   useSEOMeta({
     pageId: 'home',
     fallback: {
-      title: 'Elegant Care Service | NDIS Disability Service Provider',
+      title: 'Elegant Care Services | NDIS Disability Service Provider',
       description: 'Professional NDIS disability support services. We provide supported independent living, respite support, community participation, and personalized care services.',
       keywords: 'NDIS provider, disability support, supported independent living, respite care, community participation'
     }

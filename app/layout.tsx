@@ -22,7 +22,7 @@ const openSans = Open_Sans({
 })
 
 export const metadata: Metadata = {
-  title: "Elegant Care Service | NDIS Disability Service Provider",
+  title: "Elegant Care Services | NDIS Disability Services Provider",
   description:
     "Professional NDIS disability support services. We provide supported independent living, respite support, community participation, and personalized care services.",
   generator: 'v0.app',

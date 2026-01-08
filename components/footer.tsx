@@ -27,6 +27,7 @@ export function Footer() {
       contactInfo.city,
       contactInfo.state,
       contactInfo.postcode,
+      contactInfo.country,
     ].filter(Boolean)
     return parts.join(", ")
   }
@@ -46,7 +47,7 @@ export function Footer() {
               <Logo className="[&_span]:text-white [&_span:last-child]:text-[#8CC63F]" />
             </div>
             <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6">
-              Elegant Care Service is a registered NDIS provider committed to delivering high-quality disability support
+              Elegant Care Services is a registered NDIS provider committed to delivering high-quality disability support
               services. We believe in empowering individuals to live life on their own terms with dignity and
               independence.
             </p>
@@ -197,7 +198,7 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
           <p className="text-gray-400 text-[10px] sm:text-xs leading-relaxed text-center">
-            Elegant Care Service acknowledges the Traditional Custodians of Country throughout Australia and recognizes
+            Elegant Care Services acknowledges the Traditional Custodians of Country throughout Australia and recognizes
             their continuing connection to land, waters, and community. We pay our respects to Aboriginal and Torres
             Strait Islander cultures and to Elders past, present, and emerging.
           </p>
@@ -208,7 +209,7 @@ export function Footer() {
       <div className="border-t border-white/10 bg-[#152D4A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <p className="text-center text-xs sm:text-sm text-gray-400 flex items-center justify-center gap-2 flex-wrap">
-            <span>&copy; {new Date().getFullYear()} Elegant Care Service. All rights reserved.</span>
+            <span>&copy; {new Date().getFullYear()} Elegant Care Services. All rights reserved.</span>
             <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-[#8CC63F] inline-block" />
             <span className="hover:text-[#8CC63F] transition-colors">
               <a href="https://mntfuture.com/" target="_blank" rel="noopener noreferrer">

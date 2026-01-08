@@ -163,7 +163,7 @@ export async function POST() {
 
     const defaultSettings = {
       id: "default",
-      siteName: "Elegant Care Service",
+      siteName: "Elegant Care Services",
       siteTagline: "Quality NDIS Support Services",
       logo: null,
       favicon: null,

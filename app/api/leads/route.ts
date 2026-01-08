@@ -96,7 +96,7 @@ async function sendAdminNotification(smtpConfig: any, lead: any) {
     <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; background-color: #f8fafc;">
       <div style="background: linear-gradient(135deg, #8CC63F 0%, #6BA32D 100%); padding: 30px; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 28px;">New Contact Form Submission</h1>
-        <p style="color: #E8F5E0; margin: 10px 0 0 0; font-size: 16px;">Elegant Care Service Admin Panel</p>
+        <p style="color: #E8F5E0; margin: 10px 0 0 0; font-size: 16px;">Elegant Care Services Admin Panel</p>
       </div>
       
       <div style="padding: 30px; background-color: white; margin: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
@@ -133,7 +133,7 @@ async function sendAdminNotification(smtpConfig: any, lead: any) {
 
         <div style="text-align: center; margin-top: 40px; padding-top: 30px; border-top: 2px solid #e5e7eb;">
           <p style="color: #6b7280; margin: 0; font-size: 14px;">
-            This email was automatically generated from the Elegant Care Service website.<br>
+            This email was automatically generated from the Elegant Care Services website.<br>
             Lead ID: #${lead._id}<br>
             Received at: ${new Date().toLocaleString("en-AU", { timeZone: "Australia/Sydney" })}
           </p>
@@ -165,14 +165,14 @@ async function sendCustomerConfirmation(smtpConfig: any, lead: any) {
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8fafc;">
       <div style="background: linear-gradient(135deg, #8CC63F 0%, #6BA32D 100%); padding: 30px; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 28px;">Thank You for Contacting Us!</h1>
-        <p style="color: #E8F5E0; margin: 10px 0 0 0; font-size: 16px;">Elegant Care Service</p>
+        <p style="color: #E8F5E0; margin: 10px 0 0 0; font-size: 16px;">Elegant Care Services</p>
       </div>
       
       <div style="padding: 30px; background-color: white; margin: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
         <div style="text-align: center; margin-bottom: 30px;">
           <h2 style="color: #1f2937; margin: 0 0 15px 0;">Hi ${lead.firstName}!</h2>
           <p style="color: #4b5563; line-height: 1.6; margin: 0;">
-            Thank you for reaching out to Elegant Care Service. We have received your enquiry and our team will get back to you within 24-48 hours.
+            Thank you for reaching out to Elegant Care Services. We have received your enquiry and our team will get back to you within 24-48 hours.
           </p>
         </div>
 
@@ -193,7 +193,7 @@ async function sendCustomerConfirmation(smtpConfig: any, lead: any) {
         </div>
 
         <div style="background-color: #fef3c7; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-          <h3 style="color: #1f2937; margin: 0 0 15px 0;">Why Choose Elegant Care Service?</h3>
+          <h3 style="color: #1f2937; margin: 0 0 15px 0;">Why Choose Elegant Care Services?</h3>
           <ul style="color: #4b5563; line-height: 1.6; margin: 0; padding-left: 20px;">
             <li>NDIS registered provider</li>
             <li>Experienced and compassionate care team</li>
@@ -206,7 +206,7 @@ async function sendCustomerConfirmation(smtpConfig: any, lead: any) {
         <div style="text-align: center; margin-top: 40px; padding-top: 30px; border-top: 2px solid #e5e7eb;">
           <p style="color: #6b7280; margin: 0; font-size: 14px;">
             Best regards,<br>
-            Elegant Care Service Team<br>
+            Elegant Care Services Team<br>
             Quality Care, Compassionate Support
           </p>
         </div>
@@ -217,7 +217,7 @@ async function sendCustomerConfirmation(smtpConfig: any, lead: any) {
   const mailOptions = {
     from: `"${smtpConfig.fromName}" <${smtpConfig.fromEmail}>`,
     to: lead.email,
-    subject: "Thank You for Your Enquiry - Elegant Care Service",
+    subject: "Thank You for Your Enquiry - Elegant Care Services",
     html: emailHTML,
   };
 

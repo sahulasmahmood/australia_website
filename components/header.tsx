@@ -18,7 +18,8 @@ const staticNavItems = [
     dropdown: [
       { label: "Our Story", href: "/about" },
       { label: "Our Mission", href: "/about#mission" },
-      { label: "Our Team", href: "/about/team" },
+      { label: "Our Values", href: "/about#values" },
+      // { label: "Our Team", href: "/about/team" },
     ],
   },
   { label: "NDIS", href: "/ndis" },

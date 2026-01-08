@@ -999,7 +999,7 @@ export default function SupportModelsPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, seoTitle: e.target.value })
                   }
-                  placeholder="e.g., Household Tasks Support | Elegant Care Service"
+                  placeholder="e.g., Household Tasks Support | Elegant Care Services"
                   maxLength={200}
                   className="mt-2"
                 />

@@ -13,7 +13,7 @@ const settingsSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      default: "Elegant Care Service",
+      default: "Elegant Care Services",
     },
     siteTagline: {
       type: String,
@@ -52,7 +52,7 @@ const Settings =
 // Default settings data for Elegant Care Service
 const defaultSettingsData = {
   id: "default",
-  siteName: "Elegant Care Service",
+  siteName: "Elegant Care Services",
   siteTagline: "Quality NDIS Support Services",
   logo: null,
   favicon: null,

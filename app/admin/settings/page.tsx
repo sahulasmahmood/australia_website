@@ -19,7 +19,7 @@ import {
 export default function SettingsPage() {
   const { toast } = useToast();
 
-  const [siteName, setSiteName] = useState("Elegant Care Service");
+  const [siteName, setSiteName] = useState("Elegant Care Services");
   const [siteTagline, setSiteTagline] = useState("Quality NDIS Support Services");
   const [logo, setLogo] = useState<string | null>(null);
   const [favicon, setFavicon] = useState<string | null>(null);
@@ -34,7 +34,7 @@ export default function SettingsPage() {
         const result = await response.json();
 
         if (result.success && result.data) {
-          setSiteName(result.data.siteName || "Elegant Care Service");
+          setSiteName(result.data.siteName || "Elegant Care Services");
           setSiteTagline(result.data.siteTagline || "Quality NDIS Support Services");
           setLogo(result.data.logo || null);
           setFavicon(result.data.favicon || null);
@@ -102,7 +102,7 @@ export default function SettingsPage() {
       const result = await response.json();
 
       if (result.success) {
-        setSiteName("Elegant Care Service");
+        setSiteName("Elegant Care Services");
         setSiteTagline("Quality NDIS Support Services");
         setLogo(null);
         setFavicon(null);

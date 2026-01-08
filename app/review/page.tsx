@@ -184,7 +184,7 @@ function ReviewPageContent() {
         >
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-[#1E3A5F] mb-2">Share Your Experience</h1>
-            <p className="text-gray-600">Help others by sharing your experience with Elegant Care Service</p>
+            <p className="text-gray-600">Help others by sharing your experience with Elegant Care Services</p>
           </div>
 
           {leadDetails && (

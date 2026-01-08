@@ -16,8 +16,8 @@ export async function GET() {
         {
           id: "home",
           pageName: "Home Page",
-          title: "Elegant Care Service - Quality NDIS Support Services in Australia",
-          description: "Elegant Care Service provides compassionate NDIS support services across Australia. Expert care workers, personalized support plans, and 24/7 assistance for people with disabilities.",
+          title: "Elegant Care Services - Quality NDIS Support Services in Australia",
+          description: "Elegant Care Services provides compassionate NDIS support services across Australia. Expert care workers, personalized support plans, and 24/7 assistance for people with disabilities.",
           keywords: "NDIS support services, disability care Australia, support workers, NDIS provider, quality care services, disability support, home care, community access",
           lastUpdated: new Date(),
           isActive: true,
@@ -25,8 +25,8 @@ export async function GET() {
         {
           id: "about",
           pageName: "About Us",
-          title: "About Elegant Care Service - Your Trusted NDIS Support Provider",
-          description: "Learn about Elegant Care Service, a trusted NDIS registered provider offering quality disability support services. Our experienced team is dedicated to empowering individuals with disabilities.",
+          title: "About Elegant Care Services - Your Trusted NDIS Support Provider",
+          description: "Learn about Elegant Care Services, a trusted NDIS registered provider offering quality disability support services. Our experienced team is dedicated to empowering individuals with disabilities.",
           keywords: "about elegant care, NDIS registered provider, disability support team, quality care provider, experienced support workers, trusted NDIS service",
           lastUpdated: new Date(),
           isActive: true,
@@ -53,7 +53,7 @@ export async function GET() {
           id: "ndis",
           pageName: "NDIS Information",
           title: "NDIS Information - Understanding Your NDIS Plan & Support",
-          description: "Learn about the NDIS, how to access support services, understanding your NDIS plan, and how Elegant Care Service can help you achieve your goals.",
+          description: "Learn about the NDIS, how to access support services, understanding your NDIS plan, and how Elegant Care Services can help you achieve your goals.",
           keywords: "NDIS information, NDIS plan, disability support scheme, NDIS access, understanding NDIS, NDIS funding, support coordination",
           lastUpdated: new Date(),
           isActive: true,
@@ -61,7 +61,7 @@ export async function GET() {
         {
           id: "feedback",
           pageName: "Feedback",
-          title: "Feedback - Share Your Experience with Elegant Care Service",
+          title: "Feedback - Share Your Experience with Elegant Care Services",
           description: "We value your feedback! Share your compliments, suggestions, or concerns about our NDIS support services. Your input helps us improve and deliver better care.",
           keywords: "feedback, customer feedback, service feedback, NDIS feedback, compliments, suggestions, concerns, service improvement, client feedback",
           lastUpdated: new Date(),
@@ -70,8 +70,8 @@ export async function GET() {
         {
           id: "contact",
           pageName: "Contact Us",
-          title: "Contact Elegant Care Service - Get NDIS Support Today",
-          description: "Contact Elegant Care Service for NDIS support services. Our friendly team is available 24/7 to discuss your care needs and create a personalized support plan.",
+          title: "Contact Elegant Care Services - Get NDIS Support Today",
+          description: "Contact Elegant Care Services for NDIS support services. Our friendly team is available 24/7 to discuss your care needs and create a personalized support plan.",
           keywords: "contact elegant care, NDIS inquiry, support services contact, 24/7 care support, NDIS consultation, get support, care inquiry",
           lastUpdated: new Date(),
           isActive: true,
@@ -89,7 +89,7 @@ export async function GET() {
 
       await SEO.bulkWrite(bulkOps);
       seoData = await SEO.find({}).sort({ lastUpdated: -1 });
-      console.log("✅ SEO data initialized for Elegant Care Service");
+      console.log("✅ SEO data initialized for Elegant Care Services");
     }
     
     return NextResponse.json({

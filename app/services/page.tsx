@@ -8,7 +8,7 @@ import { ServicesContent } from "@/components/Services/ServicesContent"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: 'Our Services | Elegant Care Service',
+  title: 'Our Services | Elegant Care Services',
   description: 'Explore our comprehensive range of NDIS services including supported independent living, community participation, and respite care.',
   keywords: 'NDIS services, supported living, respite care, community participation, disability support'
 }

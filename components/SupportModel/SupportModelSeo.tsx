@@ -6,7 +6,7 @@ export function SupportModelSeo() {
   useSEOMeta({
     pageId: 'support-model',
     fallback: {
-      title: 'Our Support Model | Elegant Care Service',
+      title: 'Our Support Model | Elegant Care Services',
       description: 'Discover our person-centered support models designed to empower individuals with disabilities to achieve their goals.',
       keywords: 'NDIS support model, person-centered care, disability support, empowerment, collaborative support'
     }

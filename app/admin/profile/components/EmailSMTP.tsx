@@ -38,13 +38,13 @@ export default function EmailSMTP() {
     smtpUser: "",
     smtpPassword: "",
     fromEmail: "",
-    fromName: "Elegant Care Service",
+    fromName: "Elegant Care Services",
   });
 
   const [testEmailData, setTestEmailData] = useState<TestEmailData>({
     email: "",
     message:
-      "Greetings from Elegant Care Service! This is a test email to verify our SMTP configuration is working correctly for sending notifications and updates.",
+      "Greetings from Elegant Care Services! This is a test email to verify our SMTP configuration is working correctly for sending notifications and updates.",
   });
 
   const [isTestingConnection, setIsTestingConnection] = useState(false);
@@ -251,7 +251,7 @@ export default function EmailSMTP() {
         setTestEmailData({
           email: "",
           message:
-            "Greetings from Elegant Care Service! This is a test email to verify our SMTP configuration is working correctly for sending notifications and updates.",
+            "Greetings from Elegant Care Services! This is a test email to verify our SMTP configuration is working correctly for sending notifications and updates.",
         });
       } else {
         toast({
@@ -406,7 +406,7 @@ export default function EmailSMTP() {
               onChange={(e) =>
                 setEmailSettings({ ...emailSettings, fromName: e.target.value })
               }
-              placeholder="Elegant Care Service"
+              placeholder="Elegant Care Services"
               className="mt-2"
             />
             <p className="text-xs text-gray-500 mt-1">
