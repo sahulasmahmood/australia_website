@@ -91,9 +91,40 @@ export default function AdminLayout({
         setAdminProfile(response.data.admin)
       }
     } catch (error) {
-      console.error("Failed to fetch admin profile:", error)
+      // Silently handle profile fetch errors
+      // If token verification fails, logout the user
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        handleTokenExpiration()
+      }
     }
   }
+
+  const handleTokenExpiration = () => {
+    localStorage.removeItem("admin_token")
+    setIsAuthenticated(false)
+    setAdminProfile(null)
+    router.push("/login")
+  }
+
+  // Setup axios interceptor for handling 401 errors globally
+  useEffect(() => {
+    const interceptor = axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response?.status === 401) {
+          // Token expired or invalid - silently handle and redirect
+          handleTokenExpiration()
+          // Return a resolved promise to prevent error propagation
+          return Promise.resolve({ data: { success: false, message: 'Session expired' } })
+        }
+        return Promise.reject(error)
+      }
+    )
+
+    return () => {
+      axios.interceptors.response.eject(interceptor)
+    }
+  }, [router])
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -101,8 +132,25 @@ export default function AdminLayout({
       const publicPaths = ["/login", "/login/forgot-password", "/login/reset-password"]
 
       if (token) {
-        setIsAuthenticated(true)
-        await fetchAdminProfile()
+        try {
+          // Verify token before setting authenticated
+          const response = await axios.get("/api/admin/auth/verify", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+
+          if (response.data.success) {
+            setIsAuthenticated(true)
+            setAdminProfile(response.data.admin)
+          } else {
+            handleTokenExpiration()
+          }
+        } catch (error) {
+          // Silently handle token expiration - no need to log error
+          // User will be redirected to login automatically
+          handleTokenExpiration()
+        }
       } else {
         setIsAuthenticated(false)
         if (!publicPaths.some(path => pathname.startsWith(path))) {
@@ -120,7 +168,7 @@ export default function AdminLayout({
     try {
       await axios.post("/api/admin/auth/logout")
     } catch (error) {
-      console.error("Logout error:", error)
+      // Silently handle logout errors
     }
     localStorage.removeItem("admin_token")
     setIsAuthenticated(false)

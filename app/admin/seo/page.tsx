@@ -55,7 +55,6 @@ export default function SEOManagerPage() {
         });
       }
     } catch (error) {
-      console.error("Error fetching SEO data:", error);
       toast({
         title: "Error",
         description: "Failed to fetch SEO data",
@@ -127,7 +126,6 @@ export default function SEOManagerPage() {
           })
         }
       } catch (error) {
-        console.error("Error updating SEO:", error);
         toast({
           title: "Error",
           description: "Failed to update SEO data",

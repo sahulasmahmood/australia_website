@@ -83,7 +83,6 @@ export default function ContactPage() {
           });
         }
       } catch (error) {
-        console.error("Error fetching contact info:", error);
         toast({
           title: "Error",
           description: "Failed to load contact information",
@@ -117,16 +116,18 @@ export default function ContactPage() {
           description: "All contact information has been successfully saved.",
         });
       } else {
-        throw new Error(result.message || "Failed to save contact information");
+        // Show error in toast only, don't throw
+        toast({
+          title: "Error",
+          description: result.message || "Failed to save contact information",
+          variant: "destructive",
+        });
       }
     } catch (error) {
-      console.error("Error saving contact info:", error);
+      // Silently handle network errors, show user-friendly message
       toast({
         title: "Error",
-        description:
-          error instanceof Error
-            ? error.message
-            : "Failed to save contact information",
+        description: "Failed to save contact information. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -314,7 +315,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <Label htmlFor="state" className="text-base font-semibold">
-                  State *
+                  State
                 </Label>
                 <Input
                   id="state"

@@ -54,7 +54,6 @@ async function getSupportModelBySlug(slug: string, increment = false) {
 
     return supportModel;
   } catch (error) {
-    console.error("Error fetching support model:", error);
     return null;
   }
 }

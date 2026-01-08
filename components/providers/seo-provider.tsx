@@ -49,7 +49,6 @@ export function SEOProvider({ children }: { children: React.ReactNode }) {
       }
     } catch (err) {
       setError('Failed to fetch SEO data')
-      console.error('SEO fetch error:', err)
     } finally {
       setLoading(false)
     }

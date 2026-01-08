@@ -91,10 +91,13 @@ export default function AdminDashboard() {
           });
         }
       } else {
-        throw new Error(result.message || "Failed to fetch dashboard data");
+        toast({
+          title: "Error",
+          description: result.message || "Failed to fetch dashboard data",
+          variant: "destructive",
+        });
       }
     } catch (error) {
-      console.error("Error fetching dashboard data:", error);
       toast({
         title: "Error",
         description: "Failed to load dashboard data. Please try again.",

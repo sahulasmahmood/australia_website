@@ -63,13 +63,17 @@ export function ContactContent() {
           message: "",
         })
       } else {
-        throw new Error(data.error || "Failed to send message")
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: data.error || "Failed to send message",
+        })
       }
     } catch (error: any) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: error.message || "Failed to send message. Please try again.",
+        description: "Failed to send message. Please try again.",
       })
     } finally {
       setFormLoading(false)

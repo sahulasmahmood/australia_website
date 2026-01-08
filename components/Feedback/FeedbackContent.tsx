@@ -81,13 +81,17 @@ export function FeedbackContent() {
         })
         setIsAnonymous(false)
       } else {
-        throw new Error(data.error || "Failed to submit feedback")
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: data.error || "Failed to submit feedback",
+        })
       }
     } catch (error: any) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: error.message || "Failed to submit feedback. Please try again.",
+        description: "Failed to submit feedback. Please try again.",
       })
     } finally {
       setLoading(false)

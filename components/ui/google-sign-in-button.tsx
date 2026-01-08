@@ -48,7 +48,6 @@ export function GoogleSignInButton() {
         // Navigate to admin dashboard
         router.push("/admin")
       } catch (error: any) {
-        console.error("Google login error:", error)
         toast({
           title: "Login Error",
           description: error.response?.data?.error || "An error occurred during Google login.",

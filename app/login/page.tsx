@@ -76,7 +76,12 @@ export default function LoginPage() {
       const { token, admin } = response.data
       
       if (!token || !admin) {
-        throw new Error("Invalid response from server")
+        toast({
+          variant: "destructive",
+          title: "Login Failed",
+          description: "Invalid response from server",
+        })
+        return
       }
       
       localStorage.setItem("admin_token", token)

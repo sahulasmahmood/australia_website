@@ -40,7 +40,7 @@ export default function SettingsPage() {
           setFavicon(result.data.favicon || null);
         }
       } catch (error) {
-        console.error("Error fetching settings:", error);
+        // Silently handle settings fetch errors
       } finally {
         setFetchLoading(false);
       }
@@ -74,16 +74,16 @@ export default function SettingsPage() {
           description: "Site settings saved successfully",
         });
       } else {
-        throw new Error(result.message || "Failed to save settings");
+        toast({
+          title: "Error",
+          description: result.message || "Failed to save settings",
+          variant: "destructive",
+        });
       }
     } catch (error) {
-      console.error("Error saving settings:", error);
       toast({
         title: "Error",
-        description:
-          error instanceof Error
-            ? error.message
-            : "Failed to save site settings",
+        description: "Failed to save site settings",
         variant: "destructive",
       });
     } finally {
@@ -112,16 +112,16 @@ export default function SettingsPage() {
           description: "Site settings reset to default",
         });
       } else {
-        throw new Error(result.message || "Failed to reset settings");
+        toast({
+          title: "Error",
+          description: result.message || "Failed to reset settings",
+          variant: "destructive",
+        });
       }
     } catch (error) {
-      console.error("Error resetting settings:", error);
       toast({
         title: "Error",
-        description:
-          error instanceof Error
-            ? error.message
-            : "Failed to reset site settings",
+        description: "Failed to reset site settings",
         variant: "destructive",
       });
     } finally {
